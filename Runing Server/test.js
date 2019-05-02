@@ -1,17 +1,47 @@
 var http = require('http');
 var url = require('url');
-const { exec } = require('child_process');
 
-function run(dir) {
-    exec("start " + dir);
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec)
+
+async function run(dir) {
+    let result = await exec("E:/PROJECT/Query.exe/Project1/Debug/Project1.exe " + dir);
+    return result.stdout;
 }
 
-http.createServer(function (req, res) {
+http.createServer(async function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write("Islamic Republic of Iran Air Force \n:)");
-    var q = url.parse(req.url, true).query;
-    run(q.appname);
-    var txt = q.text + ":)";
-    res.write(txt);
-    res.end();
+
+    let ur = url.parse(req.url, true);
+    var q = ur.query;
+    var pth = ur.pathname;
+    //==============================================================
+    //type=user&command=signin&user/pass
+    //type=user&command=signup&user/pass/phone/name/moaref
+    //type=user&command=delete&user/pass
+    //type=user&command=edit&user/pass/phone/name/moaref
+    
+    //==============================================================
+    var x = q.type + "";
+    console.log(q);
+    var cmd;
+    if (q.type == "usersignin" && q.user!=undefined && q.pass!=undefined) {
+        cmd = "user signin " + q.user + " " + q.pass;
+    }
+    else if (q.type == "usersignup" && q.user != undefined && q.pass != undefined) {
+        cmd = "user signup " + q.user + " " + q.pass;
+    }
+    else if (q.type == "userdelete" && q.user != undefined && q.pass != undefined) {
+        cmd = "user delete " + q.user + " " + q.pass;
+    }
+    else if (q.type == "useredit" && q.olduser != undefined && q.oldpass != undefined && q.user != undefined && q.pass != undefined) {
+        cmd = "user edit " + q.olduser + " " + q.oldpass + " " + q.user + " " + q.pass;
+    }
+    else if (q.type == "2000279")
+        cmd = "user show";
+    else
+        cmd = "error";
+    //==============================================================
+    var result = await run(cmd);
+    res.end(result);
 }).listen(1379);
