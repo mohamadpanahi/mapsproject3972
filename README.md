@@ -9,7 +9,7 @@
 
 فایل های سرور
 Users.txt
-مشترک  {“Ali”:{id,pass,name,email,phone,birth,location,gender,code,needtoactive,other}}}
+مشترک  {“Ali”:{id,pass,name,email,phone,birth,location,gender,code,needtoactive,other}}}<br/>
 کاربر  “other”:{“favorite”:{sport:[],team:[]}}
 بازیکن ها  “other”:[team, sport, others] // others مربوط به ورزش مخصوص به خود
 مدیرها  “other”=”sport”
