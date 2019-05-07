@@ -3,21 +3,9 @@
 User::User(string filename) :DataBase(filename) {}
 User::~User() {}
 
-json User::search(string username)
-{
-	try
-	{
-		return j.at(username);
-	}
-	catch (...)
-	{
-		return 0;
-	}
-}
-
 bool User::signup(string username, json person)
 {
-	if (search(username) != 0)
+	if (find(j, username))
 		return false;
 	j.insert(person.begin(), person.end());
 	return true;
@@ -25,8 +13,7 @@ bool User::signup(string username, json person)
 
 bool User::signin(string username, string password)
 {
-	json temp = search(username);
-	if (temp != 0 && temp["pass"] == password)
+	if (find(j, username) && j[username]["pass"] == password)
 		return true;
 	return false;
 }
@@ -49,4 +36,21 @@ bool User::edit(string username, string password, json input)
 		return true;
 	}
 	return false;
+}
+
+bool User::addfavorite(string username, string base, string id)
+{
+	if (searcharr(j[username]["favorite"][base], id) != -1)
+		return false;
+
+	j[username]["favorite"][base].push_back(id);
+	return true;
+}
+bool User::delfavorite(string username, string base, string id)
+{
+	int k = searcharr(j[username]["favorite"][base], id);
+	if (k == -1)
+		return false;
+	j[username]["favorite"][base].erase(j[username]["favorite"][base].begin() + k);
+	return true;
 }

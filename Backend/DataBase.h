@@ -29,5 +29,8 @@ public:
 	void show(initializer_list<const char*> s);
 	bool sync();
 	
-};
+	int searcharr(json arr, string s);
+	bool find(const json& jj, string key);
 
+	string getfreeid(const json& jj, long long int startid);
+};
