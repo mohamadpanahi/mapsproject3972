@@ -1,21 +1,5 @@
 #pragma once
-#include <nlohmann/json.hpp>
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
-//#include <conio.h>
-//#include <Windows.h>
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <cstdlib>
-//#include <ctime>
-//#include <time.h>
-//#include <vector>
-//#include <list>
-using json = nlohmann::json;
-using namespace std;
-
+#include "Usefull.h"
 
 class DataBase
 {
@@ -26,7 +10,7 @@ public:
 	DataBase(string file);
 	~DataBase();
 
-	void show(initializer_list<const char*> s);
+	void show(initializer_list<const char*> s, int len, int mlen = 25, int n = 2);
 	bool sync();
 	
 	int searcharr(json arr, string s);

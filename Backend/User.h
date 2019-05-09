@@ -8,13 +8,19 @@ public:
 	~User();
 
 	//Users information
-	bool signup(string username, json person);
-	bool signin(string username, string password);
+
+	//1: active - 1 : inactive 0 : invalid username other : activation code
+	int signin(string username, string password);
+	bool signup(string username, string password, string email,  string otherinfo);
 	bool del(string username, string password);
 	bool edit(string username, string password, json input);
 
+	bool generatecode(string username, string password);
+	bool activation(string username, string password, string code);
+	bool retrievepass(string username, string email);
+
 	//add favorite
-	bool addfavorite(string username, string base, string id);
-	bool delfavorite(string username, string base, string id);
+	bool addfavorite(string username, string password, string base, string id);
+	bool delfavorite(string username, string password, string base, string id);
 	
 };

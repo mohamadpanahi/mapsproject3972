@@ -1,18 +1,5 @@
 #include "DataBase.h"
 
-string intTOstring(long long int a)
-{
-	if (a == 0)
-		return "0";
-	string s;
-	if (a < 0)
-		s = '-', a = -a;
-
-	for (int l = pow(10, (int)log10(a)); l; a %= l, l /= 10)
-		s += (a / l + '0');
-	return s;
-}
-
 DataBase::DataBase(string filename) : filename(filename)
 {
 	//INCOMPLETED DataBase: try catch
@@ -32,25 +19,51 @@ DataBase::~DataBase()
 	sync();
 }
 
-void DataBase::show(initializer_list<const char*> s)
+void DataBase::show(initializer_list<const char*> s, int len, int mlen, int n)
 {
+	n++;
+	string temp;
+	nlohmann::json::iterator it = j.begin();
+	//Title
+	cout << "key";
+	for (int i = 3; i < len; i++)
+		cout << ' ';
+	int ttt = 0;
 	for (auto i : s)
 	{
 		cout << i;
-		for (int l = strlen(i); l < 20; l++)
+		for (int l = strlen(i); l < (ttt < s.size() - n ? len : mlen); l++)
 			cout << ' ';
+		ttt++;
 	}
 	cout << endl;
-
+	//Json
+	int t, tt = 0;
 	for(auto k:j)
 	{
+		//Key
+		temp = it.key();
+		cout << temp;
+		for (int i = temp.length(); i < len; i++)
+			cout << ' ';
+
+		//other
+		tt = 0;
 		for (auto i : s)
 		{
-			cout << k[i];
-			for (int l = k[i].dump().length(); l < 20; l++)
+			temp = k[i].dump();
+			cout << temp;
+
+			if (tt < s.size() - n)
+				t = len;
+			else t = mlen;
+			for (int l = temp.length(); l < t; l++)
 				cout << ' ';
+			
+			tt++;
 		}
 		cout << endl;
+		it++;
 	}
 }
 

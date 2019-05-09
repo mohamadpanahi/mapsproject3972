@@ -1,0 +1,6 @@
+1- in (generatecode && retrievepass) check connection to send email
+2- sign in return activation code?
+3- vaccount can active with code 0
+4- how deleted account can active?
+5- what happen if in sign up other is empty
+6- 
