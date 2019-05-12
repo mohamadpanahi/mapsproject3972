@@ -3,7 +3,6 @@
 #include "League.h"
 #include "User.h"
 
-
 #include <conio.h>
 /*
 classes:
@@ -90,27 +89,22 @@ void competition(char* argv[])
 //	else cout << "ERROR 404: not found :(";
 //}
 
-
-int main()
+void usertest()
 {
-	//json j;
-	//ifstream file("j.json");
-	//stringstream ss;
-	//ss << file.rdbuf();
-	////INCOMPLETED DataBase: try catch
-	//j = json::parse(ss.str());
 	User user("j.json");
 	string u, p, s, ss;
 	char ch;
-	cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nf: add favorite\nF: delete favorite\ns: show\nh: help\n";
+	cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nr: retrieve pass\nf: add favorite\nF: delete favorite\ns: show\nS: show js\nh: help\nx: exit\n";
 	while (true)
 	{
 		ch = _getch();
 
 		switch (ch)
 		{
+		case 'x':
+			return;
 		case 'h':
-			cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nf: add favorite\nF: delete favorite\ns: show\nh: help\n";
+			cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nr: retrieve pass\nf: add favorite\nF: delete favorite\ns: show\nS: show js\nh: help\nx: exit\n";
 			break;
 		case 'i':
 			cout << "~~~~~~~~~~~ SIGN IN ~~~~~~~~~~~\n";
@@ -186,7 +180,7 @@ int main()
 			cin >> s;
 			cout << "id: ";
 			cin >> ss;
-			
+
 			cout << user.addfavorite(u, p, s, ss) << endl;
 			break;
 		case 'F':
@@ -199,17 +193,236 @@ int main()
 			cin >> s;
 			cout << "id: ";
 			cin >> ss;
-			
+
 			cout << user.delfavorite(u, p, s, ss) << endl;
 			break;
 		case 's':
 			cout << "~~~~~~~~~~~~ SHOW ~~~~~~~~~~~~~\n";
 			user.show({ "name","pass","active","phone","email","favorite" }, 15, 30, 2);
 			break;
+		case 'S':
+			cout << "~~~~~~~~~~~~ SHOW ~~~~~~~~~~~~~\n";
+			user.show();
+			break;
 		}
 	}
-	
+}
+void leaguetest()
+{
+	League league("l.json");
+	string s, l, t, ss;
+	char ch;
+	cout << "p: sport\nl: league\nt: team\nc: competition\nh: help\ns: show\nS: show js\nx: exit\n";
+	while (true)
+	{
+		ch = _getch();
+		if (ch == 'p')
+		{
+			cout << "------------ SPORT -------------\n";
+			cout << "sport name to add: ";
+			cin >> s;
+			cout << league.add_sport(s);
+		}
+		else if (ch == 'l')
+		{
+			cout << "------------ LEAGUE ------------\n";
+			switch (_getch())
+			{
+			case 'a':
+				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "info: ";
+				cin >> ss;
+				cout << league.add_league(s, l, ss) << endl;
+				break;
+			case 'd':
+				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << league.del_league(s, l) << endl;
+				break;
+			case 'c':
+				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << league.active_league(s, l) << endl;
+				break;
+			case 'e':
+				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "new info: ";
+				cin >> ss;
+				cout << league.edit_league(s, l, ss) << endl;
+				break;
+			case 'h':
+				cout << "a: add\ne: edit\nd: delete\nc: active\ns: show\nh: help\nx: exit\n";
+				break;
+			case 'x':
+				return;
+			}
+		}
+		else if (ch == 't')
+		{
+			cout << "------------- TEAM -------------\n";
+			switch (_getch())
+			{
+			case 'a':
+				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << "info: ";
+				cin >> ss;
+				cout << league.add_team(s, l, t, ss) << endl;
+				break;
+			case 'd':
+				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << league.del_team(s, l, t) << endl;
+				break;
+			case 'c':
+				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << league.active_team(s, l, t) << endl;
+				break;
+			case 'e':
+				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << "new info: ";
+				cin >> ss;
+				cout << league.edit_team(s, l, t, ss) << endl;
+				break;
+			case 'A':
+				cout << "~~~~~~~~~~~~ ADDM ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << "id: ";
+				cin >> ss;
+				cout << league.add_team_members(s, l, t, ss) << endl;
+				break;
+			case 'D':
+				cout << "~~~~~~~~~~~~ DELM ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "team: ";
+				cin >> t;
+				cout << "id: ";
+				cin >> ss;
+				cout << league.del_team_members(s, l, t, ss) << endl;
+				break;
+			case 'h':
+				cout << "a: add\ne: edit\nd: delete\nc: active\nA: add member\nD: del member\nh: help\nx: exit\n";
+				break;
+			case 'x':
+				return;
+			}
+		}
+		else if (ch == 'c')
+		{
+			cout << "------------ COMPET ------------\n";
+			switch (_getch())
+			{
+			case 'a':
+				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "competition: ";
+				cin >> t;
+				cout << "info: ";
+				cin >> ss;
+				cout << league.add_competition(s, l, t, json::parse("{" + ss + "}")) << endl;
+				break;
+			case 'd':
+				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "competition: ";
+				cin >> t;
+				cout << league.del_competition(s, l, t) << endl;
+				break;
+			case 'c':
+				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "competition: ";
+				cin >> t;
+				cout << league.active_competition(s, l, t) << endl;
+				break;
+			case 'r':
+				cout << "~~~~~~~~~~~ RESULT ~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "competition: ";
+				cin >> t;
+				cout << "result: ";
+				cin >> ss;
+				cout << league.edit_result(s, l, t, ss) << endl;
+				break;
+			case 'h':
+				cout << "a: add\ne: edit\nd: delete\nc: active\nr: edit resulth: help\nx: exit\n";
+				break;
+			case 'x':
+				return;
+			}
+		}
+		else if (ch == 'h')
+		{
+			cout << "l: league\nt: team\nc: competition\nh: help\ns: show\nx: exit\n";
+		}
+		/*else if (ch == 's')
+			league.show({"});*/
+		else if (ch == 's')
+			league.show();
+		else if (ch == 'x')
+			return;
+	}
+}
 
+
+int main()
+{	
+	leaguetest();
 }
 /*{"ali":{"email":"alii@ali.com","favorite":{"sport":["1"]},"name":"ali","pass":"123"},"aliop":{"name":"aliop","pass":"1234"},"aliop2":{"name":"aliop2","pass":"1234"},"hadi":{"active":"0","email":"alisalemmi@outlook.com","favorite":{"sport":[],"team":["3","5","7","11","2"]},"name":"hadi","pass":"456","phone":"12345678901"},"mahdi":{"name":"mahdi","pass":"456"},"mammad":{"name":"mammad","pass":"1234"},"seyed":{"name":"seyed","pass":"125"}}*/
-

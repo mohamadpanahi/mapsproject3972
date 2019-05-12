@@ -67,7 +67,12 @@ void DataBase::show(initializer_list<const char*> s, int len, int mlen, int n)
 	}
 }
 
-bool DataBase::sync()
+void DataBase::show()const
+{
+	cout << j << endl;
+}
+
+bool DataBase::sync()const
 {
 	//INCOMPLETED DataBase: try catch
 	ofstream file(filename);
@@ -75,7 +80,7 @@ bool DataBase::sync()
 	return true;
 }
 
-int DataBase::searcharr(json arr, string s)
+int DataBase::searcharr(json arr, string s)const
 {
 	int k = 0;
 	for (auto i : arr)
@@ -89,7 +94,7 @@ int DataBase::searcharr(json arr, string s)
 	else
 		return -1;
 }
-bool DataBase::find(const json& jj, string key)
+bool DataBase::find(const json& jj, string key)const
 {
 	try
 	{
@@ -102,7 +107,7 @@ bool DataBase::find(const json& jj, string key)
 	}
 }
 
-string DataBase::getfreeid(const json& jj, long long int startid)
+string DataBase::getfreeid(const json& jj, long long int startid)const
 {
 	for (int i = startid;; i++)
 		if (!find(jj, intTOstring(i)))

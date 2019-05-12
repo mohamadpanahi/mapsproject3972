@@ -13,130 +13,136 @@ bool League::add_sport(string name)
 	return true;
 }
 
-bool League::make_league(string league_name, string sport, string league)
+bool League::add_league(string sport, string league, string input)
 {
-	if (!find(j, sport) || find(j[sport], league_name))
+	if (!find(j, sport) || find(j[sport], league))
 		return false;
 
-	json jj = json::parse("{\"" + league_name + "\":{" + league + ",\"team\":{},\"competition\":{}}}");
-	jj["active"] = true;
+	json jj = json::parse("{\"" + league + "\":{" + input + ",\"team\":{},\"competition\":{}}}");
+	jj[league]["active"] = true;
 	j[sport].insert(jj.begin(), jj.end());
 	return true;
 }
-bool League::edit(string sport, string league_name, json input)
+bool League::edit_league(string sport, string league, string input)
 {
-	if (!find(j[sport], league_name))
+	if (!find(j[sport], league))
 		return false;
 
-	j[sport][league_name].update(input);
+	json jj = json::parse("{" + input + "}");
+	j[sport][league].update(jj);
 	return true;
 }
-
-bool League::del(string sport, string league_name)
+bool League::del_league(string sport, string league)
 {
-	if (!find(j, sport) || !find(j[sport], league_name))
+	if (!find(j, sport) || !find(j[sport], league))
 		return false;
-	j[sport][league_name]["active"] = false;
+	j[sport][league]["active"] = false;
 	return true;
 }
-bool League::activeleague(string sport, string league_name)
+bool League::active_league(string sport, string league)
 {
 	//INACTIVE competitions ago
-	if (!find(j, sport) || !find(j[sport], league_name))
+	if (!find(j, sport) || !find(j[sport], league))
 		return false;
-	j[sport][league_name]["active"] = true;
+	j[sport][league]["active"] = true;
 	return true;
 }
 
-bool League::addteam(string sport, string league, string team_name, string team)
+
+bool League::add_team(string sport, string league, string team, string input)
 {
-	if (!find(j, sport) || !find(j[sport], league) || find(j[sport][league]["team"], team_name))
+	if (!find(j, sport) || !find(j[sport], league) || find(j[sport][league]["team"], team))
 		return false;
 
-	json jj = json::parse("{\"" + team_name + "\":{" + team + ",\"member\":[]}}");
-	jj["active"] = true;
+	json jj = json::parse("{\"" + team + "\":{" + input + ",\"member\":[]}}");
+	jj[team]["active"] = true;
 	j[sport][league]["team"].insert(jj.begin(), jj.end());
 	return true;
 }
-bool League::edit_team(string sport, string league, string team_name, json input)
+bool League::edit_team(string sport, string league, string team, string input)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team))
 		return false;
 
-	j[sport][league]["team"][team_name].update(input);
+	json jj = json::parse("{" + input + "}");
+
+	j[sport][league]["team"][team].update(jj);
+	return true;
+}
+bool League::del_team(string sport, string league, string team)
+{
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team))
+		return false;
+	j[sport][league]["team"][team]["active"] = false;
+	return true;
+}
+bool League::active_team(string sport, string league, string team)
+{
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team))
+		return false;
+	j[sport][league]["team"][team]["active"] = true;
 	return true;
 }
 
-bool League::del_team(string sport, string league, string team_name)
+bool League::add_team_members(string sport, string league, string team, string user)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team) || searcharr(j[sport][league]["team"][team]["member"],user)!=-1)
 		return false;
-	j[sport][league]["team"][team_name]["active"] = false;
+	j[sport][league]["team"][team]["member"].push_back(user);
 	return true;
 }
-bool League::activeteam(string sport, string league_name, string team_name)
+bool League::del_team_members(string sport, string league, string team, string user)
 {
-	if (!find(j, sport) || !find(j[sport], league_name) || !find(j[sport][league_name]["team"], team_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team))
 		return false;
-	j[sport][league_name]["team"][team_name]["active"] = true;
-	return true;
-}
-
-bool League::add_team_members(string sport, string league, string team_name, string user)
-{
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team_name) || searcharr(j[sport][league]["team"][team_name]["member"],user)!=-1)
-		return false;
-	j[sport][league]["team"][team_name]["member"].push_back(user);
-	return true;
-}
-bool League::del_team_members(string sport, string league, string team_name, string user)
-{
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team_name))
-		return false;
-	int k = searcharr(j[sport][league]["team"][team_name]["member"], user);
+	int k = searcharr(j[sport][league]["team"][team]["member"], user);
 	if (k == -1)
 		return false;
 
-	j[sport][league]["team"][team_name]["member"].erase(j[sport][league]["team"][team_name]["member"].begin() + k);
+	j[sport][league]["team"][team]["member"].erase(j[sport][league]["team"][team]["member"].begin() + k);
 	return true;
 }
 
-bool League::make_competition(string sport, string league, string competition_name, json competition)
+
+bool League::add_competition(string sport, string league, string competition, json input)
 {
-	if (!find(j, sport) || !find(j[sport], league)  || !find(j[sport][league]["team"], competition["team1"]) || !find(j[sport][league]["team"], competition["team2"]))
+	if (!find(j, sport) || !find(j[sport], league)  || !find(j[sport][league]["team"], input["team1"]) || !find(j[sport][league]["team"], input["team2"]))
 		return false;
 	
-	json jj = json::parse("\"" + getfreeid(j[sport][league]["competition"], 1) + "\":" + competition.dump());
-	jj["active"] = true;
+	string s = getfreeid(j[sport][league]["competition"], 1);
+	json jj = json::parse("\"" + s + "\":" + input.dump());
+	jj[s]["active"] = true;
 	j[sport][league]["competition"].insert(jj.begin(), jj.end());
 	return true;
 }
-bool League::edit_competition(string sport, string league, string competition_name, json input)
+bool League::edit_competition(string sport, string league, string competition, string input)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition))
 		return false;
 
-	j[sport][league]["competition"][competition_name].update(input);
+	json jj = json::parse("{" + input + "}");
+
+	j[sport][league]["competition"][competition].update(jj);
 	return true;
 }
-bool League::del_competition(string sport, string league, string competition_name)
+bool League::del_competition(string sport, string league, string competition)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition))
 		return false;
-	j[sport][league]["competition"][competition_name]["active"] = false;
+	j[sport][league]["competition"][competition]["active"] = false;
 	return true;
 }
-bool League::activecompetition(string sport, string league_name, string competition_name)
+bool League::active_competition(string sport, string league, string competition)
 {
-	if (!find(j, sport) || !find(j[sport], league_name) || !find(j[sport][league_name]["competition"], competition_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition))
 		return false;
-	j[sport][league_name]["competition"][competition_name]["active"] = true;
+	j[sport][league]["competition"][competition]["active"] = true;
 	return true;
 }
 
-bool League::edit_result(string sport, string league, string competition_name, string result)
+bool League::edit_result(string sport, string league, string competition, string result)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition_name))
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition))
 		return false;
-	j[sport][league]["competition"][competition_name]["result"] = result;
+	j[sport][league]["competition"][competition]["result"] = result;
 }

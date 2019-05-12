@@ -9,11 +9,11 @@ public:
 
 	//Users information
 
-	//1: active - 1 : inactive 0 : invalid username other : activation code
+	//1: active 0: inactive -1: invalid username other : activation code
 	int signin(string username, string password);
 	bool signup(string username, string password, string email,  string otherinfo);
 	bool del(string username, string password);
-	bool edit(string username, string password, json input);
+	bool edit(string username, string password, string input);
 
 	bool generatecode(string username, string password);
 	bool activation(string username, string password, string code);

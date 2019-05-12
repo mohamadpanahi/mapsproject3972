@@ -3,7 +3,6 @@
 User::User(string filename) :DataBase(filename) {}
 User::~User() {}
 
-
 int User::signin(string username, string password)
 {
 	if (find(j, username) && j[username]["pass"] == password)
@@ -13,7 +12,7 @@ int User::signin(string username, string password)
 		else if (j[username]["active"] == "0") //inactive -> send email to active
 		{
 			generatecode(username, password);
-			return -1;
+			return 0;
 		}
 		else //wait for active
 		{
@@ -21,7 +20,7 @@ int User::signin(string username, string password)
 			return stoi(s);
 		}
 	}
-	return 0;
+	return -1;
 }
 bool User::signup(string username, string password, string email, string otherinfo)
 {
@@ -46,11 +45,12 @@ bool User::del(string username, string password)
 	}
 	return false;
 }
-bool User::edit(string username, string password, json input)
+bool User::edit(string username, string password, string input)
 {
 	if (signin(username, password) == 1)
 	{
-		j[username].update(input);
+		json jj = json::parse("{" + input + "}");
+		j[username].update(jj);
 		return true;
 	}
 	return false;
@@ -61,17 +61,17 @@ bool User::generatecode(string username, string password)
 	string rnc = randcode(6);
 	j[username]["active"] = rnc;
 	// send rnc with email
-	sendemail(j[username]["email"], "Activation code", rnc + "use this link to active your account: http://localhost:1379/?type=useractivation&user=" + username + "&code=" + rnc);
+	sendemail(j[username]["email"], "Activation code", rnc + " use this link to active your account: http://localhost:1379/?type=useractivation&user=" + username + "&code=" + rnc);
 	return true;
 }
 bool User::activation(string username, string password, string code)
 {
 	int t = signin(username, password);
-	if (t == 0)
+	if (t == -1)
 		return false;
 	else if (t == 1)
 		return true;
-	else if (t == -1)
+	else if (t == 0)
 	{
 		generatecode(username, password);
 		return false;
@@ -97,7 +97,7 @@ bool User::retrievepass(string username, string email)
 
 bool User::addfavorite(string username, string password, string base, string id)
 {
-	if (signin(username, password) == 1 || searcharr(j[username]["favorite"][base], id) != -1)
+	if (signin(username, password) != 1 || searcharr(j[username]["favorite"][base], id) != -1)
 		return false;
 
 	j[username]["favorite"][base].push_back(id);

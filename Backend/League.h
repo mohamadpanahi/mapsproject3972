@@ -10,26 +10,26 @@ public:
 	bool add_sport(string name);//
 
 	//league information**************************************************
-	bool make_league(string league_name, string sport, string league);
-	bool edit(string sport, string league_name, json input);
-	bool del(string sport, string league_name);
-	bool activeleague(string sport, string league_name);
+	bool add_league(string sport, string league, string input);
+	bool edit_league(string sport, string league, string input);
+	bool del_league(string sport, string league);
+	bool active_league(string sport, string league);
 
 	//team information****************************************************
-	bool addteam(string sport, string league, string team_name, string team);
-	bool edit_team(string sport, string league, string team_name, json input);
-	bool del_team(string sport, string league, string team_name);
-	bool activeteam(string sport, string league_name, string team_name);
+	bool add_team(string sport, string league, string team, string input);
+	bool edit_team(string sport, string league, string team, string input);
+	bool del_team(string sport, string league, string team);
+	bool active_team(string sport, string league, string team);
 
-	bool add_team_members(string sport, string league, string team_name, string user);
-	bool del_team_members(string sport, string league, string team_name, string user);
+	bool add_team_members(string sport, string league, string team, string user);
+	bool del_team_members(string sport, string league, string team, string user);
 	
 	//competition information*********************************************
-	bool make_competition(string sport, string league, string competition_name, json competition);
-	bool edit_competition(string sport, string league, string competition_name, json input);
-	bool del_competition(string sport, string league, string competition_name);
-	bool activecompetition(string sport, string league_name, string competition_name);
+	bool add_competition(string sport, string league, string competition, json input);
+	bool edit_competition(string sport, string league, string competition, string input);
+	bool del_competition(string sport, string league, string competition);
+	bool active_competition(string sport, string league, string competition);
 
 	//5 23-25 24-26 29-27 25-10 10-15 2-3
-	bool edit_result(string sport, string league, string competition_name, string result);
+	bool edit_result(string sport, string league, string competition, string result);
 };
