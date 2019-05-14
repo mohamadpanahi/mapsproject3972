@@ -113,3 +113,93 @@ bool User::delfavorite(string username, string password, string base, string id)
 	j[username]["favorite"][base].erase(j[username]["favorite"][base].begin() + k);
 	return true;
 }
+
+string User::basicbigsearch(json js, string path, string request)
+{
+	static string a = "";
+	if (js.is_object())
+	{
+		auto it = js.begin();
+		for (auto i : js)
+		{
+			if (i["isplayer"] == true)
+			{
+				basicbigsearch(i, path + "/" + it.key(), request);
+				it++;
+			}
+		}
+	}
+	else
+	{
+		if (js.dump().find(request) != string::npos) //big search
+			a += (path + "\n");
+
+		int i = path.length() - 1;
+		for (; i >= 0 && path[i] != '/'; i--);
+		path.erase(i);
+	}
+	return a;
+}
+json User::big(string search)
+{
+	stringstream ss(basicbigsearch(j, "", search));
+	string t;
+	json result;
+
+	while (getline(ss, t))
+	{
+		json temp = jsonpath(t);
+		if (t.find("/team/") != string::npos)
+			result["team"].insert(temp.begin(), temp.end());
+		else if (t.find("/competition/") != string::npos)
+			result["competition"].insert(temp.begin(), temp.end());
+		else
+			result["league"].insert(temp.begin(), temp.end());
+	}
+	return result;
+}
+
+string User::basicexactsearch(json js, string path, string request)
+{
+	static string a = "";
+	if (js.is_object())
+	{
+		auto it = js.begin();
+		for (auto i : js)
+		{
+			if (i["isplayer"] == true)
+			{
+				basicbigsearch(i, path + "/" + it.key(), request);
+				it++;
+			}
+		}
+	}
+	else
+	{
+		if (js.dump() == ("\"" + request + "\"")) //exact search
+			a += (path + "\n");
+
+		int i = path.length() - 1;
+		for (; i >= 0 && path[i] != '/'; i--);
+		path.erase(i);
+	}
+	return a;
+}
+json User::exact(string search)
+{
+	stringstream ss(basicexactsearch(j, "", search));
+	string t;
+	json result;
+
+	while (getline(ss, t))
+	{
+		json temp = jsonpath(t);
+		if (t.find("/team/") != string::npos)
+			result["team"].insert(temp.begin(), temp.end());
+		else if (t.find("/competition/") != string::npos)
+			result["competition"].insert(temp.begin(), temp.end());
+		else
+			result["league"].insert(temp.begin(), temp.end());
+	}
+	return result;
+}

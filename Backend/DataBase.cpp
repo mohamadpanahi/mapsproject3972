@@ -66,7 +66,6 @@ void DataBase::show(initializer_list<const char*> s, int len, int mlen, int n)
 		it++;
 	}
 }
-
 void DataBase::show()const
 {
 	cout << j << endl;
@@ -106,7 +105,21 @@ bool DataBase::find(const json& jj, string key)const
 		return 0;
 	}
 }
+json DataBase::jsonpath(string path) const
+{
+	json temp = j;
+	string t;
+	if (path[0] == '/')
+		path.erase(path.begin());
+	stringstream spath(path);
+	while (getline(spath, t, '/'))
+		temp = temp[t];
 
+	string s = temp.dump();
+	s.erase(s.begin());
+	s.erase(s.end() - 1);
+	return json::parse("{\"" + path + "\":{" + s + "}}");
+}
 string DataBase::getfreeid(const json& jj, long long int startid)const
 {
 	for (int i = startid;; i++)

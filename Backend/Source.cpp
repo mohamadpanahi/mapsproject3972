@@ -432,7 +432,36 @@ void leaguetest()
 
 
 int main()
-{	
-	leaguetest();
+{
+	//leaguetest();	
+
+	// /sport/league/team || competition /...
+	/*string sl, st, sc, t, tt;
+	stringstream sea (ssearch(j, "", "n1"));
+	*/
+	//while (getline(sea, t))
+	//{
+	//	if (t.find("/team/") != string::npos)
+	//	{
+	//		st += (t + "\n");
+	//		continue;
+	//	}
+	//	else if (t.find("/competition/") != string::npos)
+	//	{
+	//		sc += (t + "\n");
+	//		continue;
+	//	}
+	//	else
+	//	{
+	//		sl += (t + "\n");
+	//		continue;
+	//	}
+	//}
+	
+	/*cout << "\n\n\n========================== league ==========================\n" << sl << endl;
+	cout << "\n\n\n======================== competition =======================\n" << sc << endl;
+	cout << "\n\n\n=========================== team ===========================\n" << st << endl;*/
+	
 }
 /*{"ali":{"email":"alii@ali.com","favorite":{"sport":["1"]},"name":"ali","pass":"123"},"aliop":{"name":"aliop","pass":"1234"},"aliop2":{"name":"aliop2","pass":"1234"},"hadi":{"active":"0","email":"alisalemmi@outlook.com","favorite":{"sport":[],"team":["3","5","7","11","2"]},"name":"hadi","pass":"456","phone":"12345678901"},"mahdi":{"name":"mahdi","pass":"456"},"mammad":{"name":"mammad","pass":"1234"},"seyed":{"name":"seyed","pass":"125"}}*/
+//116

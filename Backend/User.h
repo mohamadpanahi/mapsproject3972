@@ -3,6 +3,9 @@
 
 class User :public DataBase
 {
+	string basicbigsearch(json js, string path, string request);
+	string basicexactsearch(json js, string path, string request);
+
 public:
 	User(string filename);
 	~User();
@@ -23,4 +26,7 @@ public:
 	bool addfavorite(string username, string password, string base, string id);
 	bool delfavorite(string username, string password, string base, string id);
 	
+	//search**************************************************************
+	json big(string search);
+	json exact(string search);
 };

@@ -3,11 +3,14 @@
 
 class League : public DataBase
 {
+	string basicbigsearch(json js, string path, string request);
+	string basicexactsearch(json js, string path, string request);
+
 public:
 	League(string filename);
 	~League();
 
-	bool add_sport(string name);//
+	bool add_sport(string name);
 
 	//league information**************************************************
 	bool add_league(string sport, string league, string input);
@@ -32,4 +35,8 @@ public:
 
 	//5 23-25 24-26 29-27 25-10 10-15 2-3
 	bool edit_result(string sport, string league, string competition, string result);
+
+	//search**************************************************************
+	json big(string search);
+	json exact(string search);
 };
