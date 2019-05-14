@@ -400,8 +400,20 @@ void leaguetest()
 				cin >> ss;
 				cout << league.edit_result(s, l, t, ss) << endl;
 				break;
+			case 'e':
+				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
+				cout << "sport: ";
+				cin >> s;
+				cout << "league: ";
+				cin >> l;
+				cout << "competition: ";
+				cin >> t;
+				cout << "new info: ";
+				cin >> ss;
+				cout << league.edit_competition(s, l, t, ss) << endl;
+				break;
 			case 'h':
-				cout << "a: add\ne: edit\nd: delete\nc: active\nr: edit resulth: help\nx: exit\n";
+				cout << "a: add\ne: edit\nd: delete\nc: active\nr: edit result\nh: help\nx: exit\n";
 				break;
 			case 'x':
 				return;
@@ -411,8 +423,6 @@ void leaguetest()
 		{
 			cout << "l: league\nt: team\nc: competition\nh: help\ns: show\nx: exit\n";
 		}
-		/*else if (ch == 's')
-			league.show({"});*/
 		else if (ch == 's')
 			league.show();
 		else if (ch == 'x')

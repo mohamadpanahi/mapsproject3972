@@ -1,5 +1,8 @@
 1- in (generatecode && retrievepass) check connection to send email
 4- how deleted account can active?
-6- competition adding called abort()
 7- competition debug
-8- 
+8- big_search
+9- classification :O
+10-baz negahdashtan query on server
+11-signin -> find&search
+12-

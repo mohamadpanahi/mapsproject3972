@@ -110,7 +110,7 @@ bool League::add_competition(string sport, string league, string competition, js
 		return false;
 	
 	string s = getfreeid(j[sport][league]["competition"], 1);
-	json jj = json::parse("\"" + s + "\":" + input.dump());
+	json jj = json::parse("{\"" + s + "\":" + input.dump() + "}");
 	jj[s]["active"] = true;
 	j[sport][league]["competition"].insert(jj.begin(), jj.end());
 	return true;
