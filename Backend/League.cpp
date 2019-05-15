@@ -54,7 +54,7 @@ bool League::add_team(string sport, string league, string team, string input)
 	if (!find(j, sport) || !find(j[sport], league) || find(j[sport][league]["team"], team))
 		return false;
 
-	json jj = json::parse("{\"" + team + "\":{" + input + ",\"member\":[]}}");
+	json jj = json::parse("{\"" + team + "\":{" + input + ",\"member\":{}}}");
 	jj[team]["active"] = true;
 	j[sport][league]["team"].insert(jj.begin(), jj.end());
 	return true;
@@ -84,22 +84,22 @@ bool League::active_team(string sport, string league, string team)
 	return true;
 }
 
-bool League::add_team_members(string sport, string league, string team, string user)
+bool League::add_team_members(string sport, string league, string team, string player)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team) || searcharr(j[sport][league]["team"][team]["member"],user)!=-1)
+	json jj = json::parse("{" + player + "}");
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team) || !find(j[sport][league]["team"][team]["member"], jj.begin().key()))
 		return false;
-	j[sport][league]["team"][team]["member"].push_back(user);
+	j[sport][league]["team"][team]["member"].insert(jj.begin(), jj.end());
 	return true;
 }
-bool League::del_team_members(string sport, string league, string team, string user)
+bool League::del_team_members(string sport, string league, string team, string player)
 {
-	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team))
+	json jj = json::parse("{" + player + "}");
+	string key = jj.begin().key();
+	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["team"], team) || !find(j[sport][league]["team"][team]["member"], key))
 		return false;
-	int k = searcharr(j[sport][league]["team"][team]["member"], user);
-	if (k == -1)
-		return false;
-
-	j[sport][league]["team"][team]["member"].erase(j[sport][league]["team"][team]["member"].begin() + k);
+	
+	j[sport][league]["team"][team]["member"].erase(key);
 	return true;
 }
 
@@ -170,11 +170,11 @@ string League::basicbigsearch(json js, string path, string request)
 	}
 	return a;
 }
-json League::big(string search)
+json League::bigsearch(string search)
 {
 	stringstream ss(basicbigsearch(j, "", search));
 	string t;
-	json result;
+	json result = json::parse("{\"team\":{},\"competition\":{},\"league\":{}}");
 
 	while (getline(ss, t))
 	{
@@ -197,13 +197,13 @@ string League::basicexactsearch(json js, string path, string request)
 		auto it = js.begin();
 		for (auto i : js)
 		{
-			basicbigsearch(i, path + "/" + it.key(), request);
+			basicexactsearch(i, path + "/" + it.key(), request);
 			it++;
 		}
 	}
 	else
 	{
-		if (js.dump() == ("\"" + request + "\"")) //exact search
+		if (js.dump() == request) //exact search
 			a += (path + "\n");
 
 		int i = path.length() - 1;
@@ -212,11 +212,11 @@ string League::basicexactsearch(json js, string path, string request)
 	}
 	return a;
 }
-json League::exact(string search)
+json League::exactsearch(string search)
 {
-	stringstream ss(basicexactsearch(j, "", search));
+	stringstream ss(basicexactsearch(j, "", "\"" + search + "\""));
 	string t;
-	json result;
+	json result = json::parse("{\"team\":{},\"competition\":{},\"league\":{}}");
 
 	while (getline(ss, t))
 	{

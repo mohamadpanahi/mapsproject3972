@@ -14,7 +14,7 @@ DataBase::DataBase(string filename) : filename(filename)
 	else
 		cout << "Error reading file :(";
 }
-DataBase::~DataBase() 
+DataBase::~DataBase()
 {
 	sync();
 }
@@ -39,7 +39,7 @@ void DataBase::show(initializer_list<const char*> s, int len, int mlen, int n)
 	cout << endl;
 	//Json
 	int t, tt = 0;
-	for(auto k:j)
+	for (auto k : j)
 	{
 		//Key
 		temp = it.key();
@@ -59,7 +59,7 @@ void DataBase::show(initializer_list<const char*> s, int len, int mlen, int n)
 			else t = mlen;
 			for (int l = temp.length(); l < t; l++)
 				cout << ' ';
-			
+
 			tt++;
 		}
 		cout << endl;
@@ -93,7 +93,7 @@ int DataBase::searcharr(json arr, string s)const
 	else
 		return -1;
 }
-bool DataBase::find(const json& jj, string key)const
+bool DataBase::find(const json & jj, string key)const
 {
 	try
 	{
@@ -116,11 +116,11 @@ json DataBase::jsonpath(string path) const
 		temp = temp[t];
 
 	string s = temp.dump();
-	s.erase(s.begin());
-	s.erase(s.end() - 1);
-	return json::parse("{\"" + path + "\":{" + s + "}}");
+	json jj = json::parse("{\"" + path + "\":" + s + "}");
+
+	return jj;
 }
-string DataBase::getfreeid(const json& jj, long long int startid)const
+string DataBase::getfreeid(const json & jj, long long int startid)const
 {
 	for (int i = startid;; i++)
 		if (!find(jj, intTOstring(i)))

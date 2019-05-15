@@ -24,8 +24,8 @@ public:
 	bool del_team(string sport, string league, string team);
 	bool active_team(string sport, string league, string team);
 
-	bool add_team_members(string sport, string league, string team, string user);
-	bool del_team_members(string sport, string league, string team, string user);
+	bool add_team_members(string sport, string league, string team, string player);
+	bool del_team_members(string sport, string league, string team, string player);
 	
 	//competition information*********************************************
 	bool add_competition(string sport, string league, string competition, json input);
@@ -37,6 +37,6 @@ public:
 	bool edit_result(string sport, string league, string competition, string result);
 
 	//search**************************************************************
-	json big(string search);
-	json exact(string search);
+	json bigsearch(string search);
+	json exactsearch(string search);
 };

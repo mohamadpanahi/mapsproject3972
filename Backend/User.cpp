@@ -114,92 +114,31 @@ bool User::delfavorite(string username, string password, string base, string id)
 	return true;
 }
 
-string User::basicbigsearch(json js, string path, string request)
+json User::bigsearch(string search)
 {
-	static string a = "";
-	if (js.is_object())
+	json result = json::parse("[]");
+	for (auto i : j)
 	{
-		auto it = js.begin();
-		for (auto i : js)
+		try
 		{
-			if (i["isplayer"] == true)
-			{
-				basicbigsearch(i, path + "/" + it.key(), request);
-				it++;
-			}
+			if (i["isplayer"] && i["name"].dump().find(search) != string::npos)
+				result.push_back(i);
 		}
-	}
-	else
-	{
-		if (js.dump().find(request) != string::npos) //big search
-			a += (path + "\n");
-
-		int i = path.length() - 1;
-		for (; i >= 0 && path[i] != '/'; i--);
-		path.erase(i);
-	}
-	return a;
-}
-json User::big(string search)
-{
-	stringstream ss(basicbigsearch(j, "", search));
-	string t;
-	json result;
-
-	while (getline(ss, t))
-	{
-		json temp = jsonpath(t);
-		if (t.find("/team/") != string::npos)
-			result["team"].insert(temp.begin(), temp.end());
-		else if (t.find("/competition/") != string::npos)
-			result["competition"].insert(temp.begin(), temp.end());
-		else
-			result["league"].insert(temp.begin(), temp.end());
+		catch (...) {}
 	}
 	return result;
 }
-
-string User::basicexactsearch(json js, string path, string request)
+json User::exactsearch(string search)
 {
-	static string a = "";
-	if (js.is_object())
+	json result = json::parse("[]");
+	for (auto i : j)
 	{
-		auto it = js.begin();
-		for (auto i : js)
+		try
 		{
-			if (i["isplayer"] == true)
-			{
-				basicbigsearch(i, path + "/" + it.key(), request);
-				it++;
-			}
+			if (i["isplayer"] && i["name"] == search)
+				result.push_back(i);
 		}
-	}
-	else
-	{
-		if (js.dump() == ("\"" + request + "\"")) //exact search
-			a += (path + "\n");
-
-		int i = path.length() - 1;
-		for (; i >= 0 && path[i] != '/'; i--);
-		path.erase(i);
-	}
-	return a;
-}
-json User::exact(string search)
-{
-	stringstream ss(basicexactsearch(j, "", search));
-	string t;
-	json result;
-
-	while (getline(ss, t))
-	{
-		json temp = jsonpath(t);
-		if (t.find("/team/") != string::npos)
-			result["team"].insert(temp.begin(), temp.end());
-		else if (t.find("/competition/") != string::npos)
-			result["competition"].insert(temp.begin(), temp.end());
-		else
-			result["league"].insert(temp.begin(), temp.end());
+		catch (...) {}
 	}
 	return result;
 }
