@@ -13,13 +13,13 @@ var mailOptions = {
     from: 'panahi.7928@gmail.com',
     to: args[0],
     subject: args[1],
-    text: args[2]
+    text: args[2].replace(/\\n/gi,'\n')
 };
 
 transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-        console.log(error);
+        return 0;
     } else {
-        console.log('Email sent: ' + info.response);
+        return 1;
     }
 });

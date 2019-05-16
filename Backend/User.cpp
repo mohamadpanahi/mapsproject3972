@@ -61,7 +61,7 @@ bool User::generatecode(string username, string password)
 	string rnc = randcode(6);
 	j[username]["active"] = rnc;
 	// send rnc with email
-	sendemail(j[username]["email"], "Activation code", rnc + " use this link to active your account: http://localhost:1379/?type=useractivation&user=" + username + "&code=" + rnc);
+	sendemail(j[username]["email"], "Activation code","This email has sent to you for your request to make account in MAPS.\\nIf you don't know about this ignore it.\\nActivation code: " + rnc + "\\nUse this link to active your account:\\nhttp://localhost:1379/?type=useractivation&user=" + username + "&code=" + rnc);
 	return true;
 }
 bool User::activation(string username, string password, string code)

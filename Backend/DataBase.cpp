@@ -113,7 +113,15 @@ json DataBase::jsonpath(string path) const
 		path.erase(path.begin());
 	stringstream spath(path);
 	while (getline(spath, t, '/'))
-		temp = temp[t];
+	{
+		if (t[0] != '~')
+			temp = temp[t];
+		else 
+		{
+			t.erase(t.begin());
+			temp = temp[stoi(t)];
+		}
+	}
 
 	string s = temp.dump();
 	json jj = json::parse("{\"" + path + "\":" + s + "}");

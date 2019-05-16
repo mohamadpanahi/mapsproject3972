@@ -47,6 +47,16 @@ bool League::active_league(string sport, string league)
 	j[sport][league]["active"] = true;
 	return true;
 }
+bool League::end_league(string sport, string league)
+{
+	if (!find(j, sport) || !find(j[sport], league))
+		return false;
+
+	History h("h.json");
+	h.add(sport, j[sport][league]);
+	j[sport].erase(league);
+	return true;
+}
 
 
 bool League::add_team(string sport, string league, string team, string input)
@@ -230,3 +240,4 @@ json League::exactsearch(string search)
 	}
 	return result;
 }
+

@@ -1,5 +1,6 @@
 #pragma once
 #include "DataBase.h"
+#include "History.h"
 
 class League : public DataBase
 {
@@ -17,6 +18,7 @@ public:
 	bool edit_league(string sport, string league, string input);
 	bool del_league(string sport, string league);
 	bool active_league(string sport, string league);
+	bool end_league(string sport, string league);
 
 	//team information****************************************************
 	bool add_team(string sport, string league, string team, string input);

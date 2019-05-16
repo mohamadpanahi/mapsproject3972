@@ -1,11 +1,7 @@
-1- in (generatecode && retrievepass) check connection to send email
+﻿1- in (generatecode && retrievepass) check connection to send email
 4- how deleted account can active?
-8- big_search
-9- classification :O
+9- classification :O -> cleaning
 10-baz negahdashtan query on server
-11-signin -> find&search
-12-member objective
 13-search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
-15-search debug
-16-history
-17-
+17-فارسی نویسی و ارسال فارسی به cmd
+18-

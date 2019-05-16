@@ -12,4 +12,4 @@ using namespace std;
 string intTOstring(long long int a);
 string randcode(int len);
 
-void sendemail(string To, string subject, string text);
+void sendemail(string To, string subject, string text); 

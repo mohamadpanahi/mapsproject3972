@@ -425,8 +425,8 @@ void leaguetest()
 	}
 }
 
-
 int main()
 {
-	usertest();
+	User a("j.json");
+	a.generatecode("ali", "123");
 }
