@@ -51,7 +51,7 @@ bool League::end_league(string sport, string league)
 {
 	if (!find(j, sport) || !find(j[sport], league))
 		return false;
-
+	//may construction of history throw
 	History h("h.json");
 	h.add(sport, j[sport][league]);
 	j[sport].erase(league);
@@ -118,7 +118,7 @@ bool League::add_competition(string sport, string league, string competition, js
 {
 	if (!find(j, sport) || !find(j[sport], league)  || !find(j[sport][league]["team"], input["team1"]) || !find(j[sport][league]["team"], input["team2"]))
 		return false;
-	
+	//stoi exception
 	string s = getfreeid(j[sport][league]["competition"], 1);
 	json jj = json::parse("{\"" + s + "\":" + input.dump() + "}");
 	jj[s]["active"] = true;
@@ -173,10 +173,11 @@ string League::basicbigsearch(json js, string path, string request)
 	{
 		if (js.dump().find(request) != string::npos) //big search
 			a += (path + "\n");
-
+		//path = "0" or "f" or "c" that c=one charachter
 		int i = path.length() - 1;
 		for (; i >= 0 && path[i] != '/'; i--);
 		path.erase(i);
+		//if the above cindition is true this will throw out_of_range because i = -1
 	}
 	return a;
 }
@@ -215,10 +216,11 @@ string League::basicexactsearch(json js, string path, string request)
 	{
 		if (js.dump() == request) //exact search
 			a += (path + "\n");
-
+		//path = "0" or "f" or "c" that c=one charachter
 		int i = path.length() - 1;
 		for (; i >= 0 && path[i] != '/'; i--);
 		path.erase(i);
+		//if the above cindition is true this will throw out_of_range because i = -1
 	}
 	return a;
 }
@@ -240,4 +242,3 @@ json League::exactsearch(string search)
 	}
 	return result;
 }
-

@@ -35,9 +35,11 @@ string History::basicbigsearch(json js, string path, string request)
 		if (js.dump().find(request) != string::npos) //big search
 			a += (path + "\n");
 
+		//path = "0" or "f" or "c" that c=one charachter
 		int i = path.length() - 1;
 		for (; i >= 0 && path[i] != '/'; i--);
 		path.erase(i);
+		//if the above cindition is true this will throw out_of_range because i = -1
 	}
 	return a;
 }
@@ -86,9 +88,11 @@ string History::basicexactsearch(json js, string path, string request)
 		if (js.dump() == request) //exact search
 			a += (path + "\n");
 
+		//path = "0" or "f" or "c" that c=one charachter
 		int i = path.length() - 1;
 		for (; i >= 0 && path[i] != '/'; i--);
 		path.erase(i);
+		//if the above cindition is true this will throw out_of_range because i = -1
 	}
 	return a;
 }

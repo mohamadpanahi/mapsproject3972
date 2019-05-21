@@ -1,18 +1,17 @@
 #include "DataBase.h"
 
-DataBase::DataBase(string filename) : filename(filename)
+DataBase::DataBase(const string& filename) : filename(filename)
 {
-	//INCOMPLETED DataBase: try catch
 	ifstream file(filename);
 	if (file)
 	{
 		stringstream ss;
 		ss << file.rdbuf();
-		//INCOMPLETED DataBase: try catch
+		//it throw json::parse_error
 		j = json::parse(ss.str());
 	}
-	else
-		cout << "Error reading file :(";
+	//else
+		//throw exFile(filename);
 }
 DataBase::~DataBase()
 {
@@ -73,13 +72,17 @@ void DataBase::show()const
 
 bool DataBase::sync()const
 {
-	//INCOMPLETED DataBase: try catch
 	ofstream file(filename);
-	file << j;
-	return true;
+	if (file)
+	{
+		file << j;
+		return true;
+	}
+	//else
+		//throw exFile(filename);
 }
 
-int DataBase::searcharr(json arr, string s)const
+int DataBase::searcharr(const json& arr, const string& s)const
 {
 	int k = 0;
 	for (auto i : arr)
@@ -93,7 +96,7 @@ int DataBase::searcharr(json arr, string s)const
 	else
 		return -1;
 }
-bool DataBase::find(const json & jj, string key)const
+bool DataBase::find(const json & jj, const string& key)const
 {
 	try
 	{
@@ -123,9 +126,7 @@ json DataBase::jsonpath(string path) const
 		}
 	}
 
-	string s = temp.dump();
-	json jj = json::parse("{\"" + path + "\":" + s + "}");
-
+	json jj = json::parse("{\"" + path + "\":" + temp.dump() + "}");
 	return jj;
 }
 string DataBase::getfreeid(const json & jj, long long int startid)const

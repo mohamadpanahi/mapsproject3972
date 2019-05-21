@@ -17,6 +17,7 @@ int User::signin(string username, string password)
 		else //wait for active
 		{
 			string s = j[username]["active"];
+			//stoi exception
 			return stoi(s);
 		}
 	}
@@ -90,7 +91,7 @@ bool User::retrievepass(string username, string email)
 		return false;
 
 	string s = randcode(10);
-	sendemail(j[username]["email"], "Retrieve Password", "new password: " + s);
+	sendemail(j[username]["email"], "Retrieve Password", "your new password: " + s);
 	j[username]["pass"] = s;
 	return true;
 }
@@ -114,6 +115,7 @@ bool User::delfavorite(string username, string password, string base, string id)
 	return true;
 }
 
+//may be useful in the future
 json User::bigsearch(string search)
 {
 	json result = json::parse("[]");

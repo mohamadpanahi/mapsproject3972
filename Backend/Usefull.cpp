@@ -22,6 +22,6 @@ string randcode(int len)
 }
 void sendemail(string To, string subject, string text)
 {
-	string s = "node \"E:/PROJECT/email js/sever_P1_req/email.js\" \"" + To + "\" \"" + subject + "\" \"" + text + "\"";
+	string s = "node " + string(PATH_EMAIL) + " \"" + To + "\" \"" + subject + "\" \"" + text + "\"";
 	system(s.c_str());
 }

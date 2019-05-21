@@ -2,6 +2,7 @@
 #include "Date_Time.h"
 #include "League.h"
 #include "User.h"
+#include "MapsEncrypt.h"
 
 #include <conio.h>
 
@@ -71,7 +72,12 @@ void competition(char* argv[])
 */
 //int main(int argc, char* argv[])
 //{
-//	if (!strcmp(argv[1], "user"))
+//	string c = argv[1];
+//	MapsEncrypt m("kachala");
+//	
+//	cout << m.decrypt(c);
+//
+//	/*if (!strcmp(argv[1], "user"))
 //		user(argv + 2);
 //	else if (!strcmp(argv[1], "sport"))
 //		sport(argv + 2);
@@ -81,7 +87,7 @@ void competition(char* argv[])
 //		team(argv + 2);
 //	else if (!strcmp(argv[1], "competition"))
 //		competition(argv + 2);
-//	else cout << "ERROR 404: not found :(";
+//	else cout << "ERROR 404: not found :(";*/
 //}
 
 void usertest()
@@ -424,9 +430,48 @@ void leaguetest()
 			return;
 	}
 }
-
-int main()
+//a global exception : if string a = "asd2" then stoi(a) throws invalid_argument exception
+//INACTIVE competitions ago -> league.cpp/active_league
+//fault : active a team or competition that it's league is inactive or ended.
+void f()
 {
-	User a("j.json");
-	a.generatecode("ali", "123");
+	ofstream file("en.txt");
+	string s = "SZdxfcvghjnk,laszDXFCGVHJNKLASZdfghjnklwazsexdcftvgybuhnjimko,8786453697435/**-*-*-*3857397@#$%($#%*&#*%#";
+	for (int i = 0; i < 1000; i++)
+	{
+		file << s;
+	}
 }
+void g()
+{
+	MapsEncrypt m("kachala", "en.txt");
+	m.encryptfile();
+}
+void h()
+{
+	MapsEncrypt m("kachala", "en.txt");
+	string p, c;
+	while (true)
+	{
+		getline(cin, p);
+		c = m.encrypt(p);
+		cout << "cipher text: " << c << "\nplain text: " << m.decrypt(c) << "\n\n";
+	}
+}
+int main()
+{	
+	string s = "SZdxfcvghjnk,laszDXFCGVHJNKLASZdfghjnklwazsexdcftvgybuhnjimko,8786453697435/**-*-*-*3857397@#$%($#%*&#*%#", ss;
+	for (int i = 0; i < 1000; i++)
+	{
+		ss += s;
+	}
+	MapsEncrypt m("kachala", "en.txt");
+	ss = m.encrypt(ss);
+	cout << m.decrypt(ss);
+	/*stringstream ss;
+	ifstream file("en.txt");
+	ss << file.rdbuf();
+	file.close();
+	cout << m.decrypt(ss.str());*/
+}
+//kjsgfksdgf
