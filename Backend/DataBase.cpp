@@ -10,8 +10,8 @@ DataBase::DataBase(const string& filename) : filename(filename)
 		//it throw json::parse_error
 		j = json::parse(ss.str());
 	}
-	//else
-		//throw exFile(filename);
+	else
+		throw exFile(filename);
 }
 DataBase::~DataBase()
 {
@@ -78,8 +78,8 @@ bool DataBase::sync()const
 		file << j;
 		return true;
 	}
-	//else
-		//throw exFile(filename);
+	else
+		throw exFile(filename);
 }
 
 int DataBase::searcharr(const json& arr, const string& s)const

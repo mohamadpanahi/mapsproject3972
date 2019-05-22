@@ -4,474 +4,170 @@
 #include "User.h"
 #include "MapsEncrypt.h"
 
-#include <conio.h>
-
-/*
-void user(char* argv[])
+void user(char* info[])
 {
-	User u("j.json");
-
-	if (!strcmp(argv[0], "signin"))
-		cout << u.signin(argv[1], argv[2]);
-	else if (!strcmp(argv[0], "signup"))
-		cout << u.signup(argv[1], json::parse(argv[2]));
-	else if (!strcmp(argv[0], "delete"))
-		cout << u.del(argv[1], argv[2]);
-	else if (!strcmp(argv[0], "edit"))
-		cout << u.edit(argv[1], argv[2], json::parse(argv[3]));
-	else if (!strcmp(argv[0], "addfav"))
-		cout << u.addfavorite(argv[1], argv[2], argv[3]);
-	else if (!strcmp(argv[0], "delfav"))
-		cout << u.delfavorite(argv[1], argv[2], argv[3]);
-	else if (!strcmp(argv[0], "show"))
-		u.show({ "name","pass","phone","favorite","email" }, 15);
-	else cout << "ERROR 404: not found :(";
-}
-void sport(char* argv[])
-{
-	League l("l.json");
-	if (!strcmp(argv[0], "add"))
-		cout << l.add_sport(argv[1]);
-	else cout << "ERROR 404: not found :(";
-}
-void league(char* argv[])
-{
-	League l("l.json");
-	if (!strcmp(argv[0], "make"))
-		cout << l.make_league(argv[1], argv[2], argv[3]);
-	else if (!strcmp(argv[0], "delete"));
-	else if (!strcmp(argv[0], "edit"))
-		cout << l.edit(argv[1], argv[2], json::parse(argv[3]));
-	else cout << "ERROR 404: not found :(";
-}
-void team(char* argv[])
-{
-	League l("l.json");
-	if (!strcmp(argv[0], "add"))
-		cout << l.addteam(argv[1], argv[2], argv[3], argv[4]);
-	else if (!strcmp(argv[0], "delete"));
-	else if (!strcmp(argv[0], "edit"))
-		cout << l.edit_team(argv[1], argv[2], argv[3], json::parse(argv[4]));
-	else if (!strcmp(argv[0], "addmember"))
-		cout << l.add_team_members(argv[1], argv[2], argv[3], argv[4]);
-	else if (!strcmp(argv[0], "deletemember"))
-		cout << l.del_team_members(argv[1], argv[2], argv[3], argv[4]);
-	else cout << "ERROR 404: not found :(";
-}
-void competition(char* argv[])
-{
-	League l("l.json");
-	if (!strcmp(argv[0], "make"))
-		cout << l.make_competition(argv[1], argv[2], argv[3], json::parse(argv[4]));
-	else if (!strcmp(argv[0], "delete"));
-	else if (!strcmp(argv[0], "edit"));
-	else if (!strcmp(argv[0], "result"));
-	else cout << "ERROR 404: not found :(";
-}
-//main
-*/
-//int main(int argc, char* argv[])
-//{
-//	string c = argv[1];
-//	MapsEncrypt m("kachala");
-//	
-//	cout << m.decrypt(c);
-//
-//	/*if (!strcmp(argv[1], "user"))
-//		user(argv + 2);
-//	else if (!strcmp(argv[1], "sport"))
-//		sport(argv + 2);
-//	else if (!strcmp(argv[1], "league"))
-//		league(argv + 2);
-//	else if (!strcmp(argv[1], "team"))
-//		team(argv + 2);
-//	else if (!strcmp(argv[1], "competition"))
-//		competition(argv + 2);
-//	else cout << "ERROR 404: not found :(";*/
-//}
-
-void usertest()
-{
-	User user("j.json");
-	string u, p, s, ss;
-	char ch;
-	cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nr: retrieve pass\nf: add favorite\nF: delete favorite\ns: show\nS: show js\nh: help\nx: exit\n";
-	while (true)
+	User user(PATH_USER);
+	
+	if (!strcmp(info[0], "signin"))
 	{
-		ch = _getch();
-
-		switch (ch)
-		{
-		case 'x':
-			return;
-		case 'h':
-			cout << "i: sign in\nu: sign up\nd: delete\ne: edit\na: activation code\ng: generate activation code\nr: retrieve pass\nf: add favorite\nF: delete favorite\ns: show\nS: show js\nh: help\nx: exit\n";
-			break;
-		case 'i':
-			cout << "~~~~~~~~~~~ SIGN IN ~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << user.signin(u, p) << endl;
-			break;
-		case 'u':
-			cout << "~~~~~~~~~~~ SIGN UP ~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << "email: ";
-			cin >> s;
-			cout << "other: ";
-			cin >> ss;
-			cout << user.signup(u, p, s, ss) << "please active your account :)\n";
-			break;
-		case 'd':
-			cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << user.del(u, p) << endl;
-			break;
-		case 'e':
-			cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << "new info: ";
-			cin >> s;
-			cout << user.edit(u, p, s) << endl;
-			break;
-		case 'a':
-			cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << "code: ";
-			cin >> s;
-			cout << user.activation(u, p, s) << endl;
-			break;
-		case 'g':
-			cout << "~~~~~~~~~~~ GENERATE ~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << user.generatecode(u, p) << endl;
-			break;
-		case 'r':
-			cout << "~~~~~~~~ RETRIEVE PASS ~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "email: ";
-			cin >> s;
-			cout << user.retrievepass(u, s) << endl;
-			break;
-		case 'f':
-			cout << "~~~~~~~~~~~ ADD FAV ~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << "base: ";
-			cin >> s;
-			cout << "id: ";
-			cin >> ss;
-
-			cout << user.addfavorite(u, p, s, ss) << endl;
-			break;
-		case 'F':
-			cout << "~~~~~~~~~~~ DEL FAV ~~~~~~~~~~~\n";
-			cout << "username: ";
-			cin >> u;
-			cout << "password: ";
-			cin >> p;
-			cout << "base: ";
-			cin >> s;
-			cout << "id: ";
-			cin >> ss;
-
-			cout << user.delfavorite(u, p, s, ss) << endl;
-			break;
-		case 's':
-			cout << "~~~~~~~~~~~~ SHOW ~~~~~~~~~~~~~\n";
-			user.show({ "name","pass","active","phone","email","favorite" }, 15, 30, 2);
-			break;
-		case 'S':
-			cout << "~~~~~~~~~~~~ SHOW ~~~~~~~~~~~~~\n";
-			user.show();
-			break;
-		}
+		cout << user.signin(info[1], info[2]); // username password
 	}
-}
-void leaguetest()
-{
-	League league("l.json");
-	string s, l, t, ss;
-	char ch;
-	cout << "p: sport\nl: league\nt: team\nc: competition\nh: help\ns: show\nS: show js\nx: exit\n";
-	while (true)
+	else if (!strcmp(info[0], "signup"))
 	{
-		ch = _getch();
-		if (ch == 'p')
-		{
-			cout << "------------ SPORT -------------\n";
-			cout << "sport name to add: ";
-			cin >> s;
-			cout << league.add_sport(s);
-		}
-		else if (ch == 'l')
-		{
-			cout << "------------ LEAGUE ------------\n";
-			switch (_getch())
-			{
-			case 'a':
-				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "info: ";
-				cin >> ss;
-				cout << league.add_league(s, l, ss) << endl;
-				break;
-			case 'd':
-				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << league.del_league(s, l) << endl;
-				break;
-			case 'c':
-				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << league.active_league(s, l) << endl;
-				break;
-			case 'e':
-				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "new info: ";
-				cin >> ss;
-				cout << league.edit_league(s, l, ss) << endl;
-				break;
-			case 'h':
-				cout << "a: add\ne: edit\nd: delete\nc: active\ns: show\nh: help\nx: exit\n";
-				break;
-			case 'x':
-				return;
-			}
-		}
-		else if (ch == 't')
-		{
-			cout << "------------- TEAM -------------\n";
-			switch (_getch())
-			{
-			case 'a':
-				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << "info: ";
-				cin >> ss;
-				cout << league.add_team(s, l, t, ss) << endl;
-				break;
-			case 'd':
-				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << league.del_team(s, l, t) << endl;
-				break;
-			case 'c':
-				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << league.active_team(s, l, t) << endl;
-				break;
-			case 'e':
-				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << "new info: ";
-				cin >> ss;
-				cout << league.edit_team(s, l, t, ss) << endl;
-				break;
-			case 'A':
-				cout << "~~~~~~~~~~~~ ADDM ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << "id: ";
-				cin >> ss;
-				cout << league.add_team_members(s, l, t, ss) << endl;
-				break;
-			case 'D':
-				cout << "~~~~~~~~~~~~ DELM ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "team: ";
-				cin >> t;
-				cout << "id: ";
-				cin >> ss;
-				cout << league.del_team_members(s, l, t, ss) << endl;
-				break;
-			case 'h':
-				cout << "a: add\ne: edit\nd: delete\nc: active\nA: add member\nD: del member\nh: help\nx: exit\n";
-				break;
-			case 'x':
-				return;
-			}
-		}
-		else if (ch == 'c')
-		{
-			cout << "------------ COMPET ------------\n";
-			switch (_getch())
-			{
-			case 'a':
-				cout << "~~~~~~~~~~~~~ ADD ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "competition: ";
-				cin >> t;
-				cout << "info: ";
-				cin >> ss;
-				cout << league.add_competition(s, l, t, json::parse("{" + ss + "}")) << endl;
-				break;
-			case 'd':
-				cout << "~~~~~~~~~~~ DELETE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "competition: ";
-				cin >> t;
-				cout << league.del_competition(s, l, t) << endl;
-				break;
-			case 'c':
-				cout << "~~~~~~~~~~~ ACTIVE ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "competition: ";
-				cin >> t;
-				cout << league.active_competition(s, l, t) << endl;
-				break;
-			case 'r':
-				cout << "~~~~~~~~~~~ RESULT ~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "competition: ";
-				cin >> t;
-				cout << "result: ";
-				cin >> ss;
-				cout << league.edit_result(s, l, t, ss) << endl;
-				break;
-			case 'e':
-				cout << "~~~~~~~~~~~~ EDIT ~~~~~~~~~~~~~\n";
-				cout << "sport: ";
-				cin >> s;
-				cout << "league: ";
-				cin >> l;
-				cout << "competition: ";
-				cin >> t;
-				cout << "new info: ";
-				cin >> ss;
-				cout << league.edit_competition(s, l, t, ss) << endl;
-				break;
-			case 'h':
-				cout << "a: add\ne: edit\nd: delete\nc: active\nr: edit result\nh: help\nx: exit\n";
-				break;
-			case 'x':
-				return;
-			}
-		}
-		else if (ch == 'h')
-		{
-			cout << "l: league\nt: team\nc: competition\nh: help\ns: show\nx: exit\n";
-		}
-		else if (ch == 's')
-			league.show();
-		else if (ch == 'x')
-			return;
+		cout << user.signup(info[1], info[2], info[3], info[4]);// username password email otherinfo
+	}
+	else if (!strcmp(info[0], "delete"))
+	{
+		cout << user.del(info[1], info[2]);// username password
+	}
+	else if (!strcmp(info[0], "edit"))
+	{
+		cout << user.edit(info[1], info[2], info[3]);// username password newinfo
+	}
+	else if (!strcmp(info[0], "active"))
+	{
+		cout << user.activation(info[1], info[2], info[3]);// username password activecode
+	}
+	else if (!strcmp(info[0], "generate"))
+	{
+		cout << user.generatecode(info[1], info[2]);// username password 
+	}
+	else if (!strcmp(info[0], "retrieve"))
+	{
+		cout << user.retrievepass(info[1], info[2]);// username email
+	}
+	else if (!strcmp(info[0], "addfavorite"))
+	{
+		cout << user.addfavorite(info[1], info[2], info[3], info[4]);// username password base id
+	}
+	else if (!strcmp(info[0], "delfavorite"))
+	{
+		cout << user.delfavorite(info[1], info[2], info[3], info[4]);// username password base id
+	}
+	else if (!strcmp(info[0], "show"))
+	{
+		user.show({ "name","pass","active","phone","email","favorite" }, 15, 30, 2);
+	}
+	else if (!strcmp(info[0], "showjs"))
+	{
+		user.show();
+	}
+	else
+		throw invalid_argument("Error 300: invalid argument in user");
+}
+void sport(char* info[])
+{
+	League league(PATH_LEAGUE);
+
+	if (!strcmp(info[0], "add"))
+		cout << league.add_sport(info[1]);//sport
+	else
+		throw invalid_argument("Error 302: invalid argument in sport");
+}
+void league(char* info[])
+{
+	League league(PATH_LEAGUE);
+	if (!strcmp(info[0], "add"))
+	{
+		cout << league.add_league(info[1], info[2], info[3]);//sport league info
+	}
+	else if (!strcmp(info[0], "delete"))
+	{
+		cout << league.del_league(info[1], info[2]);//sport league
+	}
+	else if (!strcmp(info[0], "active"))
+	{
+		cout << league.active_league(info[1], info[2]); //sport league
+	}
+	else if (strcmp(info[0], "edit"))
+	{
+		cout << league.edit_league(info[1], info[2], info[3]);// sport league newinfo
+	}
+	else if (!strcmp(info[0], "show"))
+		league.show();
+	else
+		throw invalid_argument("Error 303: invalid argument in league");
+	
+}
+void team(char* info[])
+{
+	League league(PATH_LEAGUE);
+	if (!strcmp(info[0], "add"))
+	{
+		cout << league.add_team(info[1], info[2], info[3], info[4]);//sport league team info
+	}
+	else if (!strcmp(info[0], "delete"))
+	{
+		cout << league.del_team(info[1], info[2], info[3]);//sport league team
+	}
+	else if (!strcmp(info[0], "active"))
+	{
+		cout << league.active_team(info[1], info[2], info[3]);//sport league team
+	}
+	else if (strcmp(info[0], "edit"))
+	{
+		cout << league.edit_team(info[1], info[2], info[3], info[4]);//sport league team newinfo
+	}
+	else if (strcmp(info[0], "addmemmber"))
+	{
+		cout << league.add_team_members(info[1], info[2], info[3], info[4]);//sport league team player
+	}
+	else if (strcmp(info[0], "delmemmber"))
+	{
+		cout << league.del_team_members(info[1], info[2], info[3], info[4]);//sport league team player
+	}
+	else
+		throw invalid_argument("Error 304: invalid argument in team");
+}
+void competition(char* info[])
+{
+	League league(PATH_LEAGUE);
+	if (!strcmp(info[0], "add"))
+	{
+		cout << league.add_competition(info[1], info[2], info[3], json::parse("{" + (string)info[4] + "}"));//sport league competition info
+	}
+	else if (!strcmp(info[0], "delete"))
+	{
+		cout << league.del_competition(info[1], info[2], info[3]);//sport league competition
+	}
+	else if (!strcmp(info[0], "active"))
+	{
+		cout << league.active_competition(info[1], info[2], info[3]);//sport league competition
+	}
+	else if (!strcmp(info[0], "result"))
+	{
+		cout << league.edit_result(info[1], info[2], info[3], info[4]);//sport league competition result
+	}
+	else if (!strcmp(info[0], "edit"))
+	{
+		cout << league.edit_competition(info[1], info[2], info[3], info[4]);//sport league competition newinfo
+	}
+	else
+		throw invalid_argument("Error 305: invalid argument in competition");
+}
+
+int main(int argc, char* argv[])
+{
+	try
+	{
+		if (!strcmp(argv[1], "user"))
+			user(argv + 2);
+		else if (!strcmp(argv[1], "sport"))
+			sport(argv + 2);
+		else if (!strcmp(argv[1], "league"))
+			league(argv + 2);
+		else if (!strcmp(argv[1], "team"))
+			team(argv + 2);
+		else if (!strcmp(argv[1], "competition"))
+			competition(argv + 2);
+		else
+			throw invalid_argument("Error 301: invalid argument");
+	}
+	catch (exception & e)
+	{
+		cout << e.what();
 	}
 }
 //a global exception : if string a = "asd2" then stoi(a) throws invalid_argument exception
 //INACTIVE competitions ago -> league.cpp/active_league
 //fault : active a team or competition that it's league is inactive or ended.
-void f()
-{
-	ofstream file("en.txt");
-	string s = "SZdxfcvghjnk,laszDXFCGVHJNKLASZdfghjnklwazsexdcftvgybuhnjimko,8786453697435/**-*-*-*3857397@#$%($#%*&#*%#";
-	for (int i = 0; i < 1000; i++)
-	{
-		file << s;
-	}
-}
-void g()
-{
-	MapsEncrypt m("kachala", "en.txt");
-	m.encryptfile();
-}
-void h()
-{
-	MapsEncrypt m("kachala", "en.txt");
-	string p, c;
-	while (true)
-	{
-		getline(cin, p);
-		c = m.encrypt(p);
-		cout << "cipher text: " << c << "\nplain text: " << m.decrypt(c) << "\n\n";
-	}
-}
-int main()
-{	
-	string s = "SZdxfcvghjnk,laszDXFCGVHJNKLASZdfghjnklwazsexdcftvgybuhnjimko,8786453697435/**-*-*-*3857397@#$%($#%*&#*%#", ss;
-	for (int i = 0; i < 1000; i++)
-	{
-		ss += s;
-	}
-	MapsEncrypt m("kachala", "en.txt");
-	ss = m.encrypt(ss);
-	cout << m.decrypt(ss);
-	/*stringstream ss;
-	ifstream file("en.txt");
-	ss << file.rdbuf();
-	file.close();
-	cout << m.decrypt(ss.str());*/
-}
-//kjsgfksdgf
