@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace testcsh
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class Signin : Page
+    {
+        public Signin()
+        {
+            this.InitializeComponent();
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            st_txt.Width = this.ActualWidth / 2;
+            st_main.Width = st_into.Width = st_lbl.Width + st_txt.Width + 12;
+
+            st_into.Height = st_lbl.Height = st_txt.Height = txt_user.Height + txt_pass.Height + 12;
+            st_main.Height = st_into.Height + btn_signin.Height + 12;
+        }
+
+        private async void Btn_signin_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            if (txt_user.Text != "" && txt_pass.Password != "")
+            {
+                server s = new server("1379", "type=usersignin&user=" + txt_user.Text + "&pass=" + txt_pass.Password);
+                string res = await s.get();
+                if (res == "1")
+                    txt_user.Text = ":) welcome";
+                else if (res == "-1")
+                    txt_user.Text = ":(";
+                else if (res == "0")
+                    txt_user.Text = ":| inactive";
+                else
+                    txt_user.Text = ":O enter code in appropriate place";
+            }
+        }
+
+        private void Btn_retrieve_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(RetrievePass));
+        }
+
+        private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ActiveAccount));
+        }
+    }
+}
