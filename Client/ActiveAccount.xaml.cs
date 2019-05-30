@@ -27,15 +27,20 @@ namespace testcsh
             this.InitializeComponent();
         }
 
+        private void Btn_back_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame.CanGoBack)
+                this.Frame.GoBack();
+        }
+
         private async void Btn_send_Click(object sender, RoutedEventArgs e)
         {
             if (txt_user.Text != "" && txt_pass.Password != "")
             {
-                server s = new server("1379", "type=usergenerate&user=" + txt_user.Text + "&pass=" + txt_pass.Password);
+                server s = new server("1379", "type=usersignin&user=" + txt_user.Text + "&pass=" + txt_pass.Password);
                 string res = await s.get();
                 string[] info = { txt_user.Text, txt_pass.Password };
-                
-                if (res == "1")
+                if(res=="1")
                     this.Frame.Navigate(typeof(ActiveCode), info);
             }
         }

@@ -10,10 +10,7 @@ int User::signin(string username, string password)
 		if (j[username]["active"] == "1") //active
 			return 1;
 		else if (j[username]["active"] == "0") //inactive -> send email to active
-		{
-			generatecode(username, password);
 			return 0;
-		}
 		else //wait for active
 		{
 			string s = j[username]["active"];
@@ -58,7 +55,9 @@ bool User::edit(string username, string password, string input)
 }
 
 bool User::generatecode(string username, string password)
-{	
+{
+	if (abs(signin(username, password)) == 1)//Ooooooooooooooooooh! :|
+		return false;
 	string rnc = randcode(6);
 	j[username]["active"] = rnc;
 	// send rnc with email

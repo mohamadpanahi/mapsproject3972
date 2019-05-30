@@ -19,6 +19,7 @@ public:
 	//search**************************************************************
 	int searcharr(const json& arr, const string& s)const;
 	bool find(const json& jj, const string& key)const;
+	bool find(const string& key)const;
 
 	virtual json bigsearch(string search) = 0;
 	virtual json exactsearch(string search) = 0;

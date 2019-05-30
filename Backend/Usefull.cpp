@@ -25,3 +25,11 @@ void sendemail(string To, string subject, string text)
 	string s = "node " + string(PATH_EMAIL) + " \"" + To + "\" \"" + subject + "\" \"" + text + "\"";
 	system(s.c_str());
 }
+
+char* correctargv(char* input)
+{
+	for (int i = 0; input[i] != '\0'; i++)
+		if (input[i] == '$')
+			input[i] = '\"';
+	return input;
+}

@@ -22,3 +22,4 @@ string intTOstring(long long int a);
 string randcode(int len);
 
 void sendemail(string To, string subject, string text); 
+char* correctargv(char* input);

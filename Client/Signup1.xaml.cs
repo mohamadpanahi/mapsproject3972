@@ -20,18 +20,11 @@ namespace testcsh
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ActiveCode : Page
+    public sealed partial class Signup1 : Page
     {
-        string[] info;
-        public ActiveCode()
+        public Signup1()
         {
             this.InitializeComponent();
-        }
-        
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            info = e.Parameter as string[];
-            base.OnNavigatedTo(e);
         }
 
         private void Btn_back_Click(object sender, RoutedEventArgs e)
@@ -40,12 +33,18 @@ namespace testcsh
                 this.Frame.GoBack();
         }
 
-        private async void Btn_active_Click(object sender, RoutedEventArgs e)
+        private async void Btn_continue_Click(object sender, RoutedEventArgs e)
         {
-            server s = new server("1379", "type=useractive&user=" + info[0] + "&pass=" + info[1] + "&code=" + txt_code.Text);
-            string res = await s.get();
-            if (res == "1") txt_code.Text = "Activated";
-            else txt_code.Text = "Invalid code";
+            if (txt_confirmpass.Password == txt_pass.Password && txt_user.Text != "" && txt_pass.Password != "")
+            {
+                server s = new server("1379", "type=userfind&user=" + txt_user.Text);
+                string res = await s.get();
+                if (res == "0")
+                {
+                    string[] info = { txt_user.Text, txt_pass.Password };
+                    this.Frame.Navigate(typeof(Signup2), info);
+                }
+            }
         }
     }
 }

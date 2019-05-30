@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="testcsh.ActiveAccount"
+    x:Class="testcsh.Signup1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:testcsh"
@@ -11,18 +11,19 @@
     <Grid>
         <Button x:Name="btn_back" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Margin="0,20,0,0"/>
         <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel x:Name="st_into" Height="79" Orientation="Horizontal">
-                <StackPanel x:Name="st_lbl" Height="74">
+            <StackPanel x:Name="st_into" Orientation="Horizontal">
+                <StackPanel x:Name="st_lbl">
                     <TextBlock Text="نام کاربری" TextWrapping="Wrap" Margin="0,0,0,12" Height="32"/>
                     <TextBlock Text="رمز عبور" TextWrapping="Wrap" Height="32"/>
+                    <TextBlock Text="تکرار رمز عبور" TextWrapping="Wrap" Height="32" Margin="0,12,0,0"/>
                 </StackPanel>
-                <StackPanel x:Name="st_txt" Height="77" Width="282" Margin="12,0,0,0">
+                <StackPanel x:Name="st_txt" Width="282" Margin="12,0,0,0">
                     <TextBox x:Name="txt_user" PlaceholderText="نام کاربری را وارد کنید"/>
                     <PasswordBox x:Name="txt_pass" Margin="0,12,0,0" PlaceholderText="رمز عبور را وارد کنید"/>
+                    <PasswordBox x:Name="txt_confirmpass" Margin="0,12,0,0" PlaceholderText="رمز عبور را تکرار کنید"/>
                 </StackPanel>
             </StackPanel>
-            <Button x:Name="btn_send" Content="تکمیل فعالسازی" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_send_Click"/>
+            <Button x:Name="btn_continue" Content="ادامه" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_continue_Click"/>
         </StackPanel>
-
     </Grid>
 </Page>

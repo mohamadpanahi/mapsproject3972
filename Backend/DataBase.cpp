@@ -108,6 +108,19 @@ bool DataBase::find(const json & jj, const string& key)const
 		return 0;
 	}
 }
+bool DataBase::find(const string& key)const
+{
+	try
+	{
+		j.at(key);
+		return true;
+	}
+	catch (...)
+	{
+		return 0;
+	}
+}
+
 json DataBase::jsonpath(string path) const
 {
 	json temp = j;

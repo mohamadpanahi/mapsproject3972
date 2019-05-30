@@ -15,23 +15,25 @@ http.createServer(async function (req, res) {
     var q = ur.query;
     //==============================================================
     console.log(q);
-
     var cmd;
     //======================== user ================================
     if (q.type == "usersignin" && q.user != undefined && q.pass != undefined) {
         cmd = "user signin " + q.user + " " + q.pass;
     }
     else if (q.type == "usersignup" && q.user != undefined && q.pass != undefined && q.email!=undefined && q.info!=undefined) {
-        cmd = "user signup " + q.user + " " + q.pass + " " + q.email + " " + q.info;
+        cmd = "user signup " + q.user + " " + q.pass + " " + q.email + " \"" + q.info + "\"";
+    }
+    else if (q.type == "userfind" && q.user != undefined) {
+        cmd = "user find " + q.user;
     }
     else if (q.type == "userdelete" && q.user != undefined && q.pass != undefined) {
         cmd = "user delete " + q.user + " " + q.pass;
     }
     else if (q.type == "useredit" && q.user != undefined && q.pass != undefined && q.newinfo != undefined) {
-        cmd = "user edit " + q.user + " " + q.pass + " " + q.newinfo;
+        cmd = "user edit " + q.user + " " + q.pass + " \"" + q.newinfo + "\"";
     }
     else if (q.type == "useractive" && q.user != undefined && q.pass != undefined && q.code != undefined) {
-        cmd = "user active " + q.user + " " + q.pass + " " + q.newinfo;
+        cmd = "user active " + q.user + " " + q.pass + " " + q.code;
     }
     else if (q.type == "usergenerate" && q.user != undefined && q.pass != undefined) {
         cmd = "user generate " + q.user + " " + q.pass;
@@ -55,13 +57,13 @@ http.createServer(async function (req, res) {
     }
     //======================== league ================================
     else if (q.type == "leagueadd" && q.sport != undefined && q.league != undefined && q.info != undefined) {
-        cmd = "league add " + q.sport + " " + q.league + " " + q.info;
+        cmd = "league add " + q.sport + " " + q.league + " \"" + q.info + "\"";
     }
     else if (q.type == "leaguedelete" && q.sport != undefined && q.league != undefined) {
         cmd = "league delete " + q.sport + " " + q.league;
     }
     else if (q.type == "leagueedit" && q.sport != undefined && q.league != undefined && q.newinfo != undefined) {
-        cmd = "league edit " + q.sport + " " + q.league + " " + q.newinfo;
+        cmd = "league edit " + q.sport + " " + q.league + " \"" + q.newinfo + "\"";
     }
     else if (q.type == "leagueactive" && q.sport != undefined && q.league != undefined) {
         cmd = "league active " + q.sport + " " + q.league;
@@ -71,13 +73,13 @@ http.createServer(async function (req, res) {
     }
     //======================== team ================================
     else if (q.type == "teamadd" && q.sport != undefined && q.league != undefined && q.team != undefined && q.info != undefined) {
-        cmd = "team add " + q.sport + " " + q.league + " " + q.team + " " + q.info;
+        cmd = "team add " + q.sport + " " + q.league + " " + q.team + " \"" + q.info + "\"";
     }
     else if (q.type == "teamdelete" && q.sport != undefined && q.league != undefined && q.team != undefined) {
         cmd = "team delete " + q.sport + " " + q.league + " " + q.team;
     }
     else if (q.type == "teamedit" && q.sport != undefined && q.league != undefined && q.team != undefined && q.newinfo != undefined) {
-        cmd = "team edit " + q.sport + " " + q.league + " " + q.team + " " + q.newinfo;
+        cmd = "team edit " + q.sport + " " + q.league + " " + q.team + " \"" + q.newinfo + "\"";
     }
     else if (q.type == "teamactive" && q.sport != undefined && q.league != undefined && q.team != undefined) {
         cmd = "team active " + q.sport + " " + q.league + " " + q.team;
@@ -90,24 +92,26 @@ http.createServer(async function (req, res) {
     }
     //======================== competition ================================
     else if (q.type == "competitionadd" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.info != undefined) {
-        cmd = "competition add " + q.sport + " " + q.league + " " + q.competition + " " + q.info;
+        cmd = "competition add " + q.sport + " " + q.league + " " + q.competition + " \"" + q.info + "\"";
     }
     else if (q.type == "competitiondelete" && q.sport != undefined && q.league != undefined && q.competition != undefined) {
         cmd = "competition delete " + q.sport + " " + q.league + " " + q.competition;
     }
     else if (q.type == "competitionedit" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.newinfo != undefined) {
-        cmd = "competition edit " + q.sport + " " + q.league + " " + q.competition + " " + q.newinfo;
+        cmd = "competition edit " + q.sport + " " + q.league + " " + q.competition + " \"" + q.newinfo + "\"";
     }
     else if (q.type == "competitionactive" && q.sport != undefined && q.league != undefined && q.competition != undefined) {
         cmd = "competition active " + q.sport + " " + q.league + " " + q.competition;
     }
     else if (q.type == "competitionresult" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.result != undefined) {
-        cmd = "competition result " + q.sport + " " + q.league + " " + q.competition + " " + q.result;
+        cmd = "competition result " + q.sport + " " + q.league + " " + q.competition + " \"" + q.result + "\"";
     }
     else
         cmd = "error";
     //==============================================================
+    console.log("argv: "  +cmd);
     var result = await run(cmd);
     console.log(result);
+
     res.end(result);
 }).listen(1379);

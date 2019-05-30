@@ -61,7 +61,42 @@ namespace testcsh
 
         private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
         {
+            this.Frame.Navigate(typeof(RetrieveAccount));
+        }
+
+        private void Btn_back_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame.CanGoBack)
+                this.Frame.GoBack();
+        }
+
+        private void Btn_signup_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Signup1));
+        }
+
+        private void Btn_activecode_Click(object sender, RoutedEventArgs e)
+        {
             this.Frame.Navigate(typeof(ActiveAccount));
+        }
+
+        private void Txt_user_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                txt_pass.Focus(FocusState.Keyboard);
+        }
+
+        private void Txt_pass_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Btn_signin_ClickAsync(txt_pass, e);
+            }
+        }
+
+        private void St_main_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_user.Focus(FocusState.Programmatic);
         }
     }
 }

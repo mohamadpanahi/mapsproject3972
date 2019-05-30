@@ -10,8 +10,9 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت"/>
-            <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click"/>
+            <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت" Margin="0,20,0,0" Click="Btn_signup_Click"/>
+            <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click" Margin="0,20,0,0"/>
+            <Button Content="Button" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -7,6 +7,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +35,36 @@ namespace testcsh
         private void Btn_signin_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Signin));
+        }
+
+        private void Btn_signup_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Signup1));
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(
+                            CoreDispatcherPriority.Normal,
+                            async () =>
+                            {
+                                var newWindow = Window.Current;
+                                var newAppView = ApplicationView.GetForCurrentView();
+                                newAppView.Title = "New window";
+
+                                var frame = new Frame();
+                                frame.Navigate(typeof(Signin), null);
+                                newWindow.Content = frame;
+                                newWindow.Activate();
+
+                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                                    newAppView.Id,
+                                    ViewSizePreference.UseMinimum,
+                                    currentAV.Id,
+                                    ViewSizePreference.UseMinimum);
+                            });
         }
     }
 }

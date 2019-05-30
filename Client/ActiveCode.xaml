@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
 
     <Grid>
         <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -18,8 +18,9 @@
                     <TextBox x:Name="txt_code" PlaceholderText="کد فعال سازی را وارد کنید"/>
                 </StackPanel>
             </StackPanel>
-            <Button x:Name="btn_active" Content="فعال سازی" HorizontalAlignment="Center" Margin="0,11,0,0"/>
+            <Button x:Name="btn_active" Content="فعال سازی" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_active_Click"/>
         </StackPanel>
+        <Button x:Name="btn_back" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Margin="0,20,0,0"/>
 
     </Grid>
 </Page>

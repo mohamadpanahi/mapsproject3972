@@ -36,7 +36,7 @@ namespace testcsh
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 10);
+            timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }

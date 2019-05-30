@@ -7,14 +7,17 @@
 void user(char* info[])
 {
 	User user(PATH_USER);
-	
 	if (!strcmp(info[0], "signin"))
 	{
 		cout << user.signin(info[1], info[2]); // username password
 	}
 	else if (!strcmp(info[0], "signup"))
 	{
-		cout << user.signup(info[1], info[2], info[3], info[4]);// username password email otherinfo
+		cout << user.signup(info[1], info[2], info[3], correctargv(info[4]));// username password email otherinfo
+	}
+	else if (!strcmp(info[0], "find"))
+	{
+		cout << user.find(info[1]);// username
 	}
 	else if (!strcmp(info[0], "delete"))
 	{
@@ -165,9 +168,20 @@ int main(int argc, char* argv[])
 	}
 	catch (exception & e)
 	{
-		cout << e.what();
+		cout << "Error 200: " << e.what();
+		for (int i = 1; i < argc; i++)
+			cout << "\nargv[" << i << "] -> " << argv[i];
+		
 	}
 }
+
 //a global exception : if string a = "asd2" then stoi(a) throws invalid_argument exception
 //INACTIVE competitions ago -> league.cpp/active_league
 //fault : active a team or competition that it's league is inactive or ended.
+//date: year month day
+
+//int main()
+//{
+//	char a[] = "$name$:$mohammad panahi$,$phone$:$09037351447$,$gender$:$male$,$isplayer$:false";
+//	cout << correctargv(a);
+//}
