@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,15 +29,28 @@ namespace testcsh
         public Signin()
         {
             this.InitializeComponent();
-        }
-
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            st_txt.Width = this.ActualWidth / 2;
+            /*st_txt.Width = this.ActualWidth / 2;
             st_main.Width = st_into.Width = st_lbl.Width + st_txt.Width + 12;
 
             st_into.Height = st_lbl.Height = st_txt.Height = txt_user.Height + txt_pass.Height + 12;
-            st_main.Height = st_into.Height + btn_signin.Height + 12;
+            st_main.Height = st_into.Height + btn_signin.Height + 12;*/
+
+            //set st_titlebar as titlebar
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(st_titlebar);
+            //define titlebar color
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
+            
+        }
+        
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var page = ApplicationView.GetForCurrentView();
+            page.SetPreferredMinSize(new Size(500, 300));
         }
 
         private async void Btn_signin_ClickAsync(object sender, RoutedEventArgs e)

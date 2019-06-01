@@ -10,7 +10,14 @@
     SizeChanged="Page_SizeChanged">
 
     <Grid>
-        <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Margin="0,20,0,0"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <StackPanel Background="NavajoWhite" x:Name="st_button" Orientation="Horizontal">
+                <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Height="32" Width="32"/>
+                <TextBlock Text="ورود" Margin="20,0,0,0"/>
+            </StackPanel>
+            <StackPanel Background="Fuchsia" x:Name="st_titlebar" Width="1468" VerticalAlignment="Top" Height="32"/>
+        </StackPanel>
+
         <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="St_main_Loaded">
             <StackPanel x:Name="st_into" Height="79" Orientation="Horizontal">
                 <StackPanel x:Name="st_lbl" Height="74">
@@ -23,7 +30,7 @@
                 </StackPanel>
             </StackPanel>
             <Button x:Name="btn_signin" Content="ورود" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_signin_ClickAsync"/>
-            
+
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton x:Name="btn_signup" Content="عضویت" FontSize="10" Click="Btn_signup_Click"/>
                 <TextBlock Text="/" Margin="4,0,4,0"/>

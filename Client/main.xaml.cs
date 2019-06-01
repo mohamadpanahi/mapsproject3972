@@ -32,9 +32,30 @@ namespace testcsh
 
         }
 
-        private void Btn_signin_Click(object sender, RoutedEventArgs e)
+        private async void Btn_signin_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Signin));
+            //this.Frame.Navigate(typeof(Signin));
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(
+                            CoreDispatcherPriority.Normal,
+                            async () =>
+                            {
+                                var newWindow = Window.Current;
+                                var newAppView = ApplicationView.GetForCurrentView();
+                                newAppView.Title = "ورود";
+
+                                var frame = new Frame();
+                                frame.Navigate(typeof(Signin), null);
+                                newWindow.Content = frame;
+                                newWindow.Activate();
+
+                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                                    newAppView.Id,
+                                    ViewSizePreference.UseMinimum,
+                                    currentAV.Id,
+                                    ViewSizePreference.UseMinimum);
+                            });
         }
 
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
