@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +28,15 @@ namespace testcsh
         public RetrievePass()
         {
             this.InitializeComponent();
+            //set st_titlebar as titlebar
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(st_titlebar);
+
+            //define titlebar color
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
         }
 
         private async void Btn_retrieve_ClickAsync(object sender, RoutedEventArgs e)
@@ -41,6 +53,11 @@ namespace testcsh
         {
             if (this.Frame.CanGoBack)
                 this.Frame.GoBack();
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            st_titlebar.Width = ActualWidth - st_button.ActualWidth;
         }
     }
 }

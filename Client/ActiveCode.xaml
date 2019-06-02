@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" SizeChanged="Page_SizeChanged">
 
     <Grid>
         <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -20,7 +20,13 @@
             </StackPanel>
             <Button x:Name="btn_active" Content="فعال سازی" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_active_Click"/>
         </StackPanel>
-        <Button x:Name="btn_back" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Margin="0,20,0,0"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <StackPanel x:Name="st_button" Background="Transparent" Orientation="Horizontal">
+                <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Height="32" Width="32"/>
+                <TextBlock Margin="20,0,0,0"><Run FlowDirection="RightToLeft" Text="فعال سازی حساب کاربری"/></TextBlock>
+            </StackPanel>
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="1465" VerticalAlignment="Top" Height="32"/>
+        </StackPanel>
 
     </Grid>
 </Page>

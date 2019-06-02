@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,6 +31,16 @@ namespace testcsh
             this.InitializeComponent();
             dat_birth.Date = DateTime.Now;
             st_playerinfo.Visibility = Visibility.Collapsed;
+
+            //set st_titlebar as titlebar
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(st_titlebar);
+
+            //define titlebar color
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -97,7 +109,7 @@ namespace testcsh
             if (ok)
             {
                 string req = "type=usersignup&user=" + info[0] + "&pass=" + info[1] + "&email=" + txt_email.Text + "&info=";
-                req += "$name$:$" + txt_name.Text + "$";
+                req += "$name$:$" + Useful.Fa_En(txt_name.Text) + "$";
                 if (txt_phone.Text != "")
                     req += ",$phone$:$" + txt_phone.Text + "$";
                 if (txt_code.Text != "")
@@ -110,13 +122,18 @@ namespace testcsh
                     req += ",$birth$:$" + dat_birth.Date.Year + " " + dat_birth.Date.Month + " " + dat_birth.Date.Day + "$";
                     req += ",$stature$:$" + txt_stature.Text + "$";
                     req += ",$weight$:$" + txt_weight.Text + "$";
-                    req += ",$sport$:$" + cmb_sport.SelectedValue + "$";
+                    req += ",$sport$:$" + Useful.Fa_En(cmb_sport.SelectedValue.ToString()) + "$";
                 }
 
                 server s = new server("1379", req);
                 string res = await s.get();
                 btn_signup.Content = res;
             }
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            st_titlebar.Width = ActualWidth - st_button.ActualWidth;
         }
     }
 }

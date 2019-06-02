@@ -7,25 +7,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
-    SizeChanged="Page_SizeChanged">
+    SizeChanged="Page_SizeChanged" Loaded="Page_Loaded">
 
     <Grid>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <StackPanel Background="NavajoWhite" x:Name="st_button" Orientation="Horizontal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+            <StackPanel x:Name="st_button" Background="Transparent" Orientation="Horizontal">
                 <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Height="32" Width="32"/>
-                <TextBlock Text="ورود" Margin="20,0,0,0"/>
             </StackPanel>
-            <StackPanel Background="Fuchsia" x:Name="st_titlebar" Width="1468" VerticalAlignment="Top" Height="32"/>
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="1465" VerticalAlignment="Top" Height="32">
+                <TextBlock Text="ورود" HorizontalAlignment="Left" Margin="8,0,0,0"/>                
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="St_main_Loaded">
+        <StackPanel Grid.Row="1" x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="lbl_error" Foreground="Red" Text="نام کاربری یا رمز عبور اشتباه است" TextWrapping="Wrap" Margin="0,36,0,12" HorizontalAlignment="Center" Width="350" Visibility="Collapsed"/>
             <StackPanel x:Name="st_into" Height="79" Orientation="Horizontal">
                 <StackPanel x:Name="st_lbl" Height="74">
                     <TextBlock Text="نام کاربری" TextWrapping="Wrap" Margin="0,0,0,12" Height="32"/>
                     <TextBlock Text="رمز عبور" TextWrapping="Wrap" Height="32"/>
                 </StackPanel>
                 <StackPanel x:Name="st_txt" Height="77" Width="282" Margin="12,0,0,0">
-                    <TextBox x:Name="txt_user" PlaceholderText="نام کاربری را وارد کنید" KeyDown="Txt_user_KeyDown"/>
+                    <TextBox x:Name="txt_user" PlaceholderText="نام کاربری را وارد کنید" KeyDown="Txt_user_KeyDown" BeforeTextChanging="Txt_user_BeforeTextChanging"/>
                     <PasswordBox x:Name="txt_pass" Margin="0,12,0,0" PlaceholderText="رمز عبور را وارد کنید" KeyDown="Txt_pass_KeyDown"/>
                 </StackPanel>
             </StackPanel>
@@ -36,7 +42,7 @@
                 <TextBlock Text="/" Margin="4,0,4,0"/>
                 <HyperlinkButton x:Name="btn_retrieve" Content="فراموشی رمز عبور" FontSize="10" Click="Btn_retrieve_Click"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                 <HyperlinkButton x:Name="btn_activeaccount" Content="بازیابی حساب کاربری" FontSize="10" Click="Btn_activeaccount_Click"/>
                 <TextBlock Text="/" Margin="4,0,4,0"/>
                 <HyperlinkButton x:Name="btn_activecode" Content="فعال سازی حساب کاربری" FontSize="10" Click="Btn_activecode_Click"/>

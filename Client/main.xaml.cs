@@ -29,12 +29,11 @@ namespace testcsh
         public main()
         {
             this.InitializeComponent();
-
+            Useful.SetTitlebar(st_titlebar);
         }
 
         private async void Btn_signin_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(Signin));
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
             await newAV.Dispatcher.RunAsync(
@@ -60,32 +59,12 @@ namespace testcsh
 
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Signup1));
+            //this.Frame.Navigate(typeof(Signup1));
+            
         }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var currentAV = ApplicationView.GetForCurrentView();
-            var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(
-                            CoreDispatcherPriority.Normal,
-                            async () =>
-                            {
-                                var newWindow = Window.Current;
-                                var newAppView = ApplicationView.GetForCurrentView();
-                                newAppView.Title = "New window";
-
-                                var frame = new Frame();
-                                frame.Navigate(typeof(Signin), null);
-                                newWindow.Content = frame;
-                                newWindow.Activate();
-
-                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                                    newAppView.Id,
-                                    ViewSizePreference.UseMinimum,
-                                    currentAV.Id,
-                                    ViewSizePreference.UseMinimum);
-                            });
+            st_titlebar.Width = ActualWidth;
         }
     }
 }

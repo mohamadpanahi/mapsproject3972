@@ -30,10 +30,15 @@ namespace testcsh
         {
             this.InitializeComponent();
 
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;            
+            /*ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;          
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
+            coreTitleBar.ExtendViewIntoTitleBar = true;*/
+            
+            //define titlebar color
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
 
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 1);

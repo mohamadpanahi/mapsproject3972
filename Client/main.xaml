@@ -6,13 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
+    SizeChanged="Page_SizeChanged">
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت" Margin="0,20,0,0" Click="Btn_signup_Click"/>
-            <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click" Margin="0,20,0,0"/>
-            <Button Content="Button" Click="Button_Click"/>
+            <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت" Margin="0,33,0,0" Click="Btn_signup_Click"/>
+            <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click" Margin="0,33,0,0"/>
         </StackPanel>
+        <StackPanel x:Name="st_titlebar" Background="Transparent" VerticalAlignment="Top" Height="32"/>
     </Grid>
 </Page>

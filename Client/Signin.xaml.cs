@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
+using Windows.UI.Text.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,28 +30,24 @@ namespace testcsh
         public Signin()
         {
             this.InitializeComponent();
-            /*st_txt.Width = this.ActualWidth / 2;
-            st_main.Width = st_into.Width = st_lbl.Width + st_txt.Width + 12;
 
-            st_into.Height = st_lbl.Height = st_txt.Height = txt_user.Height + txt_pass.Height + 12;
-            st_main.Height = st_into.Height + btn_signin.Height + 12;*/
-
-            //set st_titlebar as titlebar
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(st_titlebar);
-            //define titlebar color
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
-            
+            Useful.SetTitlebar(st_titlebar);
         }
-        
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(st_main.ActualWidth + 24, st_main.ActualHeight + 32));
 
+            //ApplicationView.PreferredLaunchViewSize = new Size(st_main.ActualWidth + 24, st_main.ActualHeight + 32);
+            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            //view.ViewMode = ApplicationViewMode.CompactOverlay;
+
+            txt_user.Focus(FocusState.Programmatic);
+            if (!this.Frame.CanGoBack)
+                btn_back.Visibility = Visibility.Collapsed;
+        }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var page = ApplicationView.GetForCurrentView();
-            page.SetPreferredMinSize(new Size(500, 300));
+            st_titlebar.Width = ActualWidth - st_button.ActualWidth;
         }
 
         private async void Btn_signin_ClickAsync(object sender, RoutedEventArgs e)
@@ -60,37 +57,37 @@ namespace testcsh
                 server s = new server("1379", "type=usersignin&user=" + txt_user.Text + "&pass=" + txt_pass.Password);
                 string res = await s.get();
                 if (res == "1")
-                    txt_user.Text = ":) welcome";
-                else if (res == "-1")
-                    txt_user.Text = ":(";
-                else if (res == "0")
-                    txt_user.Text = ":| inactive";
+                    Window.Current.CoreWindow.Close();
                 else
-                    txt_user.Text = ":O enter code in appropriate place";
+                {
+                    lbl_error.Visibility = Visibility.Visible;
+                    lbl_error.Text = "😝نام کاربری یا رمز عبور اشتباه است";
+                }                
             }
+            else
+            {
+                lbl_error.Visibility = Visibility.Visible;
+                lbl_error.Text = "نام کابری و رمز عبور نمی تواند خالی باشد";
+            }
+            
         }
-
-        private void Btn_retrieve_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(RetrievePass));
-        }
-
-        private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(RetrieveAccount));
-        }
-
         private void Btn_back_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame.CanGoBack)
                 this.Frame.GoBack();
         }
-
+        private void Btn_retrieve_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(RetrievePass));
+        }
+        private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(RetrieveAccount));
+        }
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Signup1));
         }
-
         private void Btn_activecode_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(ActiveAccount));
@@ -101,7 +98,6 @@ namespace testcsh
             if (e.Key == Windows.System.VirtualKey.Enter)
                 txt_pass.Focus(FocusState.Keyboard);
         }
-
         private void Txt_pass_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -109,10 +105,16 @@ namespace testcsh
                 Btn_signin_ClickAsync(txt_pass, e);
             }
         }
-
-        private void St_main_Loaded(object sender, RoutedEventArgs e)
+        private void Txt_user_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            txt_user.Focus(FocusState.Programmatic);
+            bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetterOrDigit(c) || c == '.') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "en-US")));
+            if (b)
+            {
+                lbl_error.Visibility = Visibility.Visible;
+                lbl_error.Text = "نام کاربری باید شامل حروف a-z , اعداد 0-9 و نقطه باشد";
+            }
+            else
+                lbl_error.Visibility = Visibility.Collapsed;
         }
     }
 }
