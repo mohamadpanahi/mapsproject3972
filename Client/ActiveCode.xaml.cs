@@ -55,6 +55,7 @@ namespace testcsh
 
         private async void Btn_active_Click(object sender, RoutedEventArgs e)
         {
+            // incomplate class -> activeaccount();
             server s = new server("1379", "type=useractive&user=" + info[0] + "&pass=" + info[1] + "&code=" + txt_code.Text);
             string res = await s.get();
             if (res == "1") txt_code.Text = "Activated";

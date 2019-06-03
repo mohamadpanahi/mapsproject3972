@@ -9,7 +9,21 @@
     Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" SizeChanged="Page_SizeChanged">
 
     <Grid>
-        <StackPanel x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+            <StackPanel x:Name="st_button" Background="Transparent" Orientation="Horizontal">
+                <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Height="32" Width="32"/>
+            </StackPanel>
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="1465" Height="32" VerticalAlignment="Top">
+                <TextBlock Margin="8,0,0,0" Text="فعال سازی حساب کاربری" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel x:Name="st_into" Height="79" Orientation="Horizontal">
                 <StackPanel x:Name="st_lbl" Height="74">
                     <TextBlock Text="نام کاربری" TextWrapping="Wrap" Margin="0,0,0,12" Height="32"/>
@@ -20,15 +34,7 @@
                     <PasswordBox x:Name="txt_pass" Margin="0,12,0,0" PlaceholderText="رمز عبور را وارد کنید"/>
                 </StackPanel>
             </StackPanel>
-            <Button x:Name="btn_send" Content="تکمیل فعالسازی" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_send_Click"/>
+            <Button x:Name="btn_send" Content="ارسال کد" HorizontalAlignment="Center" Margin="0,11,0,0" Click="Btn_send_Click"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <StackPanel x:Name="st_button" Background="Transparent" Orientation="Horizontal">
-                <Button x:Name="btn_back" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="Btn_back_Click" Height="32" Width="32"/>
-                <TextBlock Margin="20,0,0,0"><Run FlowDirection="RightToLeft" Text="فعال سازی حساب کاربری"/></TextBlock>
-            </StackPanel>
-            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="1465" VerticalAlignment="Top" Height="32"/>
-        </StackPanel>
-
     </Grid>
 </Page>

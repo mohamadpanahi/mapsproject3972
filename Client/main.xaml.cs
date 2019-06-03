@@ -34,33 +34,25 @@ namespace testcsh
 
         private async void Btn_signin_Click(object sender, RoutedEventArgs e)
         {
+            int newviewid = 0;
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(
-                            CoreDispatcherPriority.Normal,
-                            async () =>
+            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                            () =>
                             {
-                                var newWindow = Window.Current;
-                                var newAppView = ApplicationView.GetForCurrentView();
-                                newAppView.Title = "ورود";
-
                                 var frame = new Frame();
-                                frame.Navigate(typeof(Signin), null);
-                                newWindow.Content = frame;
-                                newWindow.Activate();
+                                frame.Navigate(typeof(Signin));
+                                Window.Current.Content = frame;
+                                Window.Current.Activate();
 
-                                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                                    newAppView.Id,
-                                    ViewSizePreference.UseMinimum,
-                                    currentAV.Id,
-                                    ViewSizePreference.UseMinimum);
+                                newviewid = ApplicationView.GetForCurrentView().Id;
                             });
+            //IsHitTestVisible = false;
+            bool shown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newviewid);
         }
-
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(Signup1));
-            
+            this.Frame.Navigate(typeof(Signup1));
         }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {

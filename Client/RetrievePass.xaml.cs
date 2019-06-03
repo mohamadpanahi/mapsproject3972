@@ -41,6 +41,7 @@ namespace testcsh
 
         private async void Btn_retrieve_ClickAsync(object sender, RoutedEventArgs e)
         {
+            //incomplate class -> retrievepass();
             if (txt_user.Text != "" && txt_email.Text != "")
             {
                 server s = new server("1379", "type=userretrieve&user=" + txt_user.Text + "&email=" + txt_email.Text);

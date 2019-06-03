@@ -50,6 +50,7 @@ namespace testcsh
         {
             if (txt_confirmpass.Password == txt_pass.Password && txt_user.Text != "" && txt_pass.Password != "")
             {
+                //incomplate class -> checkusername();
                 server s = new server("1379", "type=userfind&user=" + txt_user.Text);
                 string res = await s.get();
                 if (res == "0")

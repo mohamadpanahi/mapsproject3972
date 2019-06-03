@@ -37,9 +37,8 @@ namespace testcsh
         {
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(st_main.ActualWidth + 24, st_main.ActualHeight + 32));
 
-            //ApplicationView.PreferredLaunchViewSize = new Size(st_main.ActualWidth + 24, st_main.ActualHeight + 32);
-            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            //view.ViewMode = ApplicationViewMode.CompactOverlay;
+            ApplicationView.PreferredLaunchViewSize = new Size(st_main.ActualWidth + 24, st_main.ActualHeight + 32);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
 
             txt_user.Focus(FocusState.Programmatic);
             if (!this.Frame.CanGoBack)
@@ -82,7 +81,7 @@ namespace testcsh
         }
         private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(RetrieveAccount));
+            this.Frame.Navigate(typeof(ActiveAccount));
         }
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
         {
@@ -107,7 +106,7 @@ namespace testcsh
         }
         private void Txt_user_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetterOrDigit(c) || c == '.') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "en-US")));
+            bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetterOrDigit(c) || c == '.' || c == '_') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "en-US")));
             if (b)
             {
                 lbl_error.Visibility = Visibility.Visible;

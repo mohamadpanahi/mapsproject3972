@@ -29,33 +29,26 @@ namespace testcsh
         {
             this.InitializeComponent();
 
-            //set st_titlebar as titlebar
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(st_titlebar);
-
-            //define titlebar color
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 50, 50, 50);
-        }
-
-        private void Btn_back_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Frame.CanGoBack)
-                this.Frame.GoBack();
+            Useful.SetTitlebar(st_titlebar);
         }
 
         private async void Btn_send_Click(object sender, RoutedEventArgs e)
         {
             if (txt_user.Text != "" && txt_pass.Password != "")
             {
-                server s = new server("1379", "type=usersignin&user=" + txt_user.Text + "&pass=" + txt_pass.Password);
-                string res = await s.get();
+                //incomplate class -> 
+                bool result = await Account.Generatecode(txt_user.Text, txt_pass.Password);
                 string[] info = { txt_user.Text, txt_pass.Password };
-                if(res=="1")
+                
+                if (result)
                     this.Frame.Navigate(typeof(ActiveCode), info);
             }
+        }
+
+        private void Btn_back_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame.CanGoBack)
+                this.Frame.GoBack();
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -23,8 +23,8 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="lbl_error" Foreground="Red" Text="نام کاربری یا رمز عبور اشتباه است" TextWrapping="Wrap" Margin="0,36,0,12" HorizontalAlignment="Center" Width="350" Visibility="Collapsed"/>
+        <StackPanel Grid.Row="1" x:Name="st_main" FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,36,0,0">
+            <TextBlock x:Name="lbl_error" Foreground="Red" Text="نام کاربری یا رمز عبور اشتباه است" TextWrapping="Wrap" Margin="0,0,0,12" HorizontalAlignment="Center" Width="350" Visibility="Collapsed"/>
             <StackPanel x:Name="st_into" Height="79" Orientation="Horizontal">
                 <StackPanel x:Name="st_lbl" Height="74">
                     <TextBlock Text="نام کاربری" TextWrapping="Wrap" Margin="0,0,0,12" Height="32"/>
@@ -42,7 +42,7 @@
                 <TextBlock Text="/" Margin="4,0,4,0"/>
                 <HyperlinkButton x:Name="btn_retrieve" Content="فراموشی رمز عبور" FontSize="10" Click="Btn_retrieve_Click"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
                 <HyperlinkButton x:Name="btn_activeaccount" Content="بازیابی حساب کاربری" FontSize="10" Click="Btn_activeaccount_Click"/>
                 <TextBlock Text="/" Margin="4,0,4,0"/>
                 <HyperlinkButton x:Name="btn_activecode" Content="فعال سازی حساب کاربری" FontSize="10" Click="Btn_activecode_Click"/>
