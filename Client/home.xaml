@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="testui.home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:testui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+    SizeChanged="Page_SizeChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="48"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <StackPanel x:Name="st_button" Orientation="Horizontal">
+                <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت" Margin="0,0,12,0" Click="Btn_signup_Click"/>
+                <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click"/>
+            </StackPanel>
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="2442"/>
+        </StackPanel>
+
+
+    </Grid>
+</Page>

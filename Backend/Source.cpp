@@ -149,39 +149,47 @@ void competition(char* info[])
 		throw invalid_argument("Error 305: invalid argument in competition");
 }
 
-int main(int argc, char* argv[])
-{
-	try
-	{
-		if (!strcmp(argv[1], "user"))
-			user(argv + 2);
-		else if (!strcmp(argv[1], "sport"))
-			sport(argv + 2);
-		else if (!strcmp(argv[1], "league"))
-			league(argv + 2);
-		else if (!strcmp(argv[1], "team"))
-			team(argv + 2);
-		else if (!strcmp(argv[1], "competition"))
-			competition(argv + 2);
-		else
-			throw invalid_argument("Error 301: invalid argument");
-	}
-	catch (exception & e)
-	{
-		cout << "Error 200: " << e.what();
-		for (int i = 1; i < argc; i++)
-			cout << "\nargv[" << i << "] -> " << argv[i];
-		
-	}
-}
+//int main(int argc, char* argv[])
+//{
+//	try
+//	{
+//		if (!strcmp(argv[1], "user"))
+//			user(argv + 2);
+//		else if (!strcmp(argv[1], "sport"))
+//			sport(argv + 2);
+//		else if (!strcmp(argv[1], "league"))
+//			league(argv + 2);
+//		else if (!strcmp(argv[1], "team"))
+//			team(argv + 2);
+//		else if (!strcmp(argv[1], "competition"))
+//			competition(argv + 2);
+//		else
+//			throw invalid_argument("Error 301: invalid argument");
+//	}
+//	catch (exception & e)
+//	{
+//		cout << "Error 200: " << e.what();
+//		for (int i = 1; i < argc; i++)
+//			cout << "\nargv[" << i << "] -> " << argv[i];
+//		
+//	}
+//}
 
 //a global exception : if string a = "asd2" then stoi(a) throws invalid_argument exception
 //INACTIVE competitions ago -> league.cpp/active_league
 //fault : active a team or competition that it's league is inactive or ended.
 //date: year month day
 
-//int main()
-//{
-//	char a[] = "$name$:$mohammad panahi$,$phone$:$09037351447$,$gender$:$male$,$isplayer$:false";
-//	cout << correctargv(a);
-//}
+int main()
+{
+	/*json j = json::parse("{\"t1\": {\"score\": 12,\"name\": \"T1\"},\"t2\": {\"score\": 21,\"name\": \"T2\"},\"t3\": {\"score\": 5,\"name\": \"T3\"}}");
+	json temp = j;
+	string Team[] = {"t1","t2","t3"};
+	sort(Team, Team + temp.size(), [temp](string s1, string s2) {
+		return temp[s1]["score"] > temp[s2]["score"];
+		});
+	for (int i = 0; i < 3; i++)
+		cout << Team[i] << endl;*/
+	League l(PATH_LEAGUE);
+	cout << l.sendrank("paresh_ba_vilcher", "khola");
+}

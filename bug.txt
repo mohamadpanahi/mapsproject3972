@@ -5,8 +5,9 @@
 13-search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
 17-فارسی نویسی و ارسال فارسی به cmd
 18-چک کردن res
-19-قیافه:پنجره ها
-20-titlebar
 21-رنگ و جزئیات ارورها
 22-رمز نگاری
-23-
+23-cnd_continuesignup -> چک کردن textbox ها
+24-فراموشی رمزعبور
+25-بازیابی حساب
+26-

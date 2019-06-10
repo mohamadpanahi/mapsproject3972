@@ -1,38 +1,17 @@
 ﻿<Page
-    x:Class="testcsh.intro"
+    x:Class="testui.intro"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:testcsh"
+    xmlns:local="using:testui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" Margin="0,0,0,0" SizeChanged="Grid_SizeChanged">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <ProgressRing Height="48" Width="48" IsActive="True" FontWeight="Normal" RequestedTheme="Default"/>
-            <TextBlock Text="یه دیقه وایسا خره" TextWrapping="Wrap" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="0,20,0,0"/>
+    <Grid x:Name="st_titlebar" Background="Transparent">
+        <StackPanel FlowDirection="RightToLeft" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressRing IsActive="True" Height="60" Width="60"/>
+            <TextBlock Text="یه دیقه وایسا" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,12,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
-
-
-<!--<Page
-   <Grid Margin="0,0,10,0">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" BorderBrush="Black">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel>
-                    <TextBlock Text="User name" Height="32"/>
-                    <TextBlock Text="Pass word" Height="32" Margin="0,12,0,0"/>
-                </StackPanel>
-                <StackPanel Width="237" Margin="12,0,0,0">
-                    <TextBox Text="" PlaceholderText="enter username"/>
-                    <PasswordBox PlaceholderText="enter password" Margin="0,12,0,0"/>
-                </StackPanel>
-            </StackPanel>
-            <Button Content="Login" HorizontalAlignment="Center" Margin="0,12,0,0"/>
-        </StackPanel>
-
-    </Grid>
-</Page>-->
-

@@ -1,0 +1,55 @@
+﻿
+    <ContentDialog
+    x:Class="testui.cnd_continueSignup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:testui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" 
+    CornerRadius="8" Height="999">
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
+    </ContentDialog.Resources>
+
+    <Grid FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+       
+        <AppBarButton x:Name="btn_hide" Grid.Row="0" Icon="Cancel" Foreground="Red" Height="32" Width="28" IsTabStop="False" Click="Btn_hide_Click"/>
+        <ScrollViewer x:Name="ContentScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="12,0,12,12">
+            <StackPanel>
+                <Image Source="/Assets/sign_up.png"  Height="73" Width="275"/>
+                <TextBlock x:Name="lbl_Error" Foreground="Red" Text="Error" Visibility="Collapsed"  Margin="0,12,0,0"/>
+                <TextBox x:Name="txt_name" Header="نام و نام خانوادگی :" PlaceholderText="کریم بزغالوف" Margin="0,12,0,0"/>
+                <TextBox x:Name="txt_email" Header="رایانامه :" Margin="0,12,0,0" PlaceholderText="kerim@bozghalof.com"/>
+                <TextBox x:Name="txt_phone" Header="تلفن همراه :" Margin="0,12,0,0" PlaceholderText="09364758322" MaxLength="11"/>
+                <TextBox x:Name="txt_code" Header="کد ملی :" Margin="0,12,0,0" PlaceholderText="1138424204" MaxLength="10"/>
+                <StackPanel x:Name="st_gender" Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock Text="جنسیت : " Margin="0,0,12,0"/>
+                    <RadioButton x:Name="rbtn_man" Content="مرد" IsChecked="true" GroupName="gender"/>
+                    <RadioButton x:Name="rbtn_woman" Content="زن" GroupName="gender" Margin="12,0,0,0"/>
+                </StackPanel>
+                <StackPanel x:Name="st_activity" Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock Text="فعالیت : " Margin="0,0,12,0"/>
+                    <RadioButton x:Name="rbtn_user" Content="کاربر" IsChecked="True"/>
+                    <RadioButton x:Name="rbtn_player" Content="شرکت کننده" Checked="Rbtn_player_Checked" Unchecked="Rbtn_player_Unchecked" Margin="12,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel x:Name="st_playerinfo" Visibility="Collapsed" Margin="0,12,0,0">
+                    <DatePicker x:Name="dat_birth" Header="تاریخ تولد :" CalendarIdentifier="PersianCalendar" HorizontalAlignment="Stretch"/>
+                    <TextBox x:Name="txt_stature" Header="قد :" PlaceholderText="180cm" Margin="0,12,0,0"/>
+                    <TextBox x:Name="txt_weight" Header="وزن :" PlaceholderText="70kg" Margin="0,12,0,0"/>
+                    <ComboBox x:Name="cmb_sport" Header="ورزش" Margin="0,12,0,0" PlaceholderText="ورزش حرفه ای شما" HorizontalAlignment="Stretch">
+                        <x:String>پرش با ویلچر</x:String>
+                        <x:String>کانتر شبکه</x:String>
+                        <x:String>فوتبال دستی نابینایان</x:String>
+                    </ComboBox>
+                </StackPanel>
+                <Button x:Name="btn_signin" Content="ثبت نام" HorizontalAlignment="Center" Margin="0,12,0,0" TabIndex="3"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</ContentDialog>

@@ -13,6 +13,38 @@ bool League::add_sport(string name)
 	return true;
 }
 
+json League::leaguenames()
+{
+	json result;
+
+	for (auto iter = j.begin(); iter != j.end(); iter++)
+		for (auto it = (*iter).begin(); it != (*iter).end(); it++)
+			result[iter.key()].push_back(it.key());
+
+	return result;
+}
+json League::sendrank(string sport, string league)
+{
+	if (!find(j, sport) || !find(j[sport], league))
+		throw invalid_argument("sport or league doesn't exist! " + sport + "/" + league);
+
+	json result = j[sport][league];
+	json temp = result["team"];
+	int size = temp.size();
+
+	string* team = new string[size];
+	int i = 0;
+	for (auto it = temp.begin(); it != temp.end(); it++, i++)
+		team[i] = it.key();
+
+	sort(team, team + size, [temp](string s1,string s2) {return temp[s1]["score"] > temp[s2]["score"];});
+
+	for (int i = 0; i < size; i++)
+		result["rank"].push_back(team[i]);
+	return result;
+}
+
+
 bool League::add_league(string sport, string league, string input)
 {
 	if (!find(j, sport) || find(j[sport], league))

@@ -8,7 +8,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace testcsh
+namespace testui
 {
     class Useful
     {
@@ -37,9 +37,9 @@ namespace testcsh
         {
             string en = "";
 
-            foreach(char ch in fa)
+            foreach (char ch in fa)
             {
-                switch(ch)
+                switch (ch)
                 {
                     case 'ا':
                         en += 'a'; break;

@@ -1,6 +1,8 @@
 #pragma once
 #include "DataBase.h"
 #include "History.h"
+#include <algorithm>
+
 
 class League : public DataBase
 {
@@ -12,6 +14,8 @@ public:
 	~League();
 
 	bool add_sport(string name);
+	json leaguenames();
+	json sendrank(string sport, string league);
 
 	//league information**************************************************
 	bool add_league(string sport, string league, string input);

@@ -7,7 +7,7 @@ using Windows.Web.Http;
 using Windows.Storage;
 using System.Threading.Tasks;
 
-namespace testcsh
+namespace testui
 {
     class server
     {
@@ -18,11 +18,11 @@ namespace testcsh
 
             port = p;
             request = req;
-            
-            
+
+
             //StorageFile file = await StorageFile.GetFileFromApplicationUriAsync("ms-appx:///yourFile.txt");
         }
-      
+
         public async Task<string> get()
         {
             ip = "http://localhost";
