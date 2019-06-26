@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="testui.LeagueResult"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:testui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded" SizeChanged="Page_SizeChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="32"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <StackPanel x:Name="st_button" Orientation="Horizontal">
+                <AppBarButton x:Name="btn_back" Icon="Back" Click="Btn_back_Click"/>
+            </StackPanel>
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="2442"/>
+        </StackPanel>
+
+        <StackPanel x:Name="st_sport" Grid.Row="1" HorizontalAlignment="Right"  FlowDirection="RightToLeft">
+            <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش" HorizontalAlignment="Stretch" SelectionChanged="Cmb_sport_SelectionChanged" Margin="0,6,0,0"/>
+            <ListBox x:Name="lst_league" Background="AliceBlue" Height="933" Width="594" Margin="0,6,0,0" SelectionChanged="Lst_league_SelectionChanged"/>
+        </StackPanel>
+        <ListBox x:Name="lst_table" Grid.Row="1" Margin="0,0,828,0" FlowDirection="RightToLeft"/>
+    </Grid>
+</Page>

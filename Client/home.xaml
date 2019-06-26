@@ -16,11 +16,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="1340"/>
             <StackPanel x:Name="st_button" Orientation="Horizontal">
                 <AppBarButton x:Name="btn_signup" Icon="AddFriend" Label="عضویت" Margin="0,0,12,0" Click="Btn_signup_Click"/>
                 <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click"/>
             </StackPanel>
-            <StackPanel x:Name="st_titlebar" Background="Transparent" Width="2442"/>
         </StackPanel>
 
 

@@ -13,39 +13,40 @@ http.createServer(async function (req, res) {
 
     let ur = url.parse(req.url, true);
     var q = ur.query;
-    //==============================================================
-    console.log(q);
     var cmd;
     //======================== user ================================
     if (q.type == "usersignin" && q.user != undefined && q.pass != undefined) {
-        cmd = "user signin " + q.user + " " + q.pass;
+        cmd = `user signin "${q.user}" "${q.pass}"`;
+    }
+    else if (q.type == "userinfo" && q.user != undefined && q.pass != undefined) {
+        cmd = `user info "${q.user}" "${q.pass}"`;
     }
     else if (q.type == "usersignup" && q.user != undefined && q.pass != undefined && q.email!=undefined && q.info!=undefined) {
-        cmd = "user signup " + q.user + " " + q.pass + " " + q.email + " \"" + q.info + "\"";
+        cmd = `user signup "${q.user}" "${q.pass}" "${q.email}" "${q.info}"`;
     }
     else if (q.type == "userfind" && q.user != undefined) {
-        cmd = "user find " + q.user;
+        cmd = `user find "${q.user}"`;
     }
     else if (q.type == "userdelete" && q.user != undefined && q.pass != undefined) {
-        cmd = "user delete " + q.user + " " + q.pass;
+        cmd = `user delete "${q.user}" "${q.pass}"`;
     }
     else if (q.type == "useredit" && q.user != undefined && q.pass != undefined && q.newinfo != undefined) {
-        cmd = "user edit " + q.user + " " + q.pass + " \"" + q.newinfo + "\"";
+        cmd = `user edit "${q.user}" "${q.pass}" "${q.newinfo}"`;
     }
     else if (q.type == "useractive" && q.user != undefined && q.pass != undefined && q.code != undefined) {
-        cmd = "user active " + q.user + " " + q.pass + " " + q.code;
+        cmd = `user active "${q.user}" "${q.pass}" "${q.code}"`;
     }
     else if (q.type == "usergenerate" && q.user != undefined && q.pass != undefined) {
-        cmd = "user generate " + q.user + " " + q.pass;
+        cmd = `user generate "${q.user}" "${q.pass}"`;
     }
     else if (q.type == "userretrieve" && q.user != undefined && q.email != undefined) {
-        cmd = "user retrieve " + q.user + " " + q.email;
+        cmd = `user retrieve "${q.user}" "${q.email}"`;
     }
     else if (q.type == "useraddfavorite" && q.user != undefined && q.pass != undefined && q.base != undefined && q.id != undefined) {
-        cmd = "user addfavorite " + q.user + " " + q.pass + " " + q.base + " " + q.id;
+        cmd = `user addfavorite "${q.user}" "${q.pass}" "${q.base}" "${q.id}"`;
     }
     else if (q.type == "userdelfavorite" && q.user != undefined && q.pass != undefined && q.base != undefined && q.id != undefined) {
-        cmd = "user delfavorite " + q.user + " " + q.pass + " " + q.base + " " + q.id;
+        cmd = `user delfavorite "${q.user}" "${q.pass}" "${q.base}" "${q.id}"`;
     }
     else if (q.type == "show")
         cmd = "user show";
@@ -53,65 +54,73 @@ http.createServer(async function (req, res) {
         cmd = "user showjs";
     //======================== sport ================================
     else if (q.type == "sportadd" && q.sport != undefined) {
-        cmd = "sport add " + q.sport;
+        cmd = `sport add "${q.sport}"`;
+    }
+    else if (q.type == "sportname") {
+        cmd = "sport name";
     }
     //======================== league ================================
     else if (q.type == "leagueadd" && q.sport != undefined && q.league != undefined && q.info != undefined) {
-        cmd = "league add " + q.sport + " " + q.league + " \"" + q.info + "\"";
+        cmd = `league add "${q.sport}" "${q.league}" "${q.info}"`;
     }
     else if (q.type == "leaguedelete" && q.sport != undefined && q.league != undefined) {
-        cmd = "league delete " + q.sport + " " + q.league;
+        cmd = `league delete "${q.sport}" "${q.league}"`;
     }
     else if (q.type == "leagueedit" && q.sport != undefined && q.league != undefined && q.newinfo != undefined) {
-        cmd = "league edit " + q.sport + " " + q.league + " \"" + q.newinfo + "\"";
+        cmd = `league edit "${q.sport}" "${q.league}" "${q.newinfo}"`;
     }
     else if (q.type == "leagueactive" && q.sport != undefined && q.league != undefined) {
-        cmd = "league active " + q.sport + " " + q.league;
+        cmd = `league active "${q.sport}" "${q.league}"`;
+    }
+    else if (q.type == "leaguerank" && q.sport != undefined && q.league != undefined) {
+        cmd = `league rank "${q.sport}" "${q.league}"`;
     }
     else if (q.type == "leagueshow") {
         cmd = "league show";
     }
     //======================== team ================================
     else if (q.type == "teamadd" && q.sport != undefined && q.league != undefined && q.team != undefined && q.info != undefined) {
-        cmd = "team add " + q.sport + " " + q.league + " " + q.team + " \"" + q.info + "\"";
+        cmd = `team add "${q.sport}" "${q.league}" "${q.team}" "${q.info}"`;
     }
     else if (q.type == "teamdelete" && q.sport != undefined && q.league != undefined && q.team != undefined) {
-        cmd = "team delete " + q.sport + " " + q.league + " " + q.team;
+        cmd = `team delete "${q.sport}" "${q.league}" "${q.team}"`;
     }
     else if (q.type == "teamedit" && q.sport != undefined && q.league != undefined && q.team != undefined && q.newinfo != undefined) {
-        cmd = "team edit " + q.sport + " " + q.league + " " + q.team + " \"" + q.newinfo + "\"";
+        cmd = `team edit "${q.sport}" "${q.league}" "${q.team}" "${q.newinfo}"`;
     }
     else if (q.type == "teamactive" && q.sport != undefined && q.league != undefined && q.team != undefined) {
-        cmd = "team active " + q.sport + " " + q.league + " " + q.team;
+        cmd = `team active "${q.sport}" "${q.league}" "${q.team}"`;
     }
     else if (q.type == "teamaddmember" && q.sport != undefined && q.league != undefined && q.team != undefined && q.player != undefined) {
-        cmd = "team addmember " + q.sport + " " + q.league + " " + q.team + " " + q.player;
+        cmd = `team addmember "${q.sport}" "${q.league}" "${q.team}" "${q.player}"`;
     }
     else if (q.type == "teamdelmember" && q.sport != undefined && q.league != undefined && q.team != undefined && q.player != undefined) {
-        cmd = "team delmember " + q.sport + " " + q.league + " " + q.team + " " + q.player;
+        cmd = `team delmember "${q.sport}" "${q.league}" "${q.team}" "${q.player}"`;
     }
     //======================== competition ================================
     else if (q.type == "competitionadd" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.info != undefined) {
-        cmd = "competition add " + q.sport + " " + q.league + " " + q.competition + " \"" + q.info + "\"";
+        cmd = `competition add "${q.sport}" "${q.league}" "${q.competition}" "${q.info}"`;
     }
     else if (q.type == "competitiondelete" && q.sport != undefined && q.league != undefined && q.competition != undefined) {
-        cmd = "competition delete " + q.sport + " " + q.league + " " + q.competition;
+        cmd = `competition delete "${q.sport}" "${q.league}" "${q.competition}"`;
     }
     else if (q.type == "competitionedit" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.newinfo != undefined) {
-        cmd = "competition edit " + q.sport + " " + q.league + " " + q.competition + " \"" + q.newinfo + "\"";
+        cmd = `competition edit "${q.sport}" "${q.league}" "${q.competition}" "${q.newinfo}"`;
     }
     else if (q.type == "competitionactive" && q.sport != undefined && q.league != undefined && q.competition != undefined) {
-        cmd = "competition active " + q.sport + " " + q.league + " " + q.competition;
+        cmd = `competition active "${q.sport}" "${q.league}" "${q.competition}"`;
     }
     else if (q.type == "competitionresult" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.result != undefined) {
-        cmd = "competition result " + q.sport + " " + q.league + " " + q.competition + " \"" + q.result + "\"";
+        cmd = `competition result "${q.sport}" "${q.league}" "${q.competition}" "${q.result}"`;
     }
     else
         cmd = "error";
     //==============================================================
-    console.log("argv: "  +cmd);
     var result = await run(cmd);
-    console.log(result);
-
+    console.log("----------------------------");
+    console.log("Request -> ");
+    console.log(q);
+    console.log("cmd -> \t" + cmd);
+    console.log("Result -> \t" + result + "\n");
     res.end(result);
 }).listen(1379);

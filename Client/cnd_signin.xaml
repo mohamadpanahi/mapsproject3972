@@ -7,11 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     CornerRadius="8"
-    Background="White" Loaded="ContentDialog_Loaded">
-
+    Background="White" Closed="ContentDialog_Closed">
+    
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0,0,0,0</Thickness>
+    </ContentDialog.Resources>
+    
     <Grid FlowDirection="RightToLeft">
-        <AppBarButton x:Name="btn_hide" Icon="Cancel" Height="32" Width="28" Foreground="Red" Click="Btn_hide_Click" IsTabStop="False"/>
-        <StackPanel>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <AppBarButton x:Name="btn_hide" Grid.Row="0" Icon="Cancel" Foreground="Red" Height="32" Width="28" IsTabStop="False" Click="Btn_hide_Click" Margin="0,-4,0,0"/>
+        <StackPanel Grid.Row="1" Margin="12,0,12,12">
             <Image Source="/Assets/signin.png" Height="73" Width="275" />
             <TextBlock x:Name="lbl_Error" Foreground="Red" Text="Error" Visibility="Collapsed" Margin="0,12,0,12"/>
             <TextBox x:Name="txt_username" Header="نام کاربری:" PlaceholderText="نام کاربری را وارد کنید" BeforeTextChanging="Txt_username_BeforeTextChanging" KeyDown="Txt_username_KeyDown" TabIndex="0"/>
@@ -20,9 +30,9 @@
             <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                 <HyperlinkButton x:Name="btn_signup" Content="عضویت" FontSize="10" TabIndex="3" Click="Btn_signup_Click"/>
                 <TextBlock Text="/" Margin="4,0,4,0" />
-                <HyperlinkButton x:Name="btn_retrievepass" Content="فراموشی رمز عبور" FontSize="10" TabIndex="4"/>
+                <HyperlinkButton x:Name="btn_retrievepass" Content="فراموشی رمز عبور" FontSize="10" TabIndex="4" Click="Btn_retrievepass_Click"/>
                 <TextBlock Text="/" Margin="4,0,4,0" />
-                <HyperlinkButton Content="بازیابی حساب" FontSize="10" TabIndex="5"/>
+                <HyperlinkButton x:Name="btn_activeaccount" Content="بازیابی حساب" FontSize="10" TabIndex="5" Click="Btn_activeaccount_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

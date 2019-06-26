@@ -18,16 +18,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace testui
 {
-    public enum cnd_signin_Result { inactive, Active, WaitForActive, cancle, Signup_clicked, Retrieve_clicked, ActiveAccount_clicked }
-    public sealed partial class cnd_signin : ContentDialog
+    public enum cnd_activeAccount_Result { Cancle, SendCode, Active }
+
+    public sealed partial class cnd_ActiveAccount : ContentDialog
     {
         public string user { get; private set; }
         public string pass { get; private set; }
-        public cnd_signin_Result result { get; private set; }
-
-        public cnd_signin()
+        public cnd_activeAccount_Result result { get; private set; }
+        public cnd_ActiveAccount(string user, string pass)
         {
             this.InitializeComponent();
+            txt_username.Text = this.user = user;
+            txt_password.Password = this.pass = pass;
         }
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
@@ -35,57 +37,37 @@ namespace testui
             this.pass = txt_password.Password;
         }
 
-        private void Btn_hide_Click(object sender, RoutedEventArgs e)
+        private async void Btn_sendcode_Click(object sender, RoutedEventArgs e)
         {
-            this.result = cnd_signin_Result.cancle;
-            this.Hide();
-        }
-        private async void Btn_signin_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txt_username.Text) && !string.IsNullOrEmpty(txt_password.Password))
-            {
-                int res = await Account.Signin(txt_username.Text, txt_password.Password);
-                switch (res)
-                {
-                    case -1://√
-                        lbl_Error.Text = "نام کاربری یا رمز عبور اشتباه است";
-                        lbl_Error.Visibility = Visibility.Visible;
-                        break;
-                    case 0://generate -> active -> welcome
-                        result = cnd_signin_Result.inactive;
-                        await Account.Generatecode(txt_username.Text, txt_password.Password);
-                        this.Hide();
-                        break;
-                    case 1://√
-                        result = cnd_signin_Result.Active;
-                        this.Hide();
-                        break;
-                    default://goto activation
-                        result = cnd_signin_Result.WaitForActive;
-                        this.Hide();
-                        break;
-
-                }
-            }
-            else
+            if (txt_username.Text == "" || txt_password.Password == "")
             {
                 lbl_Error.Text = "نام کاربری یا رمز عبور نمی تواند خالی باشد";
                 lbl_Error.Visibility = Visibility.Visible;
             }
+            else switch (await Account.Signin(txt_username.Text, txt_password.Password))
+            {
+                case -1:
+                    lbl_Error.Text = "نام کاربری یا رمز عبور اشتباه است";
+                    lbl_Error.Visibility = Visibility.Visible;
+                    break;
+                case 0:
+                    result = cnd_activeAccount_Result.SendCode;
+                    await Account.Generatecode(txt_username.Text, txt_password.Password);
+                    this.Hide();
+                    break;
+                case 1:
+                    result = cnd_activeAccount_Result.Active;
+                    this.Hide();
+                    break;
+                default:
+                    result = cnd_activeAccount_Result.SendCode;
+                    this.Hide();
+                    break;
+            }
         }
-        private void Btn_signup_Click(object sender, RoutedEventArgs e)
+        private void Btn_hide_Click(object sender, RoutedEventArgs e)
         {
-            this.result = cnd_signin_Result.Signup_clicked;
-            this.Hide();
-        }
-        private void Btn_retrievepass_Click(object sender, RoutedEventArgs e)
-        {
-            this.result = cnd_signin_Result.Retrieve_clicked;
-            this.Hide();
-        }
-        private void Btn_activeaccount_Click(object sender, RoutedEventArgs e)
-        {
-            this.result = cnd_signin_Result.ActiveAccount_clicked;
+            this.result = cnd_activeAccount_Result.Cancle;
             this.Hide();
         }
 
@@ -108,8 +90,7 @@ namespace testui
         private void Txt_password_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrEmpty(txt_password.Password))
-                btn_signin.Focus(FocusState.Keyboard);
+                btn_sendcode.Focus(FocusState.Keyboard);
         }
-
     }
 }

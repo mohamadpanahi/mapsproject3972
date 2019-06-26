@@ -21,6 +21,7 @@ namespace testui
     public enum cnd_signup_Result { cancle, ContinueSignup }
     public sealed partial class cnd_signup : ContentDialog
     {
+        public string user, pass;
         public cnd_signup_Result result { get; private set; }
         public cnd_signup()
         {
@@ -36,7 +37,7 @@ namespace testui
             this.result = cnd_signup_Result.cancle;
             this.Hide();
         }
-
+        
         private void Txt_username_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetterOrDigit(c) || c == '.' || c == '_') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "en-US")));
@@ -58,11 +59,16 @@ namespace testui
             if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrEmpty(txt_password.Password))
                 txt_confirmpass.Focus(FocusState.Keyboard);
         }
-
         private void Txt_confirmpass_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrEmpty(txt_password.Password))
+            if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrEmpty(txt_confirmpass.Password))
                 btn_continue.Focus(FocusState.Keyboard);
+        }
+
+        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            user = txt_username.Text;
+            pass = txt_password.Password;
         }
 
         private async void Btn_continue_Click(object sender, RoutedEventArgs e)
@@ -89,5 +95,6 @@ namespace testui
                 this.Hide();
             }
         }
+        
     }
 }

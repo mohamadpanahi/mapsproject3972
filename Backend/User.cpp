@@ -3,13 +3,20 @@
 User::User(string filename) :DataBase(filename) {}
 User::~User() {}
 
+string User::getuserinfo(string username, string password)
+{
+	if (find(j, username) && j[username]["pass"] == password)
+		return j[username].dump();
+	return "error";
+}
+
 int User::signin(string username, string password)
 {
 	if (find(j, username) && j[username]["pass"] == password)
 	{
 		if (j[username]["active"] == "1") //active
 			return 1;
-		else if (j[username]["active"] == "0") //inactive -> send email to active
+		else if (j[username]["active"] == "0") //inactive
 			return 0;
 		else //wait for active
 		{
@@ -56,7 +63,7 @@ bool User::edit(string username, string password, string input)
 
 bool User::generatecode(string username, string password)
 {
-	if (abs(signin(username, password)) == 1)//Ooooooooooooooooooh! :|
+	if (abs(signin(username, password)) == 1)//Ooooooooooh! :|
 		return false;
 	string rnc = randcode(6);
 	j[username]["active"] = rnc;

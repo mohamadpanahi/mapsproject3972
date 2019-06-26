@@ -15,10 +15,12 @@ namespace testui
         public static void SetTitlebar(UIElement titlebar = null)
         {
             //set st_titlebar as titlebar
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
             if (titlebar != null)
+            {
+                CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
                 Window.Current.SetTitleBar(titlebar);
+            }
 
             //define titlebar color
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;

@@ -7,8 +7,10 @@ public:
 	User(string filename);
 	~User();
 
+
 	//Users information
 
+	string getuserinfo(string username, string password);
 	//1: active 0: inactive -1: invalid username other : activation code
 	int signin(string username, string password);
 	bool signup(string username, string password, string email,  string otherinfo);

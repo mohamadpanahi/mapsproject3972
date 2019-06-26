@@ -11,6 +11,11 @@ void user(char* info[])
 	{
 		cout << user.signin(info[1], info[2]); // username password
 	}
+	else if (!strcmp(info[0], "info"))
+	{
+		cout << user.getuserinfo(info[1], info[2]); // username password
+	}
+
 	else if (!strcmp(info[0], "signup"))
 	{
 		cout << user.signup(info[1], info[2], info[3], correctargv(info[4]));// username password email otherinfo
@@ -25,7 +30,7 @@ void user(char* info[])
 	}
 	else if (!strcmp(info[0], "edit"))
 	{
-		cout << user.edit(info[1], info[2], info[3]);// username password newinfo
+		cout << user.edit(info[1], info[2], correctargv(info[3]));// username password newinfo
 	}
 	else if (!strcmp(info[0], "active"))
 	{
@@ -64,6 +69,8 @@ void sport(char* info[])
 
 	if (!strcmp(info[0], "add"))
 		cout << league.add_sport(info[1]);//sport
+	else if (!strcmp(info[0], "name"))
+		cout << league.leaguenames();
 	else
 		throw invalid_argument("Error 302: invalid argument in sport");
 }
@@ -72,7 +79,7 @@ void league(char* info[])
 	League league(PATH_LEAGUE);
 	if (!strcmp(info[0], "add"))
 	{
-		cout << league.add_league(info[1], info[2], info[3]);//sport league info
+		cout << league.add_league(info[1], info[2], correctargv(info[3]));//sport league info
 	}
 	else if (!strcmp(info[0], "delete"))
 	{
@@ -82,9 +89,13 @@ void league(char* info[])
 	{
 		cout << league.active_league(info[1], info[2]); //sport league
 	}
-	else if (strcmp(info[0], "edit"))
+	else if (!strcmp(info[0], "edit"))
 	{
-		cout << league.edit_league(info[1], info[2], info[3]);// sport league newinfo
+		cout << league.edit_league(info[1], info[2], correctargv(info[3]));// sport league newinfo
+	}
+	else if (!strcmp(info[0], "rank"))
+	{
+		cout << league.sendrank(info[1], info[2]);// sport league
 	}
 	else if (!strcmp(info[0], "show"))
 		league.show();
@@ -107,15 +118,15 @@ void team(char* info[])
 	{
 		cout << league.active_team(info[1], info[2], info[3]);//sport league team
 	}
-	else if (strcmp(info[0], "edit"))
+	else if (!strcmp(info[0], "edit"))
 	{
 		cout << league.edit_team(info[1], info[2], info[3], info[4]);//sport league team newinfo
 	}
-	else if (strcmp(info[0], "addmemmber"))
+	else if (!strcmp(info[0], "addmemmber"))
 	{
 		cout << league.add_team_members(info[1], info[2], info[3], info[4]);//sport league team player
 	}
-	else if (strcmp(info[0], "delmemmber"))
+	else if (!strcmp(info[0], "delmemmber"))
 	{
 		cout << league.del_team_members(info[1], info[2], info[3], info[4]);//sport league team player
 	}
@@ -149,47 +160,33 @@ void competition(char* info[])
 		throw invalid_argument("Error 305: invalid argument in competition");
 }
 
-//int main(int argc, char* argv[])
-//{
-//	try
-//	{
-//		if (!strcmp(argv[1], "user"))
-//			user(argv + 2);
-//		else if (!strcmp(argv[1], "sport"))
-//			sport(argv + 2);
-//		else if (!strcmp(argv[1], "league"))
-//			league(argv + 2);
-//		else if (!strcmp(argv[1], "team"))
-//			team(argv + 2);
-//		else if (!strcmp(argv[1], "competition"))
-//			competition(argv + 2);
-//		else
-//			throw invalid_argument("Error 301: invalid argument");
-//	}
-//	catch (exception & e)
-//	{
-//		cout << "Error 200: " << e.what();
-//		for (int i = 1; i < argc; i++)
-//			cout << "\nargv[" << i << "] -> " << argv[i];
-//		
-//	}
-//}
+int main(int argc, char* argv[])
+{
+	try
+	{
+		if (!strcmp(argv[1], "user"))
+			user(argv + 2);
+		else if (!strcmp(argv[1], "sport"))
+			sport(argv + 2);
+		else if (!strcmp(argv[1], "league"))
+			league(argv + 2);
+		else if (!strcmp(argv[1], "team"))
+			team(argv + 2);
+		else if (!strcmp(argv[1], "competition"))
+			competition(argv + 2);
+		else
+			throw invalid_argument("Error 301: invalid argument");
+	}
+	catch (exception & e)
+	{
+		cout << e.what();
+		for (int i = 1; i < argc; i++)
+			cout << "\nargv[" << i << "] -> " << argv[i];
+		
+	}
+}
 
 //a global exception : if string a = "asd2" then stoi(a) throws invalid_argument exception
 //INACTIVE competitions ago -> league.cpp/active_league
 //fault : active a team or competition that it's league is inactive or ended.
 //date: year month day
-
-int main()
-{
-	/*json j = json::parse("{\"t1\": {\"score\": 12,\"name\": \"T1\"},\"t2\": {\"score\": 21,\"name\": \"T2\"},\"t3\": {\"score\": 5,\"name\": \"T3\"}}");
-	json temp = j;
-	string Team[] = {"t1","t2","t3"};
-	sort(Team, Team + temp.size(), [temp](string s1, string s2) {
-		return temp[s1]["score"] > temp[s2]["score"];
-		});
-	for (int i = 0; i < 3; i++)
-		cout << Team[i] << endl;*/
-	League l(PATH_LEAGUE);
-	cout << l.sendrank("paresh_ba_vilcher", "khola");
-}

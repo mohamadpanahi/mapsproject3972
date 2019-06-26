@@ -9,23 +9,19 @@ using System.Threading.Tasks;
 
 namespace testui
 {
-    class server
+    class Server
     {
-        string ip, port, request;
-        //set ip from ip.txt
-        public server(string p, string req)
+        string ip;
+        int port;
+        public Server()
         {
-
-            port = p;
-            request = req;
-
-
-            //StorageFile file = await StorageFile.GetFileFromApplicationUriAsync("ms-appx:///yourFile.txt");
+            //set ip from ip.txt
+            ip = "http://localhost";
+            port = 1379;
         }
 
-        public async Task<string> get()
+        public async Task<string> get(string request)
         {
-            ip = "http://localhost";
 
             //Create an HTTP client object
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();

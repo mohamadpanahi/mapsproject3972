@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="testui.pnl_Admin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:testui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <NavigationView x:Name="nav" FlowDirection="RightToLeft" ItemInvoked="Nav_ItemInvoked" IsSettingsVisible="False" >
+            <NavigationView.MenuItems>
+                <NavigationViewItemHeader Content="مدیریت لیگ ها"/>
+                <NavigationViewItem Icon="Add" Content="لیگ جدید" x:Name="btn_addleague" />
+                <NavigationViewItem Icon="Delete" Content="حذف لیگ" x:Name="btn_deleteleague" />
+                <NavigationViewItem Icon="Edit" Content="ویرایش لیگ" x:Name="btn_editleague" />
+                <NavigationViewItem Icon="Flag" Content="اتمام لیگ" x:Name="btn_endleague" />
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="مدیریت مسابقات"/>
+                <NavigationViewItem Icon="Add" Content="مسابقه جدید" x:Name="btn_addcompetetion" />
+                <NavigationViewItem Icon="Delete" Content="حذف مسابقه" x:Name="btn_deletecompetition" />
+                <NavigationViewItem Icon="Edit" Content="ویرایش مسابقه" x:Name="btn_editcompetition" />
+                <NavigationViewItem Content="ویرایش نتیجه" x:Name="btn_editresult">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEADF;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            
+            <Frame x:Name="frm" FlowDirection="LeftToRight"/>
+        </NavigationView>
+    </Grid>
+</Page>
+    
