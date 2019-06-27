@@ -13,7 +13,8 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="مدیریت لیگ ها"/>
                 <NavigationViewItem Icon="Add" Content="لیگ جدید" x:Name="btn_addleague" />
-                <NavigationViewItem Icon="Delete" Content="حذف لیگ" x:Name="btn_deleteleague" />
+                <NavigationViewItem Icon="Pause" Content="تعلیق لیگ" x:Name="btn_deleteleague" />
+                <NavigationViewItem Icon="Play" Content="فعال سازی لیگ" x:Name="btn_activeleague" />
                 <NavigationViewItem Icon="Edit" Content="ویرایش لیگ" x:Name="btn_editleague" />
                 <NavigationViewItem Icon="Flag" Content="اتمام لیگ" x:Name="btn_endleague" />
                 <NavigationViewItemSeparator/>

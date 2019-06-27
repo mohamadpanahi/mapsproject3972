@@ -37,7 +37,7 @@ namespace testui
         {
             if (args.InvokedItemContainer == btn_addleague)
             {
-                frm.Navigate(typeof(AddLeague));
+                frm.Navigate(typeof(AddLeague), acc);
             }
             else
                 nav.Header = acc.Name;

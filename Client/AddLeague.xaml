@@ -6,14 +6,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Page_SizeChanged" Loaded="Page_Loaded">
 
-    <Grid x:Name="st_titlebar">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="32"/>
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal"/>
+        <StackPanel x:Name="st_titlebar" Grid.Row="0" Orientation="Horizontal" Background="Transparent"/>
+        <ListBox x:Name="lst_league" FlowDirection="RightToLeft" Grid.Row="1" HorizontalAlignment="Left" Width="514"/>
+        <StackPanel x:Name="st" Grid.Row="1" HorizontalAlignment="Right" FlowDirection="RightToLeft" Width="708" Margin="0,0,12,0" VerticalAlignment="Top">
+            <TextBlock Text="info"/>
+            <TextBlock x:Name="lbl_error" Text="Err" Foreground="Red" Visibility="Collapsed" Margin="0,12,0,0"/>
+            <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" SelectionChanged="Cmb_sport_SelectionChanged"></ComboBox>
+            <TextBox x:Name="txt_league" Header="نام لیگ:" PlaceholderText="سری آ تورقوزآباد"/>
+            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

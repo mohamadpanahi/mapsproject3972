@@ -36,15 +36,16 @@ namespace testui
             JsonObject j;
             JsonObject.TryParse(await server.get($"type=leaguerank&sport={sport}&league={league}"), out j);
             JsonArray rank = j["rank"].GetArray();
-            StackPanel[] result = new StackPanel[/*rank.Count*/10];
+            StackPanel[] result = new StackPanel[rank.Count];
             
 
-            for (int i = 0; i < /*rank.Count*/10; i++)
+            for (int i = 0; i < rank.Count; i++)
             {
-                result[i] = new StackPanel { Orientation = Orientation.Horizontal };
-                result[i].Children.Add(new TextBlock { Text = "#" });
-                //result[i].Children.Add(new TextBlock { Text = rank.GetStringAt(i), Margin = new Thickness(12, 0, 12, 0) });
-                result[i].Children.Add(new TextBlock { Text = "امتیاز" });
+                result[i] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection=FlowDirection.RightToLeft };
+                result[i].Children.Add(new TextBlock { Text = (i + 1).ToString() }); //#
+                string teamname = rank.GetStringAt(Convert.ToUInt32(i));
+                result[i].Children.Add(new TextBlock { Text = teamname, Margin = new Thickness(12, 0, 12, 0) });
+                result[i].Children.Add(new TextBlock { Text = j["team"].GetObject()[teamname].GetObject()["score"].GetNumber().ToString() });
                 result[i].Children.Add(new TextBlock { Text = "برد", Margin = new Thickness(12, 0, 12, 0) });
                 result[i].Children.Add(new TextBlock { Text = "باخت" });
             }
