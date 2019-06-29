@@ -16,12 +16,12 @@
 
         <StackPanel x:Name="st_titlebar" Grid.Row="0" Orientation="Horizontal" Background="Transparent"/>
         <ListBox x:Name="lst_league" FlowDirection="RightToLeft" Grid.Row="1" HorizontalAlignment="Left" Width="514"/>
-        <StackPanel x:Name="st" Grid.Row="1" HorizontalAlignment="Right" FlowDirection="RightToLeft" Width="708" Margin="0,0,12,0" VerticalAlignment="Top">
-            <TextBlock Text="info"/>
+        <StackPanel x:Name="st" Grid.Row="1" HorizontalAlignment="Right" FlowDirection="RightToLeft" Width="300" Margin="0,0,12,0" VerticalAlignment="Top" MinWidth="250">
+            <TextBlock Text="اون ورا نگاه کن اسم تکراری انتخاب نکنی." Foreground="Gray"/>
             <TextBlock x:Name="lbl_error" Text="Err" Foreground="Red" Visibility="Collapsed" Margin="0,12,0,0"/>
-            <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" SelectionChanged="Cmb_sport_SelectionChanged"></ComboBox>
-            <TextBox x:Name="txt_league" Header="نام لیگ:" PlaceholderText="سری آ تورقوزآباد"/>
-            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click"/>
+            <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" SelectionChanged="Cmb_sport_SelectionChanged" TabIndex="0"></ComboBox>
+            <TextBox x:Name="txt_league" Header="نام لیگ:" PlaceholderText="سری آ تورقوزآباد" TabIndex="1" KeyDown="Txt_league_KeyDown" BeforeTextChanging="Txt_league_BeforeTextChanging"/>
+            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click" TabIndex="2"/>
         </StackPanel>
     </Grid>
 </Page>

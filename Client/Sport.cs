@@ -41,11 +41,14 @@ namespace testui
 
             for (int i = 0; i < rank.Count; i++)
             {
-                result[i] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection=FlowDirection.RightToLeft };
-                result[i].Children.Add(new TextBlock { Text = (i + 1).ToString() }); //#
                 string teamname = rank.GetStringAt(Convert.ToUInt32(i));
+                JsonObject team = j["team"].GetObject()[teamname].GetObject();
+                result[i] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection=FlowDirection.RightToLeft };
+
+                //#    name    score    win    lost    
+                result[i].Children.Add(new TextBlock { Text = (i + 1).ToString() }); 
                 result[i].Children.Add(new TextBlock { Text = teamname, Margin = new Thickness(12, 0, 12, 0) });
-                result[i].Children.Add(new TextBlock { Text = j["team"].GetObject()[teamname].GetObject()["score"].GetNumber().ToString() });
+                result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
                 result[i].Children.Add(new TextBlock { Text = "برد", Margin = new Thickness(12, 0, 12, 0) });
                 result[i].Children.Add(new TextBlock { Text = "باخت" });
             }

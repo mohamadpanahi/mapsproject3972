@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Text.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -97,6 +98,24 @@ namespace testui
                     Frame.Navigate(typeof(intro));
                 }
             }
+        }
+
+        private void Txt_league_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                btn_addleague.Focus(FocusState.Keyboard);
+        }
+
+        private void Txt_league_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetter(c) || c == ' ') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "fa")));
+            if (b)
+            {
+                lbl_error.Visibility = Visibility.Visible;
+                lbl_error.Text = "نام لیگ باید تنها شامل حروف فارسی باشد";
+            }
+            else
+                lbl_error.Visibility = Visibility.Collapsed;
         }
     }
 }

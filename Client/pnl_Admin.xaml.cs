@@ -39,8 +39,9 @@ namespace testui
             {
                 frm.Navigate(typeof(AddLeague), acc);
             }
-            else
-                nav.Header = acc.Name;
+            else if (args.InvokedItemContainer == btn_signout)
+                Frame.Navigate(typeof(home));
+            
         }
     }
 }

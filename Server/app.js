@@ -4,12 +4,47 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec)
 
 async function run(dir) {
-    let result = await exec("E:/VS-projects/2019/query/Debug/query.exe " + dir);
+    let result = await exec("E:/project/C++/project/Query/x64/Debug/Query.exe " + dir);
     return result.stdout;
 }
 
+const colors = {
+    Reset: "\x1b[0m",
+    Bright: "\x1b[1m",
+    Dim: "\x1b[2m",
+    Underscore: "\x1b[4m",
+    Blink: "\x1b[5m",
+    Reverse: "\x1b[7m",
+    Hidden: "\x1b[8m",
+    fg: {
+        Black: "\x1b[30m",
+        Red: "\x1b[31m",
+        Green: "\x1b[32m",
+        Yellow: "\x1b[33m",
+        Blue: "\x1b[34m",
+        Magenta: "\x1b[35m",
+        Cyan: "\x1b[36m",
+        White: "\x1b[37m",
+        Crimson: "\x1b[38m"
+    },
+    bg: {
+        Black: "\x1b[40m",
+        Red: "\x1b[41m",
+        Green: "\x1b[42m",
+        Yellow: "\x1b[43m",
+        Blue: "\x1b[44m",
+        Magenta: "\x1b[45m",
+        Cyan: "\x1b[46m",
+        White: "\x1b[47m",
+        Crimson: "\x1b[48m"
+    }
+};
+
 http.createServer(async function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
+
+    var date = new Date(Date.now());
+    var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
     let ur = url.parse(req.url, true);
     var q = ur.query;
@@ -117,10 +152,12 @@ http.createServer(async function (req, res) {
         cmd = "error";
     //==============================================================
     var result = await run(cmd);
-    console.log("----------------------------");
-    console.log("Request -> ");
-    console.log(q);
-    console.log("cmd -> \t" + cmd);
-    console.log("Result -> \t" + result + "\n");
+
+    console.log(colors.bg.White, colors.fg.Red, "---------------", colors.fg.Black, time, colors.fg.Red, "---------------", colors.Reset);
+    console.log(colors.bg.White, colors.fg.Black, "Request -> ", colors.Reset, q);
+    console.log(colors.bg.White, colors.fg.Black, "cmd     -> ",  colors.bg.Black, colors.fg.Cyan, cmd);
+    console.log(colors.bg.White, colors.fg.Black, "Result  -> ", colors.bg.Black , colors.fg.Red, result,colors.Reset, "\n");
+   
+    
     res.end(result);
 }).listen(1379);
