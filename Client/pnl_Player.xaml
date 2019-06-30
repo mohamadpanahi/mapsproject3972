@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="testui.pnl_Admin"
+    x:Class="testui.pnl_Player"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:testui"
@@ -9,14 +9,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="nav" FlowDirection="RightToLeft" ItemInvoked="Nav_ItemInvoked" IsSettingsVisible="False">
+        <NavigationView x:Name="nav" FlowDirection="RightToLeft" IsSettingsVisible="False">
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader Content="مدیریت لیگ ها"/>
-                <NavigationViewItem Icon="Add" Content="لیگ جدید" x:Name="btn_addleague" />
-                <NavigationViewItem Icon="Pause" Content="تعلیق و فعال سازی لیگ" x:Name="btn_deleteleague" />
-                <NavigationViewItem Icon="Edit" Content="ویرایش لیگ (نسخه 1.3.7.9.0.2.0.8)" x:Name="btn_editleague" />
-                <NavigationViewItem Icon="Flag" Content="اتمام لیگ" x:Name="btn_endleague" />
+                <NavigationViewItem Icon="Home" Content="صفحه اصلی" x:Name="btn_home" />
                 <NavigationViewItemSeparator/>
+                <NavigationViewItem Icon="Edit" Content="ویرایش اطلاعات" x:Name="btn_edit" />
+                <NavigationViewItem Icon="add" Content="ایجاد تیم" x:Name="btn_addteam" />
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="مدیریت لیگ ها"/>
+                <NavigationViewItem Icon="Edit" Content="ویرایش لیگ" x:Name="btn_editleague" />
+                <NavigationViewItem Icon="Flag" Content="اتمام لیگ" x:Name="btn_endleague" />
                 <NavigationViewItemHeader Content="مدیریت مسابقات"/>
                 <NavigationViewItem Icon="Add" Content="مسابقه جدید" x:Name="btn_addcompetetion" />
                 <NavigationViewItem Icon="Delete" Content="حذف مسابقه" x:Name="btn_deletecompetition" />
@@ -30,9 +32,8 @@
             <NavigationView.PaneFooter>
                 <NavigationViewItem Icon="Go" Content="خروج" x:Name="btn_signout" />
             </NavigationView.PaneFooter>
-            
+
             <Frame x:Name="frm" FlowDirection="LeftToRight"/>
         </NavigationView>
     </Grid>
 </Page>
-    

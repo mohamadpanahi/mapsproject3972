@@ -6,7 +6,6 @@ History::~History() {}
 void History::add(string sport, json hist)
 {
 	j[sport].push_back(hist);
-	cout << j << endl;
 }
 
 string History::basicbigsearch(json js, string path, string request)

@@ -71,6 +71,8 @@ void sport(char* info[])
 		cout << league.add_sport(info[1]);//sport
 	else if (!strcmp(info[0], "name"))
 		cout << league.leaguenames();
+	else if (!strcmp(info[0], "activename"))
+		cout << league.leagueactivenames();
 	else
 		throw invalid_argument("Error 302: invalid argument in sport");
 }
@@ -84,6 +86,10 @@ void league(char* info[])
 	else if (!strcmp(info[0], "delete"))
 	{
 		cout << league.del_league(info[1], info[2]);//sport league
+	}
+	else if (!strcmp(info[0], "end"))
+	{
+		cout << league.end_league(info[1], info[2]);//sport league
 	}
 	else if (!strcmp(info[0], "active"))
 	{

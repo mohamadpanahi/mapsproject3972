@@ -19,22 +19,36 @@ namespace testui
         {
             JsonObject.TryParse(await server.get("type=sportname"), out name);
         }
+        public async Task initial2()
+        {
+            JsonObject.TryParse(await server.get("type=sportactivename"), out name);
+        }
 
         public async Task<bool> addSport(string sport)
         {
             string res = await server.get($"type=sportadd&sport={Useful.Fa_En(sport)}");
             return res == "1";
         }
-        public async Task<bool> addLeague(string sport, string league)
+        public async Task<bool> addLeague(string sport, string league, int teamNumber, int memberNumber)
         {
-            string res = await server.get($"type=leagueadd&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&info=$isleague$:true");
-            return res == "1";
+            return await server.get($"type=leagueadd&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&info=$isleague$:true,$nteam$:{teamNumber},$nmember$:{memberNumber}") == "1";
         }
-
+        public async Task<bool> activeleague(string sport, string league)
+        {
+            return (await server.get($"type=leagueactive&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}") == "1");
+        }
+        public async Task<bool> inactiveleague(string sport, string league)
+        {
+            return (await server.get($"type=leaguedelete&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}") == "1");
+        }
+        public async Task<bool> endleague(string sport, string league)
+        {
+            return (await server.get($"type=leagueend&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}") == "1");
+        }
         public async Task<StackPanel[]> Rank(string sport, string league)
         {
             JsonObject j;
-            JsonObject.TryParse(await server.get($"type=leaguerank&sport={sport}&league={league}"), out j);
+            JsonObject.TryParse(await server.get($"type=leaguerank&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}"), out j);
             JsonArray rank = j["rank"].GetArray();
             StackPanel[] result = new StackPanel[rank.Count];
             
@@ -45,12 +59,39 @@ namespace testui
                 JsonObject team = j["team"].GetObject()[teamname].GetObject();
                 result[i] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection=FlowDirection.RightToLeft };
 
-                //#    name    score    win    lost    
+                //#    name   
                 result[i].Children.Add(new TextBlock { Text = (i + 1).ToString() }); 
                 result[i].Children.Add(new TextBlock { Text = teamname, Margin = new Thickness(12, 0, 12, 0) });
-                result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
-                result[i].Children.Add(new TextBlock { Text = "برد", Margin = new Thickness(12, 0, 12, 0) });
-                result[i].Children.Add(new TextBlock { Text = "باخت" });
+
+                switch (sport)
+                {
+                    case "clp ba DFAgl"://h1    h2    h3    fault
+                        result[i].Children.Add(new TextBlock { Text = team["h1"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["h2"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = team["h3"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["fault"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        break;
+                    case "wDdbaA jodF CabFCaFaC":
+                        result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["win"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = team["lost"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["equal"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = team["wg"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["lg"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = (team["wg"].GetNumber() - team["lg"].GetNumber()).ToString() });
+                        break;
+                    case "yaCdl pbyE":
+                        result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["win"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = team["lost"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["equal"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = team["wk"].GetNumber().ToString() });
+                        result[i].Children.Add(new TextBlock { Text = team["lk"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                        result[i].Children.Add(new TextBlock { Text = (team["wk"].GetNumber() - team["lk"].GetNumber()).ToString() });
+                        break;
+                    default:
+                        break;
+                }
             }
             return result;
         }

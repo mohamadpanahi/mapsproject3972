@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Page_SizeChanged" Loaded="Page_Loaded">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    SizeChanged="Page_SizeChanged" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +22,9 @@
             <TextBlock x:Name="lbl_error" Text="Err" Foreground="Red" Visibility="Collapsed" Margin="0,12,0,0"/>
             <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" SelectionChanged="Cmb_sport_SelectionChanged" TabIndex="0"></ComboBox>
             <TextBox x:Name="txt_league" Header="نام لیگ:" PlaceholderText="سری آ تورقوزآباد" TabIndex="1" KeyDown="Txt_league_KeyDown" BeforeTextChanging="Txt_league_BeforeTextChanging"/>
-            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click" TabIndex="2"/>
+            <TextBox x:Name="txt_teamnum" PlaceholderText="تعداد تیم های حاضر در لیگ" Header="تعداد تیم ها:" TabIndex="2" Margin="0,12,0,0" BeforeTextChanging="Txt_teamnum_BeforeTextChanging" KeyDown="Txt_teamnum_KeyDown"/>
+            <TextBox x:Name="txt_membernum" PlaceholderText="تعداد اعضای هر تیم" Header="تعداد اعضا:" TabIndex="3" Margin="0,12,0,0" BeforeTextChanging="Txt_membernum_BeforeTextChanging" KeyDown="Txt_membernum_KeyDown"/>
+            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click" TabIndex="4"/>
         </StackPanel>
     </Grid>
 </Page>

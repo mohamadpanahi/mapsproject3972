@@ -4,7 +4,7 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec)
 
 async function run(dir) {
-    let result = await exec("E:/project/C++/project/Query/x64/Debug/Query.exe " + dir);
+    let result = await exec("E:/VS-projects/2019/query/Debug/query.exe " + dir);
     return result.stdout;
 }
 
@@ -94,12 +94,18 @@ http.createServer(async function (req, res) {
     else if (q.type == "sportname") {
         cmd = "sport name";
     }
+    else if (q.type == "sportactivename") {
+        cmd = "sport activename";
+    }
     //======================== league ================================
     else if (q.type == "leagueadd" && q.sport != undefined && q.league != undefined && q.info != undefined) {
         cmd = `league add "${q.sport}" "${q.league}" "${q.info}"`;
     }
     else if (q.type == "leaguedelete" && q.sport != undefined && q.league != undefined) {
         cmd = `league delete "${q.sport}" "${q.league}"`;
+    }
+    else if (q.type == "leagueend" && q.sport != undefined && q.league != undefined) {
+        cmd = `league end "${q.sport}" "${q.league}"`;
     }
     else if (q.type == "leagueedit" && q.sport != undefined && q.league != undefined && q.newinfo != undefined) {
         cmd = `league edit "${q.sport}" "${q.league}" "${q.newinfo}"`;
@@ -155,8 +161,8 @@ http.createServer(async function (req, res) {
 
     console.log(colors.bg.White, colors.fg.Red, "---------------", colors.fg.Black, time, colors.fg.Red, "---------------", colors.Reset);
     console.log(colors.bg.White, colors.fg.Black, "Request -> ", colors.Reset, q);
-    console.log(colors.bg.White, colors.fg.Black, "cmd     -> ",  colors.bg.Black, colors.fg.Cyan, cmd);
-    console.log(colors.bg.White, colors.fg.Black, "Result  -> ", colors.bg.Black , colors.fg.Red, result,colors.Reset, "\n");
+    console.log(colors.bg.White, colors.fg.Black, "cmd     -> ",  colors.bg.Black, colors.fg.Red, cmd);
+    console.log(colors.bg.White, colors.fg.Black, "Result  -> ", colors.bg.Black , colors.fg.Cyan, result,colors.Reset, "\n");
    
     
     res.end(result);

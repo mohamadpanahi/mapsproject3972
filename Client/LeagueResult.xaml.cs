@@ -60,8 +60,7 @@ namespace testui
 
         private async void Lst_league_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StackPanel[] stacks = await sport.Rank("ts", "tl");
-            //StackPanel[] aa = await sport.Rank(Useful.Fa_En(cmb_sport.SelectedValue.ToString()), Useful.Fa_En(lst_league.SelectedValue.ToString()));
+            StackPanel[] stacks = await sport.Rank(Useful.Fa_En(cmb_sport.SelectedValue.ToString()), Useful.Fa_En(lst_league.SelectedValue.ToString()));
             foreach (var st in stacks)
             {
                 lst_table.Items.Add(st);

@@ -23,6 +23,22 @@ json League::leaguenames()
 
 	return result;
 }
+json League::leagueactivenames()
+{
+	json result = json::parse("{}");
+
+	for (auto iter = j.begin(); iter != j.end(); iter++)
+	{
+		result[iter.key()] = json::parse("{}");
+		for (auto it = (*iter).begin(); it != (*iter).end(); it++)
+		{
+			json t = json::parse("{\"" + it.key() + "\":" + ((*it)["active"] ? "true" : "false") + "}");
+			string s = t.dump();
+			result[iter.key()].insert(t.begin(), t.end());
+		}
+	}
+	return result;
+}
 json League::sendrank(string sport, string league)
 {
 	if (!find(j, sport) || !find(j[sport], league))
@@ -84,7 +100,7 @@ bool League::end_league(string sport, string league)
 	if (!find(j, sport) || !find(j[sport], league))
 		return false;
 	//may construction of history throw
-	History h("h.json");
+	History h(PATH_HISTORY);
 	h.add(sport, j[sport][league]);
 	j[sport].erase(league);
 	return true;

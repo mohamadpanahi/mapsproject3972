@@ -39,9 +39,14 @@ namespace testui
             {
                 frm.Navigate(typeof(AddLeague), acc);
             }
+            else if(args.InvokedItemContainer == btn_deleteleague)
+                frm.Navigate(typeof(DeleteLeague), acc);
+            else if (args.InvokedItemContainer == btn_endleague)
+                frm.Navigate(typeof(EndLeague), acc);
+            else if (args.InvokedItemContainer == btn_addcompetetion)
+                frm.Navigate(typeof(Addcompetition), acc);
             else if (args.InvokedItemContainer == btn_signout)
                 Frame.Navigate(typeof(home));
-            
         }
     }
 }

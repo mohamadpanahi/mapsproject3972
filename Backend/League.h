@@ -15,6 +15,7 @@ public:
 
 	bool add_sport(string name);
 	json leaguenames();
+	json leagueactivenames();
 	json sendrank(string sport, string league);
 
 	//league information**************************************************
