@@ -36,10 +36,6 @@ namespace testui
             lst_league.Width = Frame.ActualWidth / 4;
             st.Width = Frame.ActualWidth / 4;
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            acc = e.Parameter as Admin;
-        }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await sport.initial();
@@ -64,6 +60,10 @@ namespace testui
                     break;
             }
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            acc = e.Parameter as Admin;
+        }
 
         private void Cmb_sport_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -73,7 +73,6 @@ namespace testui
             foreach (var league in jj)
                 lst_league.Items.Add(Useful.En_Fa(league.GetString()));
         }
-
         private async void Btn_addleague_Click(object sender, RoutedEventArgs e)
         {
             if (cmb_sport.SelectedIndex == -1 || txt_league.Text == "" || txt_teamnum.Text == "" || txt_membernum.Text == "")
@@ -85,7 +84,7 @@ namespace testui
             {
                 lbl_error.Visibility = Visibility.Collapsed;
 
-                bool res = await sport.addLeague(Useful.Fa_En(cmb_sport.SelectedValue.ToString()), Useful.Fa_En(txt_league.Text), Convert.ToInt32(txt_teamnum.Text), Convert.ToInt32(txt_membernum.Text));
+                bool res = await sport.addLeague(cmb_sport.SelectedValue.ToString(), txt_league.Text, Convert.ToInt32(txt_teamnum.Text), Convert.ToInt32(txt_membernum.Text));
                 if (!res)
                 {
                     lbl_error.Text = "خاک تو سر خرت.\nمگه نگفتم اونورو نگا کن تکراری نباشه.\nاحمق خنده دار بنجل کچل";
@@ -96,12 +95,6 @@ namespace testui
                     Frame.Navigate(typeof(intro));
                 }
             }
-        }
-
-        private void Txt_league_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-                txt_teamnum.Focus(FocusState.Keyboard);
         }
 
         private void Txt_league_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
@@ -115,23 +108,24 @@ namespace testui
             else
                 lbl_error.Visibility = Visibility.Collapsed;
         }
-
         private void Txt_teamnum_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !(char.IsNumber(c)));
         }
-
         private void Txt_membernum_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
             args.Cancel = args.NewText.Any(c => !(char.IsNumber(c)));
         }
-
+        private void Txt_league_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+                txt_teamnum.Focus(FocusState.Keyboard);
+        }
         private void Txt_teamnum_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
                 txt_membernum.Focus(FocusState.Keyboard);
         }
-
         private void Txt_membernum_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)

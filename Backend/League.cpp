@@ -106,7 +106,6 @@ bool League::end_league(string sport, string league)
 	return true;
 }
 
-
 bool League::add_team(string sport, string league, string team, string input)
 {
 	if (!find(j, sport) || !find(j[sport], league) || find(j[sport][league]["team"], team))
@@ -161,16 +160,19 @@ bool League::del_team_members(string sport, string league, string team, string p
 	return true;
 }
 
-
-bool League::add_competition(string sport, string league, string competition, json input)
+bool League::add_competition(string sport, string league, string competition, string info)
 {
-	if (!find(j, sport) || !find(j[sport], league)  || !find(j[sport][league]["team"], input["team1"]) || !find(j[sport][league]["team"], input["team2"]))
+	json input = json::parse("{\"" + competition + "\":{" + info + "}}");
+	string t1, t2;
+	stringstream ss;
+	ss << competition;
+	getline(ss, t1, '-');
+	getline(ss, t2, '-');
+
+	if (!find(j, sport) || !find(j[sport], league)  || !find(j[sport][league]["team"], t1) || !find(j[sport][league]["team"], t2) || find(j[sport][league]["competition"],competition))
 		return false;
-	//stoi exception
-	string s = getfreeid(j[sport][league]["competition"], 1);
-	json jj = json::parse("{\"" + s + "\":" + input.dump() + "}");
-	jj[s]["active"] = true;
-	j[sport][league]["competition"].insert(jj.begin(), jj.end());
+
+	j[sport][league]["competition"].insert(input.begin(), input.end());
 	return true;
 }
 bool League::edit_competition(string sport, string league, string competition, string input)
@@ -187,7 +189,7 @@ bool League::del_competition(string sport, string league, string competition)
 {
 	if (!find(j, sport) || !find(j[sport], league) || !find(j[sport][league]["competition"], competition))
 		return false;
-	j[sport][league]["competition"][competition]["active"] = false;
+	j[sport][league]["competition"].erase(competition);
 	return true;
 }
 bool League::active_competition(string sport, string league, string competition)

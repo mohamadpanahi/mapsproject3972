@@ -16,29 +16,28 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="st_titlebar" Grid.Row="0" Orientation="Horizontal" Background="Transparent"/>
-        <StackPanel x:Name="st_sport" Grid.Row="1" FlowDirection="RightToLeft" HorizontalAlignment="Left" Width="535">
-            <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" TabIndex="0" SelectionChanged="Cmb_sport_SelectionChanged"/>
-            <ListBox x:Name="lst_league"/>
-        </StackPanel>
-        <!--<StackPanel x:Name="st" Grid.Row="1" HorizontalAlignment="Left" FlowDirection="RightToLeft" Width="300" VerticalAlignment="Top" MinWidth="250">
-            <TextBlock Text="اون ورا نگاه کن اسم تکراری انتخاب نکنی." Foreground="Gray"/>
-            <TextBlock x:Name="lbl_error" Text="Err" Foreground="Red" Visibility="Collapsed" Margin="0,12,0,0"/>
-            <Button x:Name="btn_addleague"  Margin="0,12,0,0" Content="ایجاد لیگ" HorizontalAlignment="Center" Click="Btn_addleague_Click" TabIndex="4"/>
-        </StackPanel>-->
-        <StackPanel FlowDirection="RightToLeft" Grid.Row="1" Background="Green" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Background="Red">
-                <ComboBox x:Name="cmb_t1" PlaceholderText="تیم اول را انتخاب کنید" VerticalAlignment="Bottom" Margin="0,0,0,16" HorizontalAlignment="Stretch"/>
-                <Image Source="/Assets/vs3.png" Height="156" Width="319"/>
-                <ComboBox x:Name="cmb_t2" PlaceholderText="تیم دوم را انتخاب کنید" VerticalAlignment="Bottom" Margin="0,0,0,16" HorizontalAlignment="Stretch"/>
+        <!--<StackPanel x:Name="st_kol" Grid.Row="1" FlowDirection="LeftToRight" Orientation="Horizontal">-->
+            <StackPanel x:Name="st_sport" Grid.Row="1" FlowDirection="RightToLeft" HorizontalAlignment="Left" Width="535">
+                <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" TabIndex="0" SelectionChanged="Cmb_sport_SelectionChanged"/>
+                <ListBox x:Name="lst_league" SelectionChanged="Lst_league_SelectionChanged" TabIndex="1" IsTabStop="True"/>
             </StackPanel>
-            <StackPanel Background="Yellow">
-                <TextBlock Margin="0,0,0,4">تاریخ برگزاری:</TextBlock>
-                <DatePicker x:Name="date_add" CalendarIdentifier="PersianCalendar" HorizontalAlignment="Left"/>
-                <TextBlock Margin="0,12,0,4">زمان برگزاری:</TextBlock>
-                <TimePicker x:Name="time_add" HorizontalAlignment="Left"/>
-                <TextBox Header="مکان برگزاری:" PlaceholderText="محل برگزاری مسابقه را وارد کنید" Margin="0,12,0,0"/>
-                <Button Content="ایجاد مسابقه" HorizontalAlignment="Center" Margin="0,12,0,0"/>
+            
+        <StackPanel x:Name="st_vs" FlowDirection="RightToLeft" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="24,0,24,0">
+            <TextBlock x:Name="lbl_error" Text="Error" Foreground="Red" Visibility="Collapsed"/>
+            <StackPanel Orientation="Horizontal" >
+                    <ComboBox x:Name="cmb_t1" PlaceholderText="تیم اول را انتخاب کنید" VerticalAlignment="Bottom" Margin="0,0,0,16" HorizontalAlignment="Stretch" SelectionChanged="Cmb_t1_SelectionChanged" Width="170" FlowDirection="LeftToRight" TabIndex="2"/>
+                    <Image x:Name="img_vs" Source="/Assets/vs3.png" Height="156" Stretch="Fill"/>
+                    <ComboBox x:Name="cmb_t2" PlaceholderText="تیم دوم را انتخاب کنید" VerticalAlignment="Bottom" Margin="0,0,0,16" HorizontalAlignment="Stretch" Width="170" TabIndex="3"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,4">تاریخ برگزاری:</TextBlock>
+                    <DatePicker x:Name="date_add" CalendarIdentifier="PersianCalendar" HorizontalAlignment="Left" TabIndex="4"/>
+                    <TextBlock Margin="0,12,0,4">زمان برگزاری:</TextBlock>
+                    <TimePicker x:Name="time_add" HorizontalAlignment="Left" Width="296" TabIndex="5"/>
+                    <TextBox x:Name="txt_place" Header="مکان برگزاری:" PlaceholderText="محل برگزاری مسابقه را وارد کنید" Margin="0,12,0,0" BeforeTextChanging="Txt_place_BeforeTextChanging" TabIndex="6"/>
+                    <Button x:Name="btn_addcompetition" Content="ایجاد مسابقه" HorizontalAlignment="Center" Margin="0,12,0,0" Click="Btn_addcompetition_Click" TabIndex="8"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        <!--</StackPanel>-->
     </Grid>
 </Page>

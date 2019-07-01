@@ -114,6 +114,8 @@ namespace testui
                         en += 'H'; break;
                     case 'ئ':
                         en += 'I'; break;
+                    case '،':
+                        en += ','; break;
                     default:
                         en += ch; break;
                 }
@@ -200,6 +202,8 @@ namespace testui
                         fa += 'ء'; break;
                     case 'I':
                         fa += 'ئ'; break;
+                    case ',':
+                        fa += '،'; break;
                     default:
                         fa += ch; break;
                 }

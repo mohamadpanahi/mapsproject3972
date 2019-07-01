@@ -23,7 +23,6 @@ namespace testui
         {
             JsonObject.TryParse(await server.get("type=sportactivename"), out name);
         }
-
         public async Task<bool> addSport(string sport)
         {
             string res = await server.get($"type=sportadd&sport={Useful.Fa_En(sport)}");
@@ -94,6 +93,24 @@ namespace testui
                 }
             }
             return result;
+        }
+        public async Task<JsonObject> leagueinfo(string sport, string league)
+        {
+            JsonObject j;
+            JsonObject.TryParse(await server.get($"type=leaguerank&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}"), out j);
+            return j;
+        }
+        public async Task<bool> addcompetition(string sport, string league, string team1, string team2, DateTimeOffset date, TimeSpan time, string place)
+        {
+            return await server.get($"type=competitionadd&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}&info=$date$:{"{"}$y$:{date.Year},$m$:{date.Month},$d$:{date.Day}{"}"},$time$:{"{"}$h$:{time.Hours},$m$:{time.Minutes}{"}"},$place$:${Useful.Fa_En(place)}$") == "1";
+        }
+        public async Task<bool> editcompetition(string sport, string league, string team1, string team2, DateTimeOffset date, TimeSpan time, string place)
+        {
+            return await server.get($"type=competitionedit&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}&newinfo=$date$:{"{"}$y$:{date.Year},$m$:{date.Month},$d$:{date.Day}{"}"},$time$:{"{"}$h$:{time.Hours},$m$:{time.Minutes}{"}"},$place$:${Useful.Fa_En(place)}$") == "1";
+        }
+        public async Task<bool> deletecompetition(string sport, string league, string team1, string team2)
+        {
+            return await server.get($"type=competitiondelete&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}") == "1";
         }
     }
 }

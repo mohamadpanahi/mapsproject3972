@@ -57,7 +57,7 @@ namespace testui
             {
                 lbl_error.Visibility = Visibility.Collapsed;
 
-                bool res = await sport.activeleague(Useful.Fa_En(cmb_sport.SelectedValue.ToString()), ((lst_league.SelectedItem as StackPanel).Children.Last() as TextBlock).Text);
+                bool res = await sport.activeleague(cmb_sport.SelectedValue.ToString(), ((lst_league.SelectedItem as StackPanel).Children.Last() as TextBlock).Text);
                 if (!res)
                 {
                     lbl_error.Text = "هههههههههه";
@@ -82,7 +82,7 @@ namespace testui
             {
                 lbl_error.Visibility = Visibility.Collapsed;
 
-                bool res = await sport.inactiveleague(Useful.Fa_En(cmb_sport.SelectedValue.ToString()), ((lst_league.SelectedItem as StackPanel).Children.Last() as TextBlock).Text);
+                bool res = await sport.inactiveleague(cmb_sport.SelectedValue.ToString(), ((lst_league.SelectedItem as StackPanel).Children.Last() as TextBlock).Text);
                 if (!res)
                 {
                     lbl_error.Text = "هههههههههه";

@@ -144,7 +144,7 @@ void competition(char* info[])
 	League league(PATH_LEAGUE);
 	if (!strcmp(info[0], "add"))
 	{
-		cout << league.add_competition(info[1], info[2], info[3], json::parse("{" + (string)info[4] + "}"));//sport league competition info
+		cout << league.add_competition(info[1], info[2], info[3], correctargv(info[4]));//sport league competition info
 	}
 	else if (!strcmp(info[0], "delete"))
 	{
@@ -160,7 +160,7 @@ void competition(char* info[])
 	}
 	else if (!strcmp(info[0], "edit"))
 	{
-		cout << league.edit_competition(info[1], info[2], info[3], info[4]);//sport league competition newinfo
+		cout << league.edit_competition(info[1], info[2], info[3], correctargv(info[4]));//sport league competition newinfo
 	}
 	else
 		throw invalid_argument("Error 305: invalid argument in competition");

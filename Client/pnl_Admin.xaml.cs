@@ -45,6 +45,10 @@ namespace testui
                 frm.Navigate(typeof(EndLeague), acc);
             else if (args.InvokedItemContainer == btn_addcompetetion)
                 frm.Navigate(typeof(Addcompetition), acc);
+            else if (args.InvokedItemContainer == btn_deletecompetition)
+                frm.Navigate(typeof(DeleteCompetition), acc);
+            else if (args.InvokedItemContainer == btn_editcompetition)
+                frm.Navigate(typeof(EditCompetition), acc);
             else if (args.InvokedItemContainer == btn_signout)
                 Frame.Navigate(typeof(home));
         }

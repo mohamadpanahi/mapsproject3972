@@ -35,7 +35,7 @@ public:
 	bool del_team_members(string sport, string league, string team, string player);
 	
 	//competition information*********************************************
-	bool add_competition(string sport, string league, string competition, json input);
+	bool add_competition(string sport, string league, string competition, string info);
 	bool edit_competition(string sport, string league, string competition, string input);
 	bool del_competition(string sport, string league, string competition);
 	bool active_competition(string sport, string league, string competition);

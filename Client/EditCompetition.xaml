@@ -6,9 +6,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Page_SizeChanged" Loaded="Page_Loaded">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="32"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel x:Name="st_titlebar" Grid.Row="0" Orientation="Horizontal" Background="Transparent" Height="32"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel x:Name="st_sport" FlowDirection="RightToLeft" Grid.Column="0" HorizontalAlignment="Left">
+                <ComboBox x:Name="cmb_sport" PlaceholderText="ورزش را انتخاب کنید" Margin="0,12,0,12" HorizontalAlignment="Stretch" TabIndex="0" SelectionChanged="Cmb_sport_SelectionChanged"/>
+                <ListBox x:Name="lst_league" TabIndex="1" IsTabStop="True" SelectionChanged="Lst_league_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FlowDirection="RightToLeft">
+                <TextBlock x:Name="lbl_error" Text="Err" Foreground="Red" Visibility="Collapsed"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <ComboBox x:Name="cmb_t1" PlaceholderText="تیم اول را انتخاب کنید" FlowDirection="LeftToRight" SelectionChanged="Cmb_t1_SelectionChanged" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Width="200" TabIndex="2"/>
+                    <TextBlock Text="VS" Margin="24,0,24,0" FontSize="60" FontWeight="Normal" FontStyle="Normal"/>
+                    <ComboBox x:Name="cmb_t2" PlaceholderText="تیم دوم را انتخاب کنید" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" SelectionChanged="Cmb_t2_SelectionChanged" Width="200" TabIndex="3"/>
+                </StackPanel>
+                <TextBlock Text="تاریخ برگزاری:" Margin="0,0,0,4" />
+                <DatePicker x:Name="date" Margin="0,0,0,12" CalendarIdentifier="PersianCalendar" TabIndex="4"/>
+                <TextBlock Text="زمان برگزاری:" Margin="0,0,0,4"/>
+                <TimePicker x:Name="time" Margin="0,0,0,12" Width="296" TabIndex="5"/>
+                <TextBox x:Name="txt_place" Header="مکان برگزاری:" Margin="0,0,0,12" TabIndex="6" BeforeTextChanging="Txt_place_BeforeTextChanging"/>
+                <Button x:Name="btn_edit" HorizontalAlignment="Center" Content="ویرایش مسابقه" TabIndex="7" Click="Btn_edit_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
