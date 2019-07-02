@@ -32,13 +32,10 @@ namespace testui
         {
             acc = e.Parameter as Admin;
         }
-
         private void Nav_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.InvokedItemContainer == btn_addleague)
-            {
                 frm.Navigate(typeof(AddLeague), acc);
-            }
             else if(args.InvokedItemContainer == btn_deleteleague)
                 frm.Navigate(typeof(DeleteLeague), acc);
             else if (args.InvokedItemContainer == btn_endleague)
@@ -49,8 +46,11 @@ namespace testui
                 frm.Navigate(typeof(DeleteCompetition), acc);
             else if (args.InvokedItemContainer == btn_editcompetition)
                 frm.Navigate(typeof(EditCompetition), acc);
+            else if (args.InvokedItemContainer == btn_editresult)
+                frm.Navigate(typeof(EditResult), acc);
             else if (args.InvokedItemContainer == btn_signout)
                 Frame.Navigate(typeof(home));
+
         }
     }
 }

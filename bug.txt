@@ -1,13 +1,6 @@
-﻿1- in (generatecode && retrievepass) check connection to send email
-4- how deleted account can active?
-9- classification :O -> cleaning
-10-baz negahdashtan query on server
-13-search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
-17-فارسی نویسی و ارسال فارسی به cmd
-18-چک کردن res
-21-رنگ و جزئیات ارورها
-22-رمز نگاری
-23-cnd_continuesignup -> چک کردن textbox ها
-24-فراموشی رمزعبور
-25-بازیابی حساب
+﻿00- in (generatecode && retrievepass) check connection to send email
+00- classification :O -> cleaning
+00-baz negahdashtan query on server
+00-search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
+00-رمز نگاری
 26-

@@ -83,11 +83,21 @@ namespace testui
         }
         private async void Lst_league_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cmb_t1.Items.Clear();
-            JsonArray teams = (await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString()))["rank"].GetArray();
-            int n = teams.Count;
-            for (int i = 0; i < n; i++)
-                cmb_t1.Items.Add(teams.GetStringAt(Convert.ToUInt32(i)));
+            lbl_error.Visibility = Visibility.Collapsed;
+            if (lst_league.SelectedIndex == -1) return;
+            try
+            {
+                cmb_t1.Items.Clear();
+                JsonArray teams = (await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString()))["rank"].GetArray();
+                int n = teams.Count;
+                for (int i = 0; i < n; i++)
+                    cmb_t1.Items.Add(Useful.En_Fa(teams.GetStringAt(Convert.ToUInt32(i))));
+            }
+            catch
+            {
+                lbl_error.Text = "هیچ مسابقه ای وجود ندارد";
+                lbl_error.Visibility = Visibility.Visible;
+            }
         }
         private void Cmb_t1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

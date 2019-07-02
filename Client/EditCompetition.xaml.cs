@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -79,13 +80,23 @@ namespace testui
         }
         private async void Lst_league_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            leagueinfo = await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString());
-            JsonArray teams = leagueinfo["rank"].GetArray();
+            lbl_error.Visibility = Visibility.Collapsed;
+            if (lst_league.SelectedIndex == -1) return;
+            try
+            {
+                leagueinfo = await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString());
+                JsonArray teams = leagueinfo["rank"].GetArray();
 
-            cmb_t1.Items.Clear();
-            int n = teams.Count;
-            for (int i = 0; i < n; i++)
-                cmb_t1.Items.Add(teams.GetStringAt(Convert.ToUInt32(i)));
+                cmb_t1.Items.Clear();
+                int n = teams.Count;
+                for (int i = 0; i < n; i++)
+                    cmb_t1.Items.Add(Useful.En_Fa(teams.GetStringAt(Convert.ToUInt32(i))));
+            }
+            catch
+            {
+                lbl_error.Text = "هیچ مسابقه ای وجود ندارد";
+                lbl_error.Visibility = Visibility.Visible;
+            }
         }
         private void Cmb_t1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -96,10 +107,11 @@ namespace testui
         }
         private void Cmb_t2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            lbl_error.Visibility = Visibility.Collapsed;
+            if (cmb_t2.SelectedIndex == -1) return;
             try
             {
-                lbl_error.Visibility = Visibility.Collapsed;
-                JsonObject competition = leagueinfo["competition"].GetObject()[cmb_t1.SelectedValue.ToString() + '-' + cmb_t2.SelectedValue.ToString()].GetObject();
+                JsonObject competition = leagueinfo["competition"].GetObject()[Useful.Fa_En(cmb_t1.SelectedValue.ToString()) + '-' + Useful.Fa_En(cmb_t2.SelectedValue.ToString())].GetObject();
 
                 JsonObject temp = competition["date"].GetObject();
                 date.Date = new DateTimeOffset((int)temp["y"].GetNumber(), (int)temp["m"].GetNumber(), (int)temp["d"].GetNumber(), 0, 0, 0, new TimeSpan());
@@ -118,7 +130,7 @@ namespace testui
 
         private async void Btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            if (cmb_t1.SelectedIndex == -1 || cmb_t2.SelectedIndex == -1 || txt_place.Text == "") 
+            if (cmb_t1.SelectedIndex == -1 || cmb_t2.SelectedIndex == -1 || txt_place.Text == "")
             {
                 lbl_error.Text = "بی شعور گاو یعنی نمی فهمی باید همه اینا را پر کنی!\nببین با کیا شدیم 80 ملیون!";
                 lbl_error.Visibility = Visibility.Visible;
@@ -142,7 +154,11 @@ namespace testui
 
         private void Txt_place_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            bool b = args.Cancel = args.NewText.Any(c => !((char.IsLetter(c) || char.IsNumber(c) || c == ' ') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "fa")));
+            bool b = false;
+            if (args.NewText.Length == 1)
+            {
+                b = args.Cancel = args.NewText.Any(c => !((char.IsLetter(c) || char.IsNumber(c) || c == ' ') && (CoreTextServicesManager.GetForCurrentView().InputLanguage.LanguageTag == "fa")));
+            }
             if (b)
             {
                 lbl_error.Visibility = Visibility.Visible;

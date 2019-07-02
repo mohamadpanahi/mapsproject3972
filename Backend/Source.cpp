@@ -73,6 +73,8 @@ void sport(char* info[])
 		cout << league.leaguenames();
 	else if (!strcmp(info[0], "activename"))
 		cout << league.leagueactivenames();
+	else if (!strcmp(info[0], "upc"))
+		cout << league.unresulted_past_competition(info[1]);//sport
 	else
 		throw invalid_argument("Error 302: invalid argument in sport");
 }
@@ -114,7 +116,7 @@ void team(char* info[])
 	League league(PATH_LEAGUE);
 	if (!strcmp(info[0], "add"))
 	{
-		cout << league.add_team(info[1], info[2], info[3], info[4]);//sport league team info
+		cout << league.add_team(info[1], info[2], info[3], correctargv(info[4]));//sport league team info
 	}
 	else if (!strcmp(info[0], "delete"))
 	{
@@ -156,7 +158,7 @@ void competition(char* info[])
 	}
 	else if (!strcmp(info[0], "result"))
 	{
-		cout << league.edit_result(info[1], info[2], info[3], info[4]);//sport league competition result
+		cout << league.edit_result(info[1], info[2], info[3], info[4], correctargv(info[5]));//sport league competition result info
 	}
 	else if (!strcmp(info[0], "edit"))
 	{

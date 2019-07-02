@@ -76,13 +76,23 @@ namespace testui
         }
         private async void Lst_league_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            leagueinfo = await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString());
-            JsonArray teams = leagueinfo["rank"].GetArray();
+            lbl_error.Visibility = Visibility.Collapsed;
+            if (lst_league.SelectedIndex == -1) return;
+            try
+            {
+                leagueinfo = await sport.leagueinfo(cmb_sport.SelectedItem.ToString(), lst_league.SelectedItem.ToString());
+                JsonArray teams = leagueinfo["rank"].GetArray();
 
-            cmb_t1.Items.Clear();
-            int n = teams.Count;
-            for (int i = 0; i < n; i++)
-                cmb_t1.Items.Add(teams.GetStringAt(Convert.ToUInt32(i)));
+                cmb_t1.Items.Clear();
+                int n = teams.Count;
+                for (int i = 0; i < n; i++)
+                    cmb_t1.Items.Add(Useful.En_Fa(teams.GetStringAt(Convert.ToUInt32(i))));
+            }
+            catch
+            {
+                lbl_error.Text = "هیچ مسابقه ای وجود ندارد";
+                lbl_error.Visibility = Visibility.Visible;
+            }
         }
         private void Cmb_t1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -93,10 +103,11 @@ namespace testui
         }
         private void Cmb_t2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            lbl_error.Visibility = Visibility.Collapsed;
+            if (cmb_t2.SelectedIndex == -1) return;
             try
             {
-                lbl_error.Visibility = Visibility.Collapsed;
-                JsonObject competition = leagueinfo["competition"].GetObject()[cmb_t1.SelectedValue.ToString() + '-' + cmb_t2.SelectedValue.ToString()].GetObject();
+                JsonObject competition = leagueinfo["competition"].GetObject()[Useful.Fa_En(cmb_t1.SelectedValue.ToString()) + '-' + Useful.Fa_En(cmb_t2.SelectedValue.ToString())].GetObject();
 
                 JsonObject temp = competition["date"].GetObject();
                 date.Date = new DateTimeOffset((int)temp["y"].GetNumber(), (int)temp["m"].GetNumber(), (int)temp["d"].GetNumber(), 0, 0, 0, new TimeSpan());

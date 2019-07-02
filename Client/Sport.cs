@@ -112,5 +112,9 @@ namespace testui
         {
             return await server.get($"type=competitiondelete&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}") == "1";
         }
+        public async Task<bool> editresultcompetition(string sport, string league, string team1, string team2, string result, string info)
+        {
+            return await server.get($"type=competitionresult&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}&result={result}&info={info}")=="1";
+        }
     }
 }

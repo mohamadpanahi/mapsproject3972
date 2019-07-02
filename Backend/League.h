@@ -39,9 +39,10 @@ public:
 	bool edit_competition(string sport, string league, string competition, string input);
 	bool del_competition(string sport, string league, string competition);
 	bool active_competition(string sport, string league, string competition);
+	json unresulted_past_competition(string sport);
 
 	//5 23-25 24-26 29-27 25-10 10-15 2-3
-	bool edit_result(string sport, string league, string competition, string result);
+	bool edit_result(string sport, string league, string competition, string result, string teaminfo);
 
 	//search**************************************************************
 	json bigsearch(string search);

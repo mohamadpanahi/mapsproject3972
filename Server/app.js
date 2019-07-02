@@ -97,6 +97,9 @@ http.createServer(async function (req, res) {
     else if (q.type == "sportactivename") {
         cmd = "sport activename";
     }
+    else if (q.type == "sportupc" && q.sport != undefined) {
+        cmd = `sport upc "${q.sport}"`;
+    }
     //======================== league ================================
     else if (q.type == "leagueadd" && q.sport != undefined && q.league != undefined && q.info != undefined) {
         cmd = `league add "${q.sport}" "${q.league}" "${q.info}"`;
@@ -151,8 +154,8 @@ http.createServer(async function (req, res) {
     else if (q.type == "competitionactive" && q.sport != undefined && q.league != undefined && q.competition != undefined) {
         cmd = `competition active "${q.sport}" "${q.league}" "${q.competition}"`;
     }
-    else if (q.type == "competitionresult" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.result != undefined) {
-        cmd = `competition result "${q.sport}" "${q.league}" "${q.competition}" "${q.result}"`;
+    else if (q.type == "competitionresult" && q.sport != undefined && q.league != undefined && q.competition != undefined && q.result != undefined && q.info != undefined) {
+        cmd = `competition result "${q.sport}" "${q.league}" "${q.competition}" "${q.result}" "${q.info}"`;
     }
     else
         cmd = "error";
