@@ -20,25 +20,22 @@ namespace testui
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class pnl_Player : Page
+    public sealed partial class pnl_user : Page
     {
-        private Player acc;
-        public pnl_Player()
+        private Account acc;
+        public pnl_user()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            acc = e.Parameter as Player;
+            acc = e.Parameter as User;
         }
-
         private void Nav_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            if (args.InvokedItemContainer == btn_edit)
-                frm.Navigate(typeof(editinfoplayer), acc);
-            else if (args.InvokedItemContainer == btn_addteam)
-                frm.Navigate(typeof(Addteam), acc);
+            if(args.InvokedItemContainer == btn_edit)
+                frm.Navigate(typeof(editinfo), acc);
             else if (args.InvokedItemContainer == btn_leagueresult)
                 Frame.Navigate(typeof(LeagueResult));
         }

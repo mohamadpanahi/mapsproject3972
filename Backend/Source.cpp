@@ -116,7 +116,7 @@ void team(char* info[])
 	League league(PATH_LEAGUE);
 	if (!strcmp(info[0], "add"))
 	{
-		cout << league.add_team(info[1], info[2], info[3], correctargv(info[4]));//sport league team info
+		cout << league.add_team(info[1], info[2], info[3], correctargv(info[4]));//sport league team member
 	}
 	else if (!strcmp(info[0], "delete"))
 	{
@@ -125,6 +125,10 @@ void team(char* info[])
 	else if (!strcmp(info[0], "active"))
 	{
 		cout << league.active_team(info[1], info[2], info[3]);//sport league team
+	}
+	else if (!strcmp(info[0], "find"))
+	{
+		cout << league.playerteam(info[1], info[2]);//sport player
 	}
 	else if (!strcmp(info[0], "edit"))
 	{

@@ -33,10 +33,31 @@ namespace testui
             {
                 if (info["isplayer"].GetBoolean())
                 {
-                    result = new User();
+                    Player player = new Player();
+                    switch (info["sport"].GetString())
+                    {
+                        case "yaCdl pbyE":
+                            player.sport = PlayerSport.CounterShabake;
+                            break;
+                        case "wDdbaA jodF CabFCaFaC":
+                            player.sport = PlayerSport.FootbalDastiNabinayan;
+                            break;
+                        case "clp ba DFAgl":
+                            player.sport = PlayerSport.PareshBaVilcher;
+                            break;
+                        default:
+                            player.sport = PlayerSport.CounterShabake;
+                            break;
+                    }
+
+                    player.stature = info["stature"].GetString();
+                    player.weight = info["weight"].GetString();
+                    player.birth = new DateTimeOffset((int)info["birthday"].GetObject()["y"].GetNumber(), (int)info["birthday"].GetObject()["m"].GetNumber(), (int)info["birthday"].GetObject()["d"].GetNumber(), 0, 0, 0, new TimeSpan());
+
+                    result = player;
                 }
                 else
-                    result = new Player();
+                    result = new User();
             }
             catch
             {
@@ -57,8 +78,7 @@ namespace testui
                         default:
                             admin.accessabilty = AdminAccessabilty.CounterShabake;
                             break;
-                    }
-
+                    }                   
                     result = admin;
                 }
                 else
@@ -83,7 +103,7 @@ namespace testui
         }
         public static async Task<bool> Signup(string user, string pass, string email, string name, string phone, string code, bool isman, DateTimeOffset birthday, string stature, string weight, string sport)
         {
-            string res = await server.get($"type=usersignup&user={user}&pass={pass}&email={email}&info=$name$:${Useful.Fa_En(name)}$,$phone$:${phone}$,$code$:${code}$,$isman$:{(isman ? "true" : "false")},$isplayer$:true,$birthday$:${birthday.Date.Year} {birthday.Date.Month} {birthday.Date.Day}$,$stature$:${stature}$,$weight$:${weight}$,$sport$:${Useful.Fa_En(sport)}$");
+            string res = await server.get($"type=usersignup&user={user}&pass={pass}&email={email}&info=$name$:${Useful.Fa_En(name)}$,$phone$:${phone}$,$code$:${code}$,$isman$:{(isman ? "true" : "false")},$isplayer$:true,$birthday$:{"{"}$y$:{birthday.Year},$m$:{birthday.Month},$d$:{birthday.Day}{"}"},$stature$:${stature}$,$weight$:${weight}$,$sport$:${Useful.Fa_En(sport)}$");
             return res == "1";
         }
         //return true if username exist

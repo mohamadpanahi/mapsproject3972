@@ -123,8 +123,8 @@ http.createServer(async function (req, res) {
         cmd = "league show";
     }
     //======================== team ================================
-    else if (q.type == "teamadd" && q.sport != undefined && q.league != undefined && q.team != undefined && q.info != undefined) {
-        cmd = `team add "${q.sport}" "${q.league}" "${q.team}" "${q.info}"`;
+    else if (q.type == "teamadd" && q.sport != undefined && q.league != undefined && q.team != undefined && q.member != undefined) {
+        cmd = `team add "${q.sport}" "${q.league}" "${q.team}" "${q.member}"`;
     }
     else if (q.type == "teamdelete" && q.sport != undefined && q.league != undefined && q.team != undefined) {
         cmd = `team delete "${q.sport}" "${q.league}" "${q.team}"`;

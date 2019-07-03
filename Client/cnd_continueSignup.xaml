@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <AppBarButton x:Name="btn_hide" Grid.Row="0" Icon="Cancel" Foreground="Red" Height="32" Width="28" IsTabStop="False" Click="Btn_hide_Click" Margin="0,-4,0,0"/>
-        <ScrollViewer x:Name="ContentScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ViewChanged="ContentScrollViewer_ViewChanged">
+        <ScrollViewer x:Name="ContentScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel  Margin="12,0,12,12">
                 <Image Source="/Assets/sign_up.png"  Height="73" Width="275"/>
                 <TextBlock x:Name="lbl_Error" Foreground="Red" Text="Error" Visibility="Collapsed"  Margin="0,12,0,0"/>

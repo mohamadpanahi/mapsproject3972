@@ -1,6 +1,9 @@
 ﻿00- in (generatecode && retrievepass) check connection to send email
 00- classification :O -> cleaning
-00-baz negahdashtan query on server
-00-search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
-00-رمز نگاری
-26-
+00- baz negahdashtan query on server
+00- search -- jsonpath : basic big search return (path + ' ' + js.dump() + "\n") instead (path + "\n")
+00- رمز نگاری
+26- admin_home
+27- lock nav in force upc
+28- task.delay(1000) in upc (await in lst_league selection changed)
+29- back button in admin nav

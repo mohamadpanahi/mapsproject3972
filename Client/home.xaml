@@ -22,7 +22,11 @@
                 <AppBarButton x:Name="btn_signin" Icon="Contact" Label="ورود" Click="Btn_signin_Click"/>
             </StackPanel>
         </StackPanel>
-
+        <AppBarButton x:Name="btn_result" Grid.Row="1" Label="جدول نتایج" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_result_Click">
+            <AppBarButton.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEADF;" FontSize="22"/>
+            </AppBarButton.Icon>
+        </AppBarButton>
 
     </Grid>
 </Page>

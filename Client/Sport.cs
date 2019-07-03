@@ -28,9 +28,9 @@ namespace testui
             string res = await server.get($"type=sportadd&sport={Useful.Fa_En(sport)}");
             return res == "1";
         }
-        public async Task<bool> addLeague(string sport, string league, int teamNumber, int memberNumber)
+        public async Task<bool> addLeague(string sport, string league, int teamNumber)
         {
-            return await server.get($"type=leagueadd&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&info=$isleague$:true,$nteam$:{teamNumber},$nmember$:{memberNumber}") == "1";
+            return await server.get($"type=leagueadd&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&info=$isleague$:true,$nteam$:{teamNumber}") == "1";
         }
         public async Task<bool> activeleague(string sport, string league)
         {
@@ -49,44 +49,67 @@ namespace testui
             JsonObject j;
             JsonObject.TryParse(await server.get($"type=leaguerank&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}"), out j);
             JsonArray rank = j["rank"].GetArray();
-            StackPanel[] result = new StackPanel[rank.Count];
-            
+            StackPanel[] result = new StackPanel[rank.Count + 1];
 
-            for (int i = 0; i < rank.Count; i++)
+            result[0] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection = FlowDirection.RightToLeft };
+
+            //#    name   score
+            result[0].Children.Add(new TextBlock { Text = "#", Width = 36 });
+            result[0].Children.Add(new TextBlock { Text = "تیم", Width = 150 });
+
+            result[0].Children.Add(new TextBlock { Text = "امتیاز", Width = 48 });
+            result[0].Children.Add(new TextBlock { Text = "ب", Width = 36 });
+            result[0].Children.Add(new TextBlock { Text = "ت", Width = 36 });
+            result[0].Children.Add(new TextBlock { Text = "ش", Width = 36 });
+
+            switch (sport)
             {
-                string teamname = rank.GetStringAt(Convert.ToUInt32(i));
+                case "پرش با ویلچر"://fault
+                    result[0].Children.Add(new TextBlock { Text = "خطا", Width = 36 });
+                    break;
+                case "فوتبال دستی نابینایان":
+                    result[0].Children.Add(new TextBlock { Text = "زده", Width = 48 });
+                    result[0].Children.Add(new TextBlock { Text = "خورده", Width = 48 });
+                    result[0].Children.Add(new TextBlock { Text = "تفاضل", Width = 48 });
+                    break;
+                case "کانتر شبکه":
+                    result[0].Children.Add(new TextBlock { Text = "کشتن", Width = 48 });
+                    result[0].Children.Add(new TextBlock { Text = "تلفات", Width = 48 });
+                    result[0].Children.Add(new TextBlock { Text = "تفاضل", Width = 48 });
+                    break;
+                default:
+                    break;
+            }
+
+            for (int i = 1; i <= rank.Count; i++)
+            {
+                string teamname = rank.GetStringAt(Convert.ToUInt32(i - 1));
                 JsonObject team = j["team"].GetObject()[teamname].GetObject();
                 result[i] = new StackPanel { Orientation = Orientation.Horizontal, FlowDirection=FlowDirection.RightToLeft };
 
-                //#    name   
-                result[i].Children.Add(new TextBlock { Text = (i + 1).ToString() }); 
-                result[i].Children.Add(new TextBlock { Text = teamname, Margin = new Thickness(12, 0, 12, 0) });
+                //#    name   score
+                result[i].Children.Add(new TextBlock { Text = i.ToString(), Width = 36}); 
+                result[i].Children.Add(new TextBlock { Text = Useful.En_Fa(teamname), Width = 150 });
+
+                result[i].Children.Add(new TextBlock { Text = (team["win"].GetNumber() * 3 + team["equal"].GetNumber()).ToString(), Width = 48 });
+                result[i].Children.Add(new TextBlock { Text = team["win"].GetNumber().ToString(), Width = 36 });
+                result[i].Children.Add(new TextBlock { Text = team["equal"].GetNumber().ToString(), Width = 36 });
+                result[i].Children.Add(new TextBlock { Text = team["lost"].GetNumber().ToString(), Width = 36 });
 
                 switch (sport)
                 {
-                    case "clp ba DFAgl"://h1    h2    h3    fault
-                        result[i].Children.Add(new TextBlock { Text = team["h1"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["h2"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = team["h3"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["fault"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
+                    case "پرش با ویلچر"://fault
+                        result[i].Children.Add(new TextBlock { Text = team["fault"].GetNumber().ToString(), Width = 36});
                         break;
-                    case "wDdbaA jodF CabFCaFaC":
-                        result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["win"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = team["lost"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["equal"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = team["wg"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["lg"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = (team["wg"].GetNumber() - team["lg"].GetNumber()).ToString() });
+                    case "فوتبال دستی نابینایان":
+                        result[i].Children.Add(new TextBlock { Text = team["wg"].GetNumber().ToString(), Width = 48 });
+                        result[i].Children.Add(new TextBlock { Text = team["lg"].GetNumber().ToString(), Width = 48 });
+                        result[i].Children.Add(new TextBlock { Text = (team["wg"].GetNumber() - team["lg"].GetNumber()).ToString(), Width = 48 });
                         break;
-                    case "yaCdl pbyE":
-                        result[i].Children.Add(new TextBlock { Text = team["score"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["win"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = team["lost"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["equal"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = team["wk"].GetNumber().ToString() });
-                        result[i].Children.Add(new TextBlock { Text = team["lk"].GetNumber().ToString(), Margin = new Thickness(12, 0, 12, 0) });
-                        result[i].Children.Add(new TextBlock { Text = (team["wk"].GetNumber() - team["lk"].GetNumber()).ToString() });
+                    case "کانتر شبکه":
+                        result[i].Children.Add(new TextBlock { Text = team["wk"].GetNumber().ToString(), Width = 48 });
+                        result[i].Children.Add(new TextBlock { Text = team["lk"].GetNumber().ToString(), Width = 48 });
+                        result[i].Children.Add(new TextBlock { Text = (team["wk"].GetNumber() - team["lk"].GetNumber()).ToString(), Width = 48 });
                         break;
                     default:
                         break;
@@ -115,6 +138,13 @@ namespace testui
         public async Task<bool> editresultcompetition(string sport, string league, string team1, string team2, string result, string info)
         {
             return await server.get($"type=competitionresult&sport={Useful.Fa_En(sport)}&league={Useful.Fa_En(league)}&competition={Useful.Fa_En(team1)}-{Useful.Fa_En(team2)}&result={result}&info={info}")=="1";
+        }
+        //unresulted past competitions
+        public async Task<JsonObject> upc(string sport)
+        {
+            JsonObject res;
+            JsonObject.TryParse(await server.get($"type=sportupc&sport={Useful.Fa_En(sport)}"), out res);
+            return res;
         }
     }
 }

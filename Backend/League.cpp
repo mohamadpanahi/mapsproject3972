@@ -55,6 +55,7 @@ json League::sendrank(string sport, string league)
 
 	sort(team, team + size, [temp](string s1, string s2) {return (temp[s1]["win"] * 3 + temp[s1]["equal"]) > (temp[s2]["win"] * 3 + temp[s2]["equal"]); });
 
+	result["rank"] = json::parse("[]");
 	for (int i = 0; i < size; i++)
 		result["rank"].push_back(team[i]);
 	return result;
@@ -106,12 +107,12 @@ bool League::end_league(string sport, string league)
 	return true;
 }
 
-bool League::add_team(string sport, string league, string team, string input)
+bool League::add_team(string sport, string league, string team, string member)
 {
 	if (!find(j, sport) || !find(j[sport], league) || find(j[sport][league]["team"], team))
 		return false;
 
-	json jj = json::parse("{\"" + team + "\":{" + input + ",\"member\":{}}}");
+	json jj = json::parse("{\"" + team + "\":{\"member\":{}}}");
 	jj[team]["active"] = true;
 	jj[team]["win"] = 0;
 	jj[team]["lost"] = 0;
@@ -132,6 +133,20 @@ bool League::add_team(string sport, string league, string team, string input)
 		jj[team]["wk"] = 0;
 		jj[team]["lk"] = 0;
 	}
+
+	//add memmber
+	json members = json::parse("{" + member + "}");
+	jj[team]["member"] = json::parse("{}");
+	for (auto mem = members.begin(); mem != members.end(); mem++)
+	{
+		auto jjj = playerteam(sport, mem.key());
+		if (jjj == false || jjj[league].size())
+			return false;
+
+		json jjjj = json::parse("{\"" + mem.key() + "\":" + mem.value().dump() + "}");
+		jj[team]["member"].insert(jjjj.begin(), jjjj.end());
+	}
+
 
 	j[sport][league]["team"].insert(jj.begin(), jj.end());
 	return true;
@@ -178,6 +193,28 @@ bool League::del_team_members(string sport, string league, string team, string p
 	
 	j[sport][league]["team"][team]["member"].erase(key);
 	return true;
+}
+json League::playerteam(string sport, string user)
+{
+	User u(PATH_USER);
+	if (!find(j, sport) || !u.find(user) || u.getjson()[user]["isplayer"] == false)
+		return false;
+
+	json result = json::parse("{}");
+	for (auto l = j[sport].begin(); l != j[sport].end(); l++)
+	{
+		for (auto t = l.value()["team"].begin(); t != l.value()["team"].end(); t++)
+		{
+			for (auto m = t.value()["member"].begin(); m != t.value()["member"].end(); m++)
+			{
+				if (m.key() == user)
+				{
+					result[l.key()].push_back(t.key());
+				}
+			}
+		}
+	}
+	return result;
 }
 
 bool League::add_competition(string sport, string league, string competition, string info)

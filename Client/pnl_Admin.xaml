@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
 
     <Grid>
         <NavigationView x:Name="nav" FlowDirection="RightToLeft" ItemInvoked="Nav_ItemInvoked" IsSettingsVisible="False">
@@ -26,6 +26,7 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEADF;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Icon="AllApps" Content="جدول نتایج" x:Name="btn_leagueresult" />
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <NavigationViewItem Icon="Go" Content="خروج" x:Name="btn_signout" />

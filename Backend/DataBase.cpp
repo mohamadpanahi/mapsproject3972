@@ -148,3 +148,8 @@ string DataBase::getfreeid(const json & jj, long long int startid)const
 		if (!find(jj, intTOstring(i)))
 			return intTOstring(i);
 }
+
+json DataBase::getjson()
+{
+	return j;
+}

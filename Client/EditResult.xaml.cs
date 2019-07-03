@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -26,6 +28,7 @@ namespace testui
         private Admin acc;
         private Sport sport = new Sport();
         private JsonObject leagueinfo;
+        private JsonObject upces;
         public EditResult()
         {
             this.InitializeComponent();
@@ -34,7 +37,13 @@ namespace testui
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            acc = e.Parameter as Admin;
+            if (e.Parameter is Admin)
+                acc = e.Parameter as Admin;
+            else if (e.Parameter is EditResultParam)
+            {
+                acc = ((EditResultParam)e.Parameter).acc;
+                upces = ((EditResultParam)e.Parameter).upc;
+            }
         }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -67,6 +76,60 @@ namespace testui
                     cmb_sport.Items.Add("پرش با ویلچر");
                     cmb_sport.SelectedIndex = 0;
                     break;
+            }
+
+            if (upces == null) return;
+
+            lbl_error.Text = "باید نتیجه مسابقه ی گذشته را وارد کنید";
+            lbl_error.Visibility = Visibility.Visible;
+
+            string league = upces.Keys.ElementAt(0);
+            string competition = Useful.En_Fa(upces[league].GetArray().GetStringAt(0));
+            league = Useful.En_Fa(league);
+
+            string t1 = "", t2 = "";
+            bool isdash = false;
+            foreach (var i in competition)
+            {
+                if (i == '-')
+                {
+                    isdash = true;
+                    continue;
+                }
+                if (isdash)
+                    t2 += i;
+                else
+                    t1 += i;
+            }
+
+            //lst_league
+            for (int i = 0; i < lst_league.Items.Count; i++)
+            {
+                if (lst_league.Items.ElementAt(i).ToString() == league)
+                {
+                    lst_league.SelectedIndex = i;
+                    break;
+                }
+            }
+            await Task.Delay(500);
+            //cmb_t1
+            for (int i = 0; i < cmb_t1.Items.Count; i++)
+            {
+                if (cmb_t1.Items.ElementAt(i).ToString() == t1)
+                {
+                    cmb_t1.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            ////cmb_t2
+            for (int i = 0; i < cmb_t2.Items.Count; i++)
+            {
+                if (cmb_t2.Items.ElementAt(i).ToString() == t2)
+                {
+                    cmb_t2.SelectedIndex = i;
+                    break;
+                }
             }
         }
 
@@ -209,6 +272,7 @@ namespace testui
                     lbl_error.Visibility = Visibility.Visible;
                 }
             }
+
         }
 
         private void Txt_r1_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)

@@ -137,10 +137,5 @@ namespace testui
                 lbl_Error.Visibility = Visibility.Visible;
             }
         }
-
-        private void ContentScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-
-        }
     }
 }

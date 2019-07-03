@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -17,6 +18,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace testui
 {
+    struct EditResultParam
+    {
+        public JsonObject upc;
+        public Admin acc;
+    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -48,9 +54,40 @@ namespace testui
                 frm.Navigate(typeof(EditCompetition), acc);
             else if (args.InvokedItemContainer == btn_editresult)
                 frm.Navigate(typeof(EditResult), acc);
+            else if (args.InvokedItemContainer == btn_leagueresult)
+                Frame.Navigate(typeof(LeagueResult));
             else if (args.InvokedItemContainer == btn_signout)
                 Frame.Navigate(typeof(home));
 
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            bool b = true;
+            EditResultParam p = new EditResultParam();
+            p.acc = acc;
+
+            Sport sport = new Sport();
+            switch (acc.accessabilty)
+            {
+                case AdminAccessabilty.PareshBaVilcher:
+                    p.upc = await sport.upc("پرش با ویلچر");
+                    break;
+                case AdminAccessabilty.CounterShabake:
+                    p.upc = await sport.upc("کانتر شبکه");
+                    break;
+                case AdminAccessabilty.FootbalDastiNabinayan:
+                    p.upc = await sport.upc("فوتبال دستی نابینایان");
+                    break;
+                default:
+                    b = false;
+                    break;
+            }
+            if (b && p.upc.Keys.Count != 0)
+            {
+                frm.Navigate(typeof(EditResult), p);
+                //lock
+            }
         }
     }
 }

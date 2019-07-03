@@ -75,7 +75,7 @@ namespace testui
         }
         private async void Btn_addleague_Click(object sender, RoutedEventArgs e)
         {
-            if (cmb_sport.SelectedIndex == -1 || txt_league.Text == "" || txt_teamnum.Text == "" || txt_membernum.Text == "")
+            if (cmb_sport.SelectedIndex == -1 || txt_league.Text == "" || txt_teamnum.Text == "")
             {
                 lbl_error.Text = "بی شعور گاو یعنی نمی فهمی باید همه اینا را پر کنی!\nببین با کیا شدیم 80 ملیون!";
                 lbl_error.Visibility = Visibility.Visible;
@@ -84,7 +84,7 @@ namespace testui
             {
                 lbl_error.Visibility = Visibility.Collapsed;
 
-                bool res = await sport.addLeague(cmb_sport.SelectedValue.ToString(), txt_league.Text, Convert.ToInt32(txt_teamnum.Text), Convert.ToInt32(txt_membernum.Text));
+                bool res = await sport.addLeague(cmb_sport.SelectedValue.ToString(), txt_league.Text, Convert.ToInt32(txt_teamnum.Text));
                 if (!res)
                 {
                     lbl_error.Text = "خاک تو سر خرت.\nمگه نگفتم اونورو نگا کن تکراری نباشه.\nاحمق خنده دار بنجل کچل";
@@ -112,21 +112,12 @@ namespace testui
         {
             args.Cancel = args.NewText.Any(c => !(char.IsNumber(c)));
         }
-        private void Txt_membernum_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-            args.Cancel = args.NewText.Any(c => !(char.IsNumber(c)));
-        }
         private void Txt_league_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
                 txt_teamnum.Focus(FocusState.Keyboard);
         }
         private void Txt_teamnum_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-                txt_membernum.Focus(FocusState.Keyboard);
-        }
-        private void Txt_membernum_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
                 btn_addleague.Focus(FocusState.Keyboard);

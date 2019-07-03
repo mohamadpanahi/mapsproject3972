@@ -25,5 +25,5 @@ public:
 	virtual json exactsearch(string search) = 0;
 
 	string getfreeid(const json& jj, long long int startid)const;
-
+	json getjson();
 };

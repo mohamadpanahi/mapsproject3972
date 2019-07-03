@@ -66,14 +66,21 @@ string MapsEncrypt::decrypt(string chipertext)
 void MapsEncrypt::encryptfile(string plaintext)
 {
 	ofstream file(filename);
-	file << encrypt(plaintext);
+	for (int j = 0; j < plaintext.length(); j++)
+		plaintext[j] ^= key[0];
+	file << plaintext;
 }
 string MapsEncrypt::decryptfile()
 {
 	ifstream file(filename);
 	stringstream ss;
 	ss << file.rdbuf();
-	return decrypt(ss.str());
+	string chipertext = ss.str();
+
+	for (int j = 0; j < chipertext.length(); j++)
+		chipertext[j] ^= key[0];
+
+	return chipertext;
 }
 void MapsEncrypt::encryptfile()
 {
@@ -82,6 +89,11 @@ void MapsEncrypt::encryptfile()
 	ss << file.rdbuf();
 	file.close();
 
+	string s;
+	s = ss.str();
+	for (int j = 0; j < s.length(); j++)
+		s[j] ^= key[0];
+
 	ofstream ofile(filename);
-	ofile << encrypt(ss.str());
+	ofile << s;
 }

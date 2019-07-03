@@ -1,6 +1,7 @@
 #pragma once
 #include "DataBase.h"
 #include "History.h"
+#include "User.h"
 #include <algorithm>
 
 
@@ -26,14 +27,14 @@ public:
 	bool end_league(string sport, string league);
 
 	//team information****************************************************
-	bool add_team(string sport, string league, string team, string input);
+	bool add_team(string sport, string league, string team, string member);
 	bool edit_team(string sport, string league, string team, string input);
 	bool del_team(string sport, string league, string team);
 	bool active_team(string sport, string league, string team);
 
 	bool add_team_members(string sport, string league, string team, string player);
 	bool del_team_members(string sport, string league, string team, string player);
-	
+	json playerteam(string sport, string user);
 	//competition information*********************************************
 	bool add_competition(string sport, string league, string competition, string info);
 	bool edit_competition(string sport, string league, string competition, string input);

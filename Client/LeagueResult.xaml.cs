@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Data.Json;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -37,8 +38,13 @@ namespace testui
         }
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            st_titlebar.Width = this.ActualWidth - st_button.ActualWidth;
+
             lst_league.Height = this.ActualHeight - 76;
-            st_sport.Width = this.ActualWidth / 4;
+
+            if (this.ActualWidth < 800)
+                st_sport.Width = this.ActualWidth - lst_table.ActualWidth;
+
         }
 
         private void Cmb_sport_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -60,6 +66,10 @@ namespace testui
 
         private async void Lst_league_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (lst_league.SelectedIndex == -1) return;
+
+            lst_table.Items.Clear();
+
             StackPanel[] stacks = await sport.Rank(cmb_sport.SelectedValue.ToString(), lst_league.SelectedValue.ToString());
             foreach (var st in stacks)
             {

@@ -32,6 +32,10 @@ namespace testui
                 Account acc = await Account.GetUserInfo(signin.user, signin.pass);
                 if (acc.GetType() == typeof(Admin))
                     Frame.Navigate(typeof(pnl_Admin), acc);
+                else if(acc.GetType() == typeof(User))
+                    Frame.Navigate(typeof(pnl_user), acc);
+                else if (acc.GetType() == typeof(Player))
+                    Frame.Navigate(typeof(pnl_Player), acc);
             }
             else if (signin.result == cnd_signin_Result.inactive || signin.result==cnd_signin_Result.WaitForActive)
                 cnd_activeCode_show(signin.user, signin.pass);
@@ -64,7 +68,7 @@ namespace testui
             await rp.ShowAsync();
 
             if (rp.result == cnd_retrievepass_Result.retrieve)
-                btn_signin.Content = "retrieve";
+                cnd_signin_show();
         }
         public async void cnd_activeAccount_show(string user, string pass)
         {
@@ -73,9 +77,14 @@ namespace testui
 
             if (aa.result == cnd_activeAccount_Result.SendCode)
                 cnd_activeCode_show(aa.user, aa.pass);
-            else if(aa.result==cnd_activeAccount_Result.Active)
-                btn_signin.Label = "Welcome";
-            //incomplete -> goto panel
+            else if (aa.result == cnd_activeAccount_Result.Active)
+            {
+                Account acc = await Account.GetUserInfo(aa.user, aa.pass);
+                if (acc.GetType() == typeof(Admin))
+                    Frame.Navigate(typeof(pnl_Admin), acc);
+                else if (acc.GetType() == typeof(User))
+                    Frame.Navigate(typeof(pnl_user), acc);
+            }
         }
         public async void cnd_activeCode_show(string user, string pass)
         {
@@ -83,8 +92,15 @@ namespace testui
             await ac.ShowAsync();
 
             if (ac.result == cnd_activeCode_result.active)
-                btn_signin.Label = "Welcome";
-                //incomplete -> goto panel
+            {
+                Account acc = await Account.GetUserInfo(user, pass);
+                if (acc.GetType() == typeof(Admin))
+                    Frame.Navigate(typeof(pnl_Admin), acc);
+                else if (acc.GetType() == typeof(User))
+                    Frame.Navigate(typeof(pnl_user), acc);
+                else if (acc.GetType() == typeof(Player))
+                    Frame.Navigate(typeof(pnl_Player), acc);
+            }
         }
         public home()
         {
@@ -104,6 +120,11 @@ namespace testui
         private void Btn_signup_Click(object sender, RoutedEventArgs e)
         {
             cnd_signup_show();
+        }
+
+        private void Btn_result_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(LeagueResult));
         }
     }
 }
